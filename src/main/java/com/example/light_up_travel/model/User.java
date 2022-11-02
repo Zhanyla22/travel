@@ -43,10 +43,11 @@ public class User {
     @Size(max = 50)
     @Email
     private String email;
+
     @Column(name = "phone_number")
     private String phoneNumber;
     @NotBlank
-    @Size(max = 120)
+    @Size(min = 8, max = 120)
     private String password;
 
     private String country;
@@ -58,16 +59,15 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     // rashid's reset password code (int only)
-    @Column(name = "reset_password_code")
-    @JsonIgnore
-    private Integer resetPasswordCode;
+//    @Column(name = "reset_password_code")
+//    @JsonIgnore
+//    private Integer resetPasswordCode;
 
     @Column( length = 64)
     private String verificationCode;
     private boolean enabled;
 
     private Date dob;
-
     @Column(name = "date_created" /*, nullable = false **/)
     private Date dateCreated;
     @Column(name = "date_updated")
@@ -76,9 +76,8 @@ public class User {
     private Date dateDeleted;
 
     public String getUsername(){
-        return email!= null ? getEmail() : getPhoneNumber();
+        return email;
     }
-
 
     public User(String name, String surname,String email, String password) {
         this.name = name;
@@ -88,7 +87,5 @@ public class User {
         this.enabled =false;
         this.dateCreated = new Date();
     }
-
-
 }
 

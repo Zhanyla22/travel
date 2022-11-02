@@ -15,7 +15,7 @@ public class SignupRequest {
   private String name;
   private String surname;
 
-  @Size(max = 100)
+  @Size(max = 150)
   @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
   private String email;
 
@@ -24,6 +24,5 @@ public class SignupRequest {
   @NotBlank
   @Size(min = 8, max = 40)
   private String password;
-
 
 }

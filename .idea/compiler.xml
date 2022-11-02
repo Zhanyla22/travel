@@ -12,7 +12,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Light Up Travel" target="11" />
-      <module name="Light_Up_Travel" target="11" />
+      <module name="Light_Up_Travel" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

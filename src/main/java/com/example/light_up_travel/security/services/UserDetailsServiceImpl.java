@@ -25,7 +25,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         User user1 = user.get();
 
-
         return UserDetailsImpl.build(user1);
     }
 

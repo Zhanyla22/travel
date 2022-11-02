@@ -105,8 +105,8 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public User findUserByEmail(String userEmailorPhone) {
-        return  userRepository.findByEmail(userEmailorPhone).
+    public User findUserByEmail(String email) {
+        return  userRepository.findByEmail(email).
                 orElseThrow(() -> new RuntimeException("User not Found") );
     }
 
