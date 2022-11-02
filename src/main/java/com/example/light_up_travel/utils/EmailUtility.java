@@ -12,7 +12,7 @@ import java.io.UnsupportedEncodingException;
 @UtilityClass
 public class EmailUtility {
 
-    private final String siteURL = "https://git.heroku.com/light-up-travel.com";
+    private final String siteURL = "https://light-up-travel.herokuapp.com/";
     public void sendVerificationEmail(User user, JavaMailSender mailSender)
             throws MessagingException, UnsupportedEncodingException {
         String toAddress = user.getEmail();
