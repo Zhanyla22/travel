@@ -16,7 +16,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="Light_Up_Travel" />
-          <factory-entry name="entityManagerFactory" />
+          <factory-entry name="entityManagerFactory" value="eb53b0f6-28b7-4c3b-ac2f-5c23e84d070c" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>
