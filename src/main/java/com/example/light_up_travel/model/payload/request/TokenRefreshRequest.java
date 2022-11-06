@@ -1,4 +1,4 @@
-package com.example.light_up_travel.payload.request;
+package com.example.light_up_travel.model.payload.request;
 
 import javax.validation.constraints.NotBlank;
 

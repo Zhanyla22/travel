@@ -1,4 +1,4 @@
-package com.example.light_up_travel.payload.response;
+package com.example.light_up_travel.model.payload.response;
 
 import lombok.Getter;
 import lombok.Setter;

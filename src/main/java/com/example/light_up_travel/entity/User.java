@@ -1,6 +1,6 @@
-package com.example.light_up_travel.model;
+package com.example.light_up_travel.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.example.light_up_travel.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

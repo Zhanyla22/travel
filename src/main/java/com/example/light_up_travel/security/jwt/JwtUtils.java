@@ -1,6 +1,6 @@
 package com.example.light_up_travel.security.jwt;
 
-import com.example.light_up_travel.security.services.UserDetailsImpl;
+import com.example.light_up_travel.services.impl.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

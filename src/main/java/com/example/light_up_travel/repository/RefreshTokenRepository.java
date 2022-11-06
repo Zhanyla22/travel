@@ -1,7 +1,7 @@
 package com.example.light_up_travel.repository;
 
-import com.example.light_up_travel.model.RefreshToken;
-import com.example.light_up_travel.model.User;
+import com.example.light_up_travel.entity.RefreshToken;
+import com.example.light_up_travel.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;

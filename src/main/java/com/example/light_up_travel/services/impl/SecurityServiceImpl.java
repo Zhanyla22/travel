@@ -1,6 +1,6 @@
 package com.example.light_up_travel.services.impl;
 
-import com.example.light_up_travel.model.PasswordResetToken;
+import com.example.light_up_travel.entity.PasswordResetToken;
 import com.example.light_up_travel.repository.PasswordResetTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

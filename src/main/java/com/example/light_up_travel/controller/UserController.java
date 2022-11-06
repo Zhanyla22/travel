@@ -1,7 +1,7 @@
 package com.example.light_up_travel.controller;
 
-import com.example.light_up_travel.model.PasswordResetToken;
-import com.example.light_up_travel.model.User;
+import com.example.light_up_travel.entity.PasswordResetToken;
+import com.example.light_up_travel.entity.User;
 import com.example.light_up_travel.services.impl.SecurityServiceImpl;
 import com.example.light_up_travel.services.impl.UserServiceImpl;
 import com.example.light_up_travel.utils.EmailUtility;

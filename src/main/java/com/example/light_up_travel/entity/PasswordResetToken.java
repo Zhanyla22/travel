@@ -1,4 +1,4 @@
-package com.example.light_up_travel.model;
+package com.example.light_up_travel.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

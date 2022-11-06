@@ -1,6 +1,6 @@
 package com.example.light_up_travel.utils;
 
-import com.example.light_up_travel.model.User;
+import com.example.light_up_travel.entity.User;
 import lombok.experimental.UtilityClass;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;

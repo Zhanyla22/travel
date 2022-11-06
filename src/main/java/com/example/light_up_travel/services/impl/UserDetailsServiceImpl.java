@@ -1,6 +1,6 @@
-package com.example.light_up_travel.security.services;
+package com.example.light_up_travel.services.impl;
 
-import com.example.light_up_travel.model.User;
+import com.example.light_up_travel.entity.User;
 import com.example.light_up_travel.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

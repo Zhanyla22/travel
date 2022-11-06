@@ -1,6 +1,6 @@
 package com.example.light_up_travel.services;
 
-import com.example.light_up_travel.model.User;
+import com.example.light_up_travel.entity.User;
 
 import java.util.List;
 
