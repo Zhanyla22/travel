@@ -16,6 +16,7 @@ import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
