@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -59,10 +60,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    // rashid's reset password code (int only)
-//    @Column(name = "reset_password_code")
-//    @JsonIgnore
-//    private Integer resetPasswordCode;
 
     @Column( length = 64)
     private String verificationCode;
@@ -71,7 +68,7 @@ public class User {
     @Enumerated
     private Status status;
 
-    private Date dob;
+    private LocalDate dob;
     @Column(name = "date_created" /*, nullable = false **/)
     private Date dateCreated;
     @Column(name = "date_updated")

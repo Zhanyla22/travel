@@ -2,6 +2,7 @@ package com.example.light_up_travel.controller;
 
 import com.example.light_up_travel.entity.PasswordResetToken;
 import com.example.light_up_travel.entity.User;
+import com.example.light_up_travel.model.payload.UserDto;
 import com.example.light_up_travel.services.impl.SecurityServiceImpl;
 import com.example.light_up_travel.services.impl.UserServiceImpl;
 import com.example.light_up_travel.utils.EmailUtility;
@@ -13,6 +14,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
@@ -30,6 +32,14 @@ public class UserController {
 
     @Autowired
     private SecurityServiceImpl securityService;
+
+
+    @Operation(summary = "Add new user")
+    @PostMapping("/add")
+    public ResponseEntity<?> addUser(@Valid @RequestBody UserDto signupRequest) {
+        userService.add(signupRequest);
+        return ResponseEntity.ok("User is created successfully");
+    }
 
     @Operation(summary = "Get all not deleted users")
     @GetMapping("/allnotdeleted")
