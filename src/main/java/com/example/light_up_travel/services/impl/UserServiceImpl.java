@@ -5,6 +5,7 @@ import com.example.light_up_travel.entity.Role;
 import com.example.light_up_travel.entity.User;
 import com.example.light_up_travel.enums.ERole;
 import com.example.light_up_travel.enums.Status;
+import com.example.light_up_travel.model.payload.UpdateUserDto;
 import com.example.light_up_travel.model.payload.UserDto;
 import com.example.light_up_travel.repository.PasswordResetTokenRepository;
 import com.example.light_up_travel.repository.RoleRepository;
@@ -75,7 +76,7 @@ public class UserServiceImpl implements UserService {
         user.setDateCreated(new Date());
         user.setEnabled(true);
         user.setStatus(Status.ACTIVE);
-        user.setVerificationCode("Verified");
+        user.setVerificationCode("Verified-By-Admin");
 
 
         Set<Role> roles = new HashSet<>();
@@ -111,6 +112,55 @@ public class UserServiceImpl implements UserService {
         user.setRoles(roles);
         userRepository.save(user);
         return userDto;
+    }
+
+    @Override
+    public User updateNotDeletedUserById(Long id, UpdateUserDto updateUserDto) {
+        User user = isUserDeletedCheck(id);
+        user.setName(updateUserDto.getName());
+        user.setSurname(updateUserDto.getSurname());
+        user.setEmail(updateUserDto.getEmail().toLowerCase());
+        user.setPassword(encoder.encode(updateUserDto.getPassword()));
+        user.setGender(updateUserDto.getGender());
+        user.setPhoneNumber(updateUserDto.getPhoneNumber());
+        user.setCountry(updateUserDto.getCountry());
+        user.setDob(updateUserDto.getDob());
+        user.setDateUpdated(new Date());
+
+        Set<Role> roles = new HashSet<>();
+        Set<String> strRoles = updateUserDto.getRole();
+
+        if (strRoles == null) {
+            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(userRole);
+        } else {
+            strRoles.forEach(role -> {
+                switch (role) {
+                    case "admin":
+                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(adminRole);
+
+                        break;
+                    case "moderator":
+                        Role techRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(techRole);
+
+                        break;
+                    default:
+                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(userRole);
+                }
+            });
+        }
+
+        user.setRoles(roles);
+
+        userRepository.save(user);
+        return user;
     }
 
     public boolean verify(String verificationCode) {

@@ -2,7 +2,9 @@ package com.example.light_up_travel.controller;
 
 import com.example.light_up_travel.entity.PasswordResetToken;
 import com.example.light_up_travel.entity.User;
+import com.example.light_up_travel.model.payload.UpdateUserDto;
 import com.example.light_up_travel.model.payload.UserDto;
+import com.example.light_up_travel.model.payload.response.MessageResponse;
 import com.example.light_up_travel.services.impl.SecurityServiceImpl;
 import com.example.light_up_travel.services.impl.UserServiceImpl;
 import com.example.light_up_travel.utils.EmailUtility;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
+import org.webjars.NotFoundException;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
@@ -39,6 +42,17 @@ public class UserController {
     public ResponseEntity<?> addUser(@Valid @RequestBody UserDto signupRequest) {
         userService.add(signupRequest);
         return ResponseEntity.ok("User is created successfully");
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateUserById(@RequestBody UpdateUserDto updateUserDto, @PathVariable Long id) {
+        try{
+            return ResponseEntity.ok(userService.updateNotDeletedUserById(id, updateUserDto));
+        } catch (NotFoundException nfe) {
+            throw new NotFoundException(nfe.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
+        }
     }
 
     @Operation(summary = "Get all not deleted users")
