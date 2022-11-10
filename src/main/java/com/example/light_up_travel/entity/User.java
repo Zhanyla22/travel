@@ -1,6 +1,7 @@
 package com.example.light_up_travel.entity;
 
 import com.example.light_up_travel.entity.Role;
+import com.example.light_up_travel.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -66,6 +67,9 @@ public class User {
     @Column( length = 64)
     private String verificationCode;
     private boolean enabled;
+
+    @Enumerated
+    private Status status;
 
     private Date dob;
     @Column(name = "date_created" /*, nullable = false **/)

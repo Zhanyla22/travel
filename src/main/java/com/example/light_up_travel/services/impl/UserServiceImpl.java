@@ -2,6 +2,7 @@ package com.example.light_up_travel.services.impl;
 
 import com.example.light_up_travel.entity.PasswordResetToken;
 import com.example.light_up_travel.entity.User;
+import com.example.light_up_travel.enums.Status;
 import com.example.light_up_travel.repository.PasswordResetTokenRepository;
 import com.example.light_up_travel.repository.UserRepository;
 import com.example.light_up_travel.services.UserService;
@@ -44,6 +45,7 @@ public class UserServiceImpl implements UserService {
         User user = isUserDeletedCheck(id);
         user.setDateDeleted(new Date());
         user.setEnabled(false);
+        user.setStatus(Status.DELETED_BY_ADMIN);
         userRepository.save(user);
         return user;
     }
@@ -56,6 +58,7 @@ public class UserServiceImpl implements UserService {
         } else {
             user.setVerificationCode(null);
             user.setEnabled(true);
+            user.setStatus(Status.ACTIVE);
             userRepository.save(user);
             return true;
         }

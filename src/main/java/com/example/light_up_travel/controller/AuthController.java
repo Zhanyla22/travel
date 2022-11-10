@@ -1,5 +1,6 @@
 package com.example.light_up_travel.controller;
 
+import com.example.light_up_travel.enums.Status;
 import com.example.light_up_travel.model.payload.request.LoginRequest;
 import com.example.light_up_travel.model.payload.request.SignupRequest;
 import com.example.light_up_travel.model.payload.request.TokenRefreshRequest;
@@ -140,7 +141,7 @@ public class AuthController {
         String randomCode = RandomString.make(64);
         user.setVerificationCode(randomCode);
         user.setEnabled(false);
-
+        user.setStatus(Status.PENDING);
         EmailUtility.sendVerificationEmail(user, mailSender);
         userRepository.save(user);
 
