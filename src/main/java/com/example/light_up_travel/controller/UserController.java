@@ -119,7 +119,7 @@ public class UserController {
         return ResponseEntity.ok("Check your email");
     }
 
-    @GetMapping("/verifyResetPasswordCode/{code}")
+    @PostMapping("/verifyResetPasswordCode/{code}")
     public ResponseEntity<?> verifyResetPasswordCode(@PathVariable String code) {
         if (userService.verifyPasswordResetCode(code)) {
             return ResponseEntity.ok("verify_success");
