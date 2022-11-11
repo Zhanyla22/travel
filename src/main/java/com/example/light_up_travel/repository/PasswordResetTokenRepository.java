@@ -10,4 +10,6 @@ public interface PasswordResetTokenRepository extends JpaRepository<PasswordRese
 
     @Query("SELECT t FROM PasswordResetToken t where t.token = ?1")
     PasswordResetToken findByToken(String token);
+    @Query("SELECT t FROM PasswordResetToken t where t.user = ?1")
+    PasswordResetToken findByUserId(Long userId);
 }

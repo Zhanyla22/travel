@@ -11,6 +11,7 @@ import com.example.light_up_travel.utils.EmailUtility;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
@@ -106,8 +107,8 @@ public class UserController {
     }
 
 
-    @PostMapping("/resetPassword")
-    public ResponseEntity<?> resetPassword(@RequestParam("userEmail") String userEmail) throws MessagingException, UnsupportedEncodingException {
+    @PostMapping("/resetPassword/{userEmail}")
+    public ResponseEntity<?> resetPassword(@PathVariable String userEmail) throws MessagingException, UnsupportedEncodingException {
         User user = userService.findUserByEmail(userEmail);
         if (user == null) {
             throw new RuntimeException("User with Email " + userEmail + " not found");
@@ -118,13 +119,36 @@ public class UserController {
         return ResponseEntity.ok("Check your email");
     }
 
-    @PostMapping("/changePassword")
-    public ResponseEntity<?> changePassword(@RequestParam("token") String token, String newPassword) {
-        try {
-            PasswordResetToken passwordResetToken =
-                    securityService.validatePasswordResetToken(token);
+    @GetMapping("/verifyResetPasswordCode/{code}")
+    public ResponseEntity<?> verifyResetPasswordCode(@PathVariable String code) {
+        if (userService.verifyPasswordResetCode(code)) {
+            return ResponseEntity.ok("verify_success");
+        } else {
+            return ResponseEntity.ok("verify_fail");
+        }
+    }
 
-            userService.changePassword(passwordResetToken, newPassword);
+//    @PostMapping("/changePassword")
+//    public ResponseEntity<?> changePassword(@RequestParam("token") String token, String newPassword) {
+//        try {
+//            PasswordResetToken passwordResetToken =
+//                    securityService.validatePasswordResetToken(token);
+//
+//            userService.changePassword(passwordResetToken, newPassword);
+//            return ResponseEntity.ok("Password changed");
+//        }
+//        catch (RuntimeException notFoundException){
+//            return ResponseEntity.status(404).body(notFoundException.getMessage());
+//        }
+//        catch (Exception e){
+//            return ResponseEntity.internalServerError().body(e.getMessage());
+//        }
+//
+//    }
+    @PostMapping("/changePassword/{newPassword}")
+    public ResponseEntity<?> changePassword(@PathVariable String newPassword) {
+        try {
+            userService.newPassword(newPassword);
             return ResponseEntity.ok("Password changed");
         }
         catch (RuntimeException notFoundException){
@@ -133,7 +157,6 @@ public class UserController {
         catch (Exception e){
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
-
 
     }
 

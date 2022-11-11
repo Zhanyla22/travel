@@ -11,7 +11,8 @@ public interface UserRepository extends JpaRepository<User,Long > {
 
     Optional <User> findByEmail(String email);
 
-//    Optional <User> findByPhoneNumber(String phoneNumber);
+
+    //    Optional <User> findByPhoneNumber(String phoneNumber);
     @Query("SELECT u FROM User u WHERE u.verificationCode = ?1")
     User findByVerificationCode(String code);
 

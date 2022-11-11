@@ -23,6 +23,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    private final SecurityServiceImpl securityService;
     private final UserRepository userRepository;
 
     private final RoleRepository roleRepository;
@@ -177,6 +178,32 @@ public class UserServiceImpl implements UserService {
         }
 
     }
+//
+//    public boolean verifyPasswordResetCode(String resetPasswordCode) {
+//        PasswordResetToken passwordResetToken =
+//                securityService.validatePasswordResetToken(resetPasswordCode);
+//        return passwordResetToken != null;
+//    }
+
+    public boolean verifyPasswordResetCode(String resetPasswordCode) {
+        PasswordResetToken passwordResetToken =
+                securityService.validatePasswordResetToken(resetPasswordCode);
+        if (passwordResetToken == null){
+            return false;
+        }else {
+            passwordResetToken.setToken("123");
+            passwordResetTokenRepository.save(passwordResetToken);
+            return true;
+        }
+    }
+    public void newPassword(String newPassword) {
+        PasswordResetToken token = passwordResetTokenRepository.findByToken("123");
+        User user = token.getUser();
+        user.setPassword(encoder.encode(newPassword));
+        passwordResetTokenRepository.delete(token);
+        userRepository.save(user);
+    }
+
 
 
     public String hardDeleteAllUsers() {
@@ -231,10 +258,10 @@ public class UserServiceImpl implements UserService {
         passwordResetTokenRepository.save(myToken);
     }
 
-    public void changePassword(PasswordResetToken token, String newPassword) {
-        User user = token.getUser();
-        user.setPassword(encoder.encode(newPassword));
-        passwordResetTokenRepository.delete(token);
-        userRepository.save(user);
-    }
+//    public void changePassword(PasswordResetToken token, String newPassword) {
+//        User user = token.getUser();
+//        user.setPassword(encoder.encode(newPassword));
+//        passwordResetTokenRepository.delete(token);
+//        userRepository.save(user);
+//    }
 }
