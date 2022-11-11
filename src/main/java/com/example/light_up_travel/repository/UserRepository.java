@@ -23,6 +23,6 @@ public interface UserRepository extends JpaRepository<User,Long > {
     @Query("SELECT u FROM User u WHERE u.dateDeleted is null and u.id = ?1")
     User findNotDeletedUserById(Long id);
 
-    @Query("SELECT u FROM User u WHERE u.dateDeleted is null")
+    @Query("SELECT u FROM User u WHERE u.status=0")
     List<User> findAllNotDeletedUsers();
 }
