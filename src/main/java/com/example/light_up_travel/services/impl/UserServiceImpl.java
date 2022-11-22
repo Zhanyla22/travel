@@ -5,8 +5,10 @@ import com.example.light_up_travel.entity.Role;
 import com.example.light_up_travel.entity.User;
 import com.example.light_up_travel.enums.ERole;
 import com.example.light_up_travel.enums.Status;
-import com.example.light_up_travel.model.payload.UpdateUserDto;
-import com.example.light_up_travel.model.payload.UserDto;
+import com.example.light_up_travel.exceptions.EmailAlreadyExistsException;
+import com.example.light_up_travel.exceptions.NotFoundException;
+import com.example.light_up_travel.model.UpdateUserDto;
+import com.example.light_up_travel.model.AddUserDto;
 import com.example.light_up_travel.repository.PasswordResetTokenRepository;
 import com.example.light_up_travel.repository.RoleRepository;
 import com.example.light_up_travel.repository.UserRepository;
@@ -58,22 +60,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto add(UserDto userDto) {
-        if (userDto.getEmail() != null &
-                userRepository.existsByEmail(userDto.getEmail().toLowerCase())) {
-            throw new RuntimeException("User with email: " + userDto.getEmail() + " - is already exist");
+    public AddUserDto add(AddUserDto addUserDto) {
+        if (addUserDto.getEmail() != null &
+                userRepository.existsByEmail(addUserDto.getEmail().toLowerCase())) {
+            throw new EmailAlreadyExistsException("User with email: " + addUserDto.getEmail() + " - is already exist");
         }
 
         // Create new user's account
         User user = new User();
-        user.setName(userDto.getName());
-        user.setSurname(userDto.getSurname());
-        user.setEmail(userDto.getEmail().toLowerCase());
-        user.setPassword(encoder.encode(userDto.getPassword()));
-        user.setGender(userDto.getGender());
-        user.setPhoneNumber(userDto.getPhoneNumber());
-        user.setCountry(userDto.getCountry());
-        user.setDob(userDto.getDob());
+        user.setName(addUserDto.getName());
+        user.setSurname(addUserDto.getSurname());
+        user.setEmail(addUserDto.getEmail().toLowerCase());
+        user.setPassword(encoder.encode(addUserDto.getPassword()));
+        user.setGender(addUserDto.getGender());
+        user.setPhoneNumber(addUserDto.getPhoneNumber());
+        user.setCountry(addUserDto.getCountry());
+        user.setDob(addUserDto.getDob());
         user.setDateCreated(new Date());
         user.setEnabled(true);
         user.setStatus(Status.ACTIVE);
@@ -81,7 +83,7 @@ public class UserServiceImpl implements UserService {
 
 
         Set<Role> roles = new HashSet<>();
-        Set<String> strRoles = userDto.getRole();
+        Set<String> strRoles = addUserDto.getRole();
 
         if (strRoles == null) {
             Role userRole = roleRepository.findByName(ERole.ROLE_USER)
@@ -112,7 +114,7 @@ public class UserServiceImpl implements UserService {
 
         user.setRoles(roles);
         userRepository.save(user);
-        return userDto;
+        return addUserDto;
     }
 
     @Override
@@ -213,7 +215,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public String hardDeleteById(Long id) {
-
+        User user = isUserDeletedCheck(id);
         userRepository.deleteById(id);
         return "User with id:" + id + " deleted";
     }
@@ -228,9 +230,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User isUserDeletedCheck(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Could not find user with id: " + id));
+                .orElseThrow(() -> new NotFoundException("Could not find user with id: " + id));
         if(user.getDateDeleted() != null) {
-            throw new RuntimeException("User with id: " + id + " was deleted!");
+            throw new NotFoundException("User with id: " + id + " was deleted!");
         }
         return user;
     }
@@ -250,7 +252,7 @@ public class UserServiceImpl implements UserService {
 
     public User findUserByEmail(String email) {
         return  userRepository.findByEmail(email).
-                orElseThrow(() -> new RuntimeException("User not Found") );
+                orElseThrow(() -> new NotFoundException("User not Found") );
     }
 
     public void createPasswordResetTokenForUser(User user, String token) {

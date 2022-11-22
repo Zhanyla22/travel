@@ -1,18 +1,20 @@
 package com.example.light_up_travel.controller;
 
 import com.example.light_up_travel.enums.Status;
-import com.example.light_up_travel.model.payload.request.LoginRequest;
-import com.example.light_up_travel.model.payload.request.SignupRequest;
-import com.example.light_up_travel.model.payload.request.TokenRefreshRequest;
+import com.example.light_up_travel.exceptions.RefreshTokenException;
+import com.example.light_up_travel.payload.request.LogOutRequest;
+import com.example.light_up_travel.payload.request.LoginRequest;
+import com.example.light_up_travel.payload.request.SignupRequest;
+import com.example.light_up_travel.payload.request.TokenRefreshRequest;
 import com.example.light_up_travel.repository.RoleRepository;
 import com.example.light_up_travel.repository.UserRepository;
 import com.example.light_up_travel.enums.ERole;
 import com.example.light_up_travel.entity.RefreshToken;
 import com.example.light_up_travel.entity.Role;
 import com.example.light_up_travel.entity.User;
-import com.example.light_up_travel.model.payload.response.JwtResponse;
-import com.example.light_up_travel.model.payload.response.MessageResponse;
-import com.example.light_up_travel.model.payload.response.TokenRefreshResponse;
+import com.example.light_up_travel.payload.response.JwtResponse;
+import com.example.light_up_travel.payload.response.MessageResponse;
+import com.example.light_up_travel.payload.response.TokenRefreshResponse;
 import com.example.light_up_travel.security.jwt.JwtUtils;
 import com.example.light_up_travel.services.impl.UserDetailsImpl;
 import com.example.light_up_travel.services.impl.RefreshTokenServiceImpl;
@@ -65,6 +67,7 @@ public class AuthController {
 
     @Autowired
     RefreshTokenServiceImpl refreshTokenService;
+
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -169,8 +172,12 @@ public class AuthController {
                     String token = jwtUtils.generateTokenFromUsername(user.getUsername());
                     return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
                 })
-                .orElseThrow(() -> new RuntimeException("Refresh token is not in database!"));
+                .orElseThrow(() -> new RefreshTokenException(requestRefreshToken,"Refresh token is not in database!"));
     }
 
-
+    @PostMapping("/logout")
+    public ResponseEntity<?> logoutUser(@Valid @RequestBody LogOutRequest logOutRequest) {
+        refreshTokenService.deleteByUserId(logOutRequest.getUserId());
+        return ResponseEntity.ok(new MessageResponse("Log out successful!"));
+    }
 }

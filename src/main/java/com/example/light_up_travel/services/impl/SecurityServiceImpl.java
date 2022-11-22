@@ -1,6 +1,7 @@
 package com.example.light_up_travel.services.impl;
 
 import com.example.light_up_travel.entity.PasswordResetToken;
+import com.example.light_up_travel.exceptions.ResetPasswordCodeExpirationException;
 import com.example.light_up_travel.repository.PasswordResetTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class SecurityServiceImpl {
                 throw new RuntimeException("Token not found");
             }
         else if (isTokenExpired(passToken)) {
-                throw new RuntimeException("Token expired");
+                throw new ResetPasswordCodeExpirationException("Token expired");
             }
         return passToken;
 

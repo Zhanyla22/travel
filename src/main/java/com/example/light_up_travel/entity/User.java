@@ -1,6 +1,5 @@
 package com.example.light_up_travel.entity;
 
-import com.example.light_up_travel.entity.Role;
 import com.example.light_up_travel.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

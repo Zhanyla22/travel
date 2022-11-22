@@ -1,8 +1,8 @@
 package com.example.light_up_travel.services;
 
 import com.example.light_up_travel.entity.User;
-import com.example.light_up_travel.model.payload.UpdateUserDto;
-import com.example.light_up_travel.model.payload.UserDto;
+import com.example.light_up_travel.model.UpdateUserDto;
+import com.example.light_up_travel.model.AddUserDto;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface UserService {
 
 
 //    boolean isDeleted(Long id);
-     UserDto add(UserDto signupRequest);
+     AddUserDto add(AddUserDto signupRequest);
 
     User updateNotDeletedUserById(Long id, UpdateUserDto updateUserDto);
 
