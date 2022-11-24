@@ -62,7 +62,7 @@ public class UserController {
     }
 
     @Operation(summary = "Get all not deleted users")
-    @GetMapping("/allnotdeleted")
+    @GetMapping("/all-not-deleted")
     ResponseEntity<?> getAllNotDeletedUsers() {
         try{
             return ResponseEntity.ok(userService.getAllNotDeletedUsers());
@@ -73,8 +73,21 @@ public class UserController {
         }
     }
 
+
+    @Operation(summary = "Get all deleted users")
+    @GetMapping("/archive")
+    ResponseEntity<?> getAllDeletedUsers() {
+        try{
+            return ResponseEntity.ok(userService.getAllDeletedUsers());
+        } catch (NotFoundException nfe) {
+            throw new NotFoundException(nfe.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
+        }
+    }
+
     @Operation(summary = "Delete user by id")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     ResponseEntity<?> deleteUserById(@PathVariable Long id) {
         try {
             userService.deleteUserById(id);
@@ -125,7 +138,7 @@ public class UserController {
     }
 
     @Operation(summary = "Hard delete all users")
-    @DeleteMapping("/harddeleteall")
+    @DeleteMapping("/hard-delete-all")
     ResponseEntity<?> hardDeleteAllUsers() {
         try {
             userService.hardDeleteAllUsers();
@@ -138,7 +151,7 @@ public class UserController {
     }
 
     @Operation(summary = "Hard delete user by id")
-    @DeleteMapping("/harddelete/{id}")
+    @DeleteMapping("/hard-delete/{id}")
     ResponseEntity<?> hardDeleteUserById(@PathVariable Long id) {
         try {
             userService.hardDeleteById(id);
@@ -152,7 +165,7 @@ public class UserController {
 
 
     @Operation(summary = "Reset password request with email")
-    @PostMapping("/resetPassword/{userEmail}")
+    @PostMapping("/reset-password/{userEmail}")
     public ResponseEntity<?> resetPassword(@PathVariable String userEmail) throws MessagingException, UnsupportedEncodingException {
         try {
             User user = userService.findUserByEmail(userEmail);
@@ -171,7 +184,7 @@ public class UserController {
     }
 
     @Operation(summary = "Verify 6 digit reset password code")
-    @PostMapping("/verifyResetPasswordCode/{code}")
+    @PostMapping("/verify-reset-password/{code}")
     public ResponseEntity<?> verifyResetPasswordCode(@PathVariable String code) {
         try {
             if (userService.verifyPasswordResetCode(code)) {
@@ -205,7 +218,7 @@ public class UserController {
 //    }
 
     @Operation(summary = "Create new password")
-    @PutMapping("/changePassword/{newPassword}")
+    @PutMapping("/change-password/{newPassword}")
     public ResponseEntity<?> changePassword(@PathVariable String newPassword) {
         try {
             userService.newPassword(newPassword);

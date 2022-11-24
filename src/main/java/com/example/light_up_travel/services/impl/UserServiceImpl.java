@@ -44,6 +44,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAllNotDeletedUsers();
     }
 
+    @Override
+    public List<User> getAllDeletedUsers() {
+        return userRepository.findAllDeletedUsers();
+    }
+
     public User getNotDeletedUserById(Long id) {
         User user = isUserDeletedCheck(id);
         return userRepository.findNotDeletedUserById(id);
@@ -71,11 +76,8 @@ public class UserServiceImpl implements UserService {
         user.setName(addUserDto.getName());
         user.setSurname(addUserDto.getSurname());
         user.setEmail(addUserDto.getEmail().toLowerCase());
-        user.setPassword(encoder.encode(addUserDto.getPassword()));
-        user.setGender(addUserDto.getGender());
-        user.setPhoneNumber(addUserDto.getPhoneNumber());
-        user.setCountry(addUserDto.getCountry());
-        user.setDob(addUserDto.getDob());
+//        user.setPassword(encoder.encode(addUserDto.getPassword()));
+        user.setPassword(encoder.encode("12345678"));
         user.setDateCreated(new Date());
         user.setEnabled(true);
         user.setStatus(Status.ACTIVE);
@@ -87,7 +89,7 @@ public class UserServiceImpl implements UserService {
 
         if (strRoles == null) {
             Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    .orElseThrow(() -> new NotFoundException("Error: Role is not found."));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
@@ -120,14 +122,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateNotDeletedUserById(Long id, UpdateUserDto updateUserDto) {
         User user = isUserDeletedCheck(id);
-        user.setName(updateUserDto.getName());
-        user.setSurname(updateUserDto.getSurname());
-        user.setEmail(updateUserDto.getEmail().toLowerCase());
-        user.setPassword(encoder.encode(updateUserDto.getPassword()));
-        user.setGender(updateUserDto.getGender());
-        user.setPhoneNumber(updateUserDto.getPhoneNumber());
-        user.setCountry(updateUserDto.getCountry());
-        user.setDob(updateUserDto.getDob());
+        if (updateUserDto.getName() != null){
+        user.setName(updateUserDto.getName());}
+        if (updateUserDto.getSurname() != null){
+        user.setSurname(updateUserDto.getSurname());}
+        if (updateUserDto.getEmail() != null){
+        user.setEmail(updateUserDto.getEmail().toLowerCase());}
         user.setDateUpdated(new Date());
 
         Set<Role> roles = new HashSet<>();

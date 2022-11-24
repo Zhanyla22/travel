@@ -19,6 +19,7 @@ public interface UserService {
 
     List<User> getAllNotDeletedUsers();
 
+    List<User> getAllDeletedUsers();
 
     User isUserDeletedCheck(Long id);
 }

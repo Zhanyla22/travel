@@ -1,13 +1,21 @@
 package com.example.light_up_travel.services.impl;
 
-import com.example.light_up_travel.entity.Form;
+import com.example.light_up_travel.entity.Forum;
+import com.example.light_up_travel.entity.User;
+import com.example.light_up_travel.enums.Stat;
+import com.example.light_up_travel.exceptions.NotFoundException;
+import com.example.light_up_travel.mapper.BasicUserMapper;
+import com.example.light_up_travel.mapper.ForumMapper;
 import com.example.light_up_travel.model.ForumDto;
 import com.example.light_up_travel.repository.ForumRepository;
 import com.example.light_up_travel.services.ForumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ForumServiceImpl implements ForumService {
@@ -16,24 +24,52 @@ public class ForumServiceImpl implements ForumService {
     private ForumRepository forumRepository;
 
     @Override
-    public List<ForumDto> getAllNotDeleteForums() {
-        return null;
+    public List<ForumDto> getAllNotDeletedForums() {
+        Iterable<Forum> forums = forumRepository.findAllNotDeletedForums();
+        List<ForumDto> forumDto = new ArrayList<>();
+
+        for (Forum forum : forums){
+            forumDto.add(ForumMapper.ForumToForumDTO(forum));
+        }
+
+        return forumDto;
+    }
+
+    @Override
+    public List<ForumDto> getAllForums() {
+        Iterable<Forum> forums = forumRepository.findAll();
+        List<ForumDto> forumDto = new ArrayList<>();
+
+        for (Forum forum : forums){
+            forumDto.add(ForumMapper.ForumToForumDTO(forum));
+        }
+
+        return forumDto;
     }
 
     @Override
     public List<ForumDto> getAllDeletedForums() {
-        return null;
+        Iterable<Forum> forums = forumRepository.findAllDeletedForums();
+        List<ForumDto> forumDto = new ArrayList<>();
+
+        for (Forum forum : forums){
+            forumDto.add(ForumMapper.ForumToForumDTO(forum));
+        }
+
+        return forumDto;
     }
 
-    @Override
-    public ForumDto getNotDeletedForumById(Long id) {
-        return null;
-    }
 
     @Override
     public ForumDto insert(ForumDto forumDto) {
-        return null;
+        Forum forum = new Forum();
+        forum.setDescription(forumDto.getDescription());
+        forum.setUser(BasicUserMapper.basicUserDtoToUser(forumDto.getUser()));
+        forum.setDateCreated(new Date());
+        forum.setStatus(Stat.PENDING);
+        return ForumMapper.ForumToForumDTO(forumRepository.save(forum));
     }
+
 
     @Override
     public ForumDto updateNotDeletedForumById(Long id) {
@@ -42,11 +78,35 @@ public class ForumServiceImpl implements ForumService {
 
     @Override
     public void deleteNotDeletedForumById(Long id) {
-
+        Forum forum = isForumDeletedCheck(id);
+        forum.setStatus(Stat.DISAPPROVED);
+        forum.setDateDeleted(new Date());
+        forumRepository.save(forum);
     }
 
     @Override
-    public Form isForumDeletedCheck(Long id) {
-        return null;
+    public Forum isForumDeletedCheck(Long id) {
+        Forum forum = forumRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Could not find forum with id: " + id));
+        if(forum.getDateDeleted() != null) {
+            throw new NotFoundException("Forum with id: " + id + " was deleted!");
+        }
+        return forum;
+    }
+
+    @Override
+    public void hardDeleteAllForums() {
+        forumRepository.deleteAll();
+    }
+
+    @Override
+    public void hardDeleteById(Long id) {
+        forumRepository.deleteById(id);
+    }
+
+    @Override
+    public ForumDto getNotDeletedForumById(Long id) {
+        Forum forum = isForumDeletedCheck(id);
+        return ForumMapper.ForumToForumDTO(forum);
     }
 }

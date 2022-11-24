@@ -34,21 +34,18 @@ public class UpdateUserDto {
     @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
-    @Schema(example = "string123")
-    @Size(min = 8, max = 40)
-    private String password;
 
-    @Schema(example = "Male")
-    private String gender;
-
-    @Schema(example = "+923456789")
-    private String phoneNumber;
-
-    @Schema(example = "1995-09-11")
-    private LocalDate dob;
-
-    @Schema(example = "USA")
-    private String country;
+//    @Schema(example = "Male")
+//    private String gender;
+//
+//    @Schema(example = "+923456789")
+//    private String phoneNumber;
+//
+//    @Schema(example = "1995-09-11")
+//    private LocalDate dob;
+//
+//    @Schema(example = "USA")
+//    private String country;
 
     @Schema(example = "[\n" +
             "    \"user\"\n" +

@@ -1,5 +1,6 @@
 package com.example.light_up_travel.model;
 
+import com.example.light_up_travel.enums.Stat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,12 +8,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserForumDto {
+public class BasicFormDto {
 
-    private Long id;
+    private String description;
 
-    private String name;
-
-    private String surname;
+    private Stat status;
 
 }

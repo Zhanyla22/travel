@@ -11,15 +11,13 @@ public interface UserRepository extends JpaRepository<User,Long > {
 
     Optional <User> findByEmail(String email);
 
-
-    //    Optional <User> findByPhoneNumber(String phoneNumber);
     @Query("SELECT u FROM User u WHERE u.verificationCode = ?1")
     User findByVerificationCode(String code);
 
     Boolean existsByEmail(String email);
 
-//    Boolean existsByPhoneNumber(String phoneNumber);
-
+    @Query("SELECT u FROM User u WHERE u.dateDeleted is not null")
+    List<User> findAllDeletedUsers();
     @Query("SELECT u FROM User u WHERE u.dateDeleted is null and u.id = ?1")
     User findNotDeletedUserById(Long id);
 

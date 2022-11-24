@@ -11,19 +11,23 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Form {
+@Table(name = "forum")
+public class Forum {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String description;
 
 //    @Column(name = "way_of_contacting")
 //    private String wayOfContacting;
+
+    @Enumerated(EnumType.STRING)
     private Stat status;
 
-    @OneToOne(optional = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
@@ -34,9 +38,8 @@ public class Form {
     @Column(name = "date_deleted")
     private Date dateDeleted;
 
-//    public Form(String description, Stat status) {
-//        this.description = description;
-//        this.status = status;
-//        this.dateCreated = new Date();
-//    }
+    public Forum(String description, User basicUserDtoToUser) {
+        this.description = description;
+        this.user = basicUserDtoToUser;
+    }
 }

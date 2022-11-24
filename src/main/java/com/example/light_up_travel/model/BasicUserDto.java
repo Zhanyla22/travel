@@ -1,28 +1,21 @@
 package com.example.light_up_travel.model;
 
-import com.example.light_up_travel.enums.Stat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ForumDto {
+public class BasicUserDto {
 
     private Long id;
 
-    private String description;
+    private String name;
 
-    private BasicUserDto user;
+    private String surname;
 
-    private Stat status;
-
-    private Date dateCreated;
-
-    //    private String wayOfContacting;
+    private String email;
 
 }

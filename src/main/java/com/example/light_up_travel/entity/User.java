@@ -1,6 +1,7 @@
 package com.example.light_up_travel.entity;
 
 import com.example.light_up_travel.enums.Status;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,13 +9,13 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,24 +31,24 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @Column(nullable = false)
     @Size(max = 50)
     private String name;
 
-    @NotBlank
+    @Column(nullable = false)
     @Size(max = 100)
     private String surname;
 
     @Size(max = 20)
     private String gender;
-    @NotBlank
+    @Column(nullable = false)
     @Size(max = 50)
     @Email
     private String email;
 
     @Column(name = "phone_number")
     private String phoneNumber;
-    @NotBlank
+    @Column(nullable = false)
     @Size(min = 8, max = 120)
     private String password;
 
@@ -74,6 +75,9 @@ public class User {
     private Date dateUpdated;
     @Column(name = "date_deleted")
     private Date dateDeleted;
+
+//    @OneToOne
+//    private Forum forum;
 
     public String getUsername(){
         return email;
