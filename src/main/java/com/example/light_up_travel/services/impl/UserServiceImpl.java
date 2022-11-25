@@ -44,6 +44,16 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAllNotDeletedUsers();
     }
 
+//    @Override
+//    public List<User> getAllNotDeletedModerators() {
+//        return userRepository.findAllNotDeletedModerators();
+//    }
+//
+//    @Override
+//    public List<User> getAllUserRoles() {
+//        return userRepository.findAllUserRoles();
+//    }
+
     @Override
     public List<User> getAllDeletedUsers() {
         return userRepository.findAllDeletedUsers();

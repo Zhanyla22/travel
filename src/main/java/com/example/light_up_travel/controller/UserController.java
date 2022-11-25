@@ -137,6 +137,29 @@ public class UserController {
         }
     }
 
+//    @Operation(summary = "Get all not deleted moderators")
+//    @GetMapping("/all")
+//    ResponseEntity<?> getAllNotDeletedModerators() {
+//        try{
+//            return ResponseEntity.ok(userService.getAllNotDeletedModerators());
+//        } catch (NotFoundException nfe) {
+//            throw new NotFoundException(nfe.getMessage());
+//        } catch (Exception ex) {
+//            return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
+//        }
+//    }
+//    @Operation(summary = "Get all not deleted user roles")
+//    @GetMapping("/all")
+//    ResponseEntity<?> getAllUserRoles() {
+//        try{
+//            return ResponseEntity.ok(userService.getAllUserRoles());
+//        } catch (NotFoundException nfe) {
+//            throw new NotFoundException(nfe.getMessage());
+//        } catch (Exception ex) {
+//            return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
+//        }
+//    }
+
     @Operation(summary = "Hard delete all users")
     @DeleteMapping("/hard-delete-all")
     ResponseEntity<?> hardDeleteAllUsers() {
@@ -218,7 +241,7 @@ public class UserController {
 //    }
 
     @Operation(summary = "Create new password")
-    @PutMapping("/change-password/{newPassword}")
+    @PostMapping("/change-password/{newPassword}")
     public ResponseEntity<?> changePassword(@PathVariable String newPassword) {
         try {
             userService.newPassword(newPassword);

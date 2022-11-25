@@ -21,5 +21,9 @@ public interface UserService {
 
     List<User> getAllDeletedUsers();
 
+//    List<User> getAllNotDeletedModerators();
+//
+//    List<User> getAllUserRoles();
+
     User isUserDeletedCheck(Long id);
 }
