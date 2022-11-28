@@ -19,11 +19,11 @@ public interface UserService {
 
     List<User> getAllNotDeletedUsers();
 
-    List<User> getAllDeletedUsers();
-
 //    List<User> getAllNotDeletedModerators();
 //
 //    List<User> getAllUserRoles();
+
+    List<User> getAllDeletedUsers();
 
     User isUserDeletedCheck(Long id);
 }

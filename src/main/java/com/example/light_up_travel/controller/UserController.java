@@ -138,7 +138,7 @@ public class UserController {
     }
 
 //    @Operation(summary = "Get all not deleted moderators")
-//    @GetMapping("/all")
+//    @GetMapping("/all-moderators")
 //    ResponseEntity<?> getAllNotDeletedModerators() {
 //        try{
 //            return ResponseEntity.ok(userService.getAllNotDeletedModerators());
@@ -149,7 +149,7 @@ public class UserController {
 //        }
 //    }
 //    @Operation(summary = "Get all not deleted user roles")
-//    @GetMapping("/all")
+//    @GetMapping("/all-users")
 //    ResponseEntity<?> getAllUserRoles() {
 //        try{
 //            return ResponseEntity.ok(userService.getAllUserRoles());

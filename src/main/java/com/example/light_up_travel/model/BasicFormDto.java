@@ -12,6 +12,4 @@ public class BasicFormDto {
 
     private String description;
 
-    private Stat status;
-
 }

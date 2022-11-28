@@ -23,7 +23,7 @@ public class ForumController {
 
 //    @Operation(summary = "Add new forum")
 //    @PostMapping("/add")
-//    public ResponseEntity<?> addForum(@Valid @RequestBody ForumDto forumDto) {
+//    public ResponseEntity<?> addForum(@PathVariable ForumDto forumDto) {
 //        try{
 //            forumService.insert(forumDto);
 //            return ResponseEntity.ok(new MessageResponse("Forum is added successfully"));
