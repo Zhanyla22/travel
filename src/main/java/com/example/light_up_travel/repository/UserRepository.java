@@ -14,8 +14,8 @@ public interface UserRepository extends JpaRepository<User,Long > {
     @Query("SELECT u FROM User u WHERE u.verificationCode = ?1")
     User findByVerificationCode(String code);
 
-    @Query("SELECT u FROM User u WHERE u.roles = set<Roles> ")
-    List<User> findAllUserRoles();
+//    @Query("SELECT u FROM User u WHERE u.roles = set <Roles> ")
+//    List<User> findAllUserRoles();
 
     @Query("SELECT u FROM User u WHERE u.roles = 'ROLE_MODERATOR'")
     List<User> findAllNotDeletedModerators();
