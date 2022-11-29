@@ -235,7 +235,7 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         return userRepository.findByEmail(authentication.getName()).orElseThrow(
-                () -> new RuntimeException("not logedit"));
+                () -> new RuntimeException("User is not logged in!"));
     }
 
     @Override

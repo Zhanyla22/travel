@@ -14,10 +14,10 @@ public interface UserRepository extends JpaRepository<User,Long > {
     @Query("SELECT u FROM User u WHERE u.verificationCode = ?1")
     User findByVerificationCode(String code);
 
-    @Query("SELECT u FROM User u join u.roles as r WHERE 'ROLE_USER' = r.name")
+    @Query("SELECT u FROM User u join u.roles as r WHERE 'ROLE_USER' = r.name and u.dateDeleted is null")
     List<User> findAllUserRoles();
 
-    @Query("SELECT u FROM User u join u.roles as r WHERE 'ROLE_MODERATOR' = r.name")
+    @Query("SELECT u FROM User u join u.roles as r WHERE 'ROLE_MODERATOR' = r.name and u.dateDeleted is null")
     List<User> findAllNotDeletedModerators();
 
     Boolean existsByEmail(String email);

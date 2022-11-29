@@ -137,7 +137,7 @@ public class UserController {
         }
     }
 
-    @Operation(summary = "Get all not deleted moderators")
+    @Operation(summary = "Get all not deleted users with role: moderator")
     @GetMapping("/all-moderators")
     ResponseEntity<?> getAllNotDeletedModerators() {
         try{
@@ -148,7 +148,7 @@ public class UserController {
             return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
         }
     }
-    @Operation(summary = "Get all not deleted user roles")
+    @Operation(summary = "Get all not deleted users with role: users")
     @GetMapping("/all-users")
     ResponseEntity<?> getAllUserRoles() {
         try{
