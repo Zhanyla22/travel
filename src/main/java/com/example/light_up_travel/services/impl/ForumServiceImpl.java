@@ -10,6 +10,8 @@ import com.example.light_up_travel.model.ForumDto;
 import com.example.light_up_travel.repository.ForumRepository;
 import com.example.light_up_travel.services.ForumService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,6 +25,8 @@ public class ForumServiceImpl implements ForumService {
     @Autowired
     private ForumRepository forumRepository;
 
+    @Autowired
+    private UserServiceImpl userService;
     @Override
     public List<ForumDto> getAllNotDeletedForums() {
         Iterable<Forum> forums = forumRepository.findAllNotDeletedForums();
@@ -65,6 +69,16 @@ public class ForumServiceImpl implements ForumService {
         Forum forum = new Forum();
         forum.setDescription(forumDto.getDescription());
         forum.setUser(BasicUserMapper.basicUserDtoToUser(forumDto.getUser()));
+        forum.setDateCreated(new Date());
+        forum.setStatus(Stat.PENDING);
+        return ForumMapper.ForumToForumDTO(forumRepository.save(forum));
+    }
+
+    public ForumDto insert(String desc) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Forum forum = new Forum();
+        forum.setDescription(desc);
+        forum.setUser(userService.getUserByAuthentication());
         forum.setDateCreated(new Date());
         forum.setStatus(Stat.PENDING);
         return ForumMapper.ForumToForumDTO(forumRepository.save(forum));

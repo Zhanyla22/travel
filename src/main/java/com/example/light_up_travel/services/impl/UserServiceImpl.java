@@ -44,15 +44,15 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAllNotDeletedUsers();
     }
 
-//    @Override
-//    public List<User> getAllNotDeletedModerators() {
-//        return userRepository.findAllNotDeletedModerators();
-//    }
-//
-//    @Override
-//    public List<User> getAllUserRoles() {
-//        return userRepository.findAllUserRoles();
-//    }
+    @Override
+    public List<User> getAllNotDeletedModerators() {
+        return userRepository.findAllNotDeletedModerators();
+    }
+
+    @Override
+    public List<User> getAllUserRoles() {
+        return userRepository.findAllUserRoles();
+    }
 
     @Override
     public List<User> getAllDeletedUsers() {
@@ -231,10 +231,11 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public Optional<User> getAuthentication() {
+    public User getUserByAuthentication() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        return userRepository.findByEmail(authentication.getName());
+        return userRepository.findByEmail(authentication.getName()).orElseThrow(
+                () -> new RuntimeException("not logedit"));
     }
 
     @Override
@@ -247,18 +248,18 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public User getCurrentUser() {
-        Optional<User> user = getAuthentication();
-
-        return user.get();
-    }
-
-    public User deleteCurrentUser() {
-        Optional<User> user = getAuthentication();
-        deleteUserById(user.get().getId());
-        return user.get();
-
-    }
+//    public User getCurrentUser() {
+//        Optional<User> user = getAuthentication();
+//
+//        return user.get();
+//    }
+//
+//    public User deleteCurrentUser() {
+//        Optional<User> user = getAuthentication();
+//        deleteUserById(user.get().getId());
+//        return user.get();
+//
+//    }
 
     public User findUserByEmail(String email) {
         return  userRepository.findByEmail(email).

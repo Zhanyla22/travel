@@ -19,9 +19,9 @@ public interface UserService {
 
     List<User> getAllNotDeletedUsers();
 
-//    List<User> getAllNotDeletedModerators();
+    List<User> getAllNotDeletedModerators();
 //
-//    List<User> getAllUserRoles();
+    List<User> getAllUserRoles();
 
     List<User> getAllDeletedUsers();
 

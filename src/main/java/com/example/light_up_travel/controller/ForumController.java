@@ -21,16 +21,16 @@ public class ForumController {
     @Autowired
     private ForumServiceImpl forumService;
 
-//    @Operation(summary = "Add new forum")
-//    @PostMapping("/add")
-//    public ResponseEntity<?> addForum(@PathVariable ForumDto forumDto) {
-//        try{
-//            forumService.insert(forumDto);
-//            return ResponseEntity.ok(new MessageResponse("Forum is added successfully"));
-//        } catch (Exception ex) {
-//            return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
-//        }
-//    }
+    @Operation(summary = "Add new forum")
+    @PostMapping("/add/{desc}")
+    public ResponseEntity<?> addForum(@PathVariable String desc) {
+        try{
+            forumService.insert(desc);
+            return ResponseEntity.ok(new MessageResponse("Forum is added successfully"));
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
+        }
+    }
 
     @Operation(summary = "Get all forums")
     @GetMapping("/all")

@@ -111,19 +111,19 @@ public class UserController {
         }
     }
 
-    @Operation(summary = "Get current user")
-    @GetMapping("/me")
-    ResponseEntity<?> getCurrentUser() {
-        return ResponseEntity.ok(userService.getCurrentUser());
-    }
-
-    @Operation(summary = "Get current user")
-    @DeleteMapping("/me")
-    ResponseEntity<?> deleteCurrentUser() {
-        User user = userService.deleteCurrentUser();
-
-        return ResponseEntity.ok("user with id " + user.getId() + " deleted");
-    }
+//    @Operation(summary = "Get current user")
+//    @GetMapping("/me")
+//    ResponseEntity<?> getCurrentUser() {
+//        return ResponseEntity.ok(userService.getCurrentUser());
+//    }
+//
+//    @Operation(summary = "Get current user")
+//    @DeleteMapping("/me")
+//    ResponseEntity<?> deleteCurrentUser() {
+//        User user = userService.deleteCurrentUser();
+//
+//        return ResponseEntity.ok("user with id " + user.getId() + " deleted");
+//    }
 
     @Operation(summary = "Get all users")
     @GetMapping("/all")
@@ -137,28 +137,28 @@ public class UserController {
         }
     }
 
-//    @Operation(summary = "Get all not deleted moderators")
-//    @GetMapping("/all-moderators")
-//    ResponseEntity<?> getAllNotDeletedModerators() {
-//        try{
-//            return ResponseEntity.ok(userService.getAllNotDeletedModerators());
-//        } catch (NotFoundException nfe) {
-//            throw new NotFoundException(nfe.getMessage());
-//        } catch (Exception ex) {
-//            return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
-//        }
-//    }
-//    @Operation(summary = "Get all not deleted user roles")
-//    @GetMapping("/all-users")
-//    ResponseEntity<?> getAllUserRoles() {
-//        try{
-//            return ResponseEntity.ok(userService.getAllUserRoles());
-//        } catch (NotFoundException nfe) {
-//            throw new NotFoundException(nfe.getMessage());
-//        } catch (Exception ex) {
-//            return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
-//        }
-//    }
+    @Operation(summary = "Get all not deleted moderators")
+    @GetMapping("/all-moderators")
+    ResponseEntity<?> getAllNotDeletedModerators() {
+        try{
+            return ResponseEntity.ok(userService.getAllNotDeletedModerators());
+        } catch (NotFoundException nfe) {
+            throw new NotFoundException(nfe.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
+        }
+    }
+    @Operation(summary = "Get all not deleted user roles")
+    @GetMapping("/all-users")
+    ResponseEntity<?> getAllUserRoles() {
+        try{
+            return ResponseEntity.ok(userService.getAllUserRoles());
+        } catch (NotFoundException nfe) {
+            throw new NotFoundException(nfe.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
+        }
+    }
 
     @Operation(summary = "Hard delete all users")
     @DeleteMapping("/hard-delete-all")
