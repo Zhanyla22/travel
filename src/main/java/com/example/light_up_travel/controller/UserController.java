@@ -10,7 +10,6 @@ import com.example.light_up_travel.utils.EmailUtility;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
@@ -111,19 +110,6 @@ public class UserController {
         }
     }
 
-//    @Operation(summary = "Get current user")
-//    @GetMapping("/me")
-//    ResponseEntity<?> getCurrentUser() {
-//        return ResponseEntity.ok(userService.getCurrentUser());
-//    }
-//
-//    @Operation(summary = "Get current user")
-//    @DeleteMapping("/me")
-//    ResponseEntity<?> deleteCurrentUser() {
-//        User user = userService.deleteCurrentUser();
-//
-//        return ResponseEntity.ok("user with id " + user.getId() + " deleted");
-//    }
 
     @Operation(summary = "Get all users")
     @GetMapping("/all")
@@ -222,23 +208,6 @@ public class UserController {
         }
     }
 
-//    @PostMapping("/changePassword")
-//    public ResponseEntity<?> changePassword(@RequestParam("token") String token, String newPassword) {
-//        try {
-//            PasswordResetToken passwordResetToken =
-//                    securityService.validatePasswordResetToken(token);
-//
-//            userService.changePassword(passwordResetToken, newPassword);
-//            return ResponseEntity.ok("Password changed");
-//        }
-//        catch (RuntimeException notFoundException){
-//            return ResponseEntity.status(404).body(notFoundException.getMessage());
-//        }
-//        catch (Exception e){
-//            return ResponseEntity.internalServerError().body(e.getMessage());
-//        }
-//
-//    }
 
     @Operation(summary = "Create new password")
     @PostMapping("/change-password/{newPassword}")

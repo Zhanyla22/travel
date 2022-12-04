@@ -14,7 +14,7 @@ public interface ForumService {
 
     List<ForumDto> getAllForums();
 
-    ForumDto insert(ForumDto forumDto);
+    ForumDto insert(String desc);
 
     ForumDto updateNotDeletedForumById(Long id);
 

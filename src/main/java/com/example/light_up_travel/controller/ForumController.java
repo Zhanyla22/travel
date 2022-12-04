@@ -1,6 +1,6 @@
 package com.example.light_up_travel.controller;
 
-import com.example.light_up_travel.model.ForumDto;
+
 import com.example.light_up_travel.payload.response.MessageResponse;
 import com.example.light_up_travel.services.impl.ForumServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
 
-import javax.validation.Valid;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

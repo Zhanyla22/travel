@@ -1,7 +1,6 @@
 package com.example.light_up_travel.services.impl;
 
 import com.example.light_up_travel.entity.Forum;
-import com.example.light_up_travel.entity.User;
 import com.example.light_up_travel.enums.Stat;
 import com.example.light_up_travel.exceptions.NotFoundException;
 import com.example.light_up_travel.mapper.BasicUserMapper;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ForumServiceImpl implements ForumService {
@@ -64,16 +62,8 @@ public class ForumServiceImpl implements ForumService {
     }
 
 
-    @Override
-    public ForumDto insert(ForumDto forumDto) {
-        Forum forum = new Forum();
-        forum.setDescription(forumDto.getDescription());
-        forum.setUser(BasicUserMapper.basicUserDtoToUser(forumDto.getUser()));
-        forum.setDateCreated(new Date());
-        forum.setStatus(Stat.PENDING);
-        return ForumMapper.ForumToForumDTO(forumRepository.save(forum));
-    }
 
+    @Override
     public ForumDto insert(String desc) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Forum forum = new Forum();

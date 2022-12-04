@@ -190,12 +190,6 @@ public class UserServiceImpl implements UserService {
         }
 
     }
-//
-//    public boolean verifyPasswordResetCode(String resetPasswordCode) {
-//        PasswordResetToken passwordResetToken =
-//                securityService.validatePasswordResetToken(resetPasswordCode);
-//        return passwordResetToken != null;
-//    }
 
     public boolean verifyPasswordResetCode(String resetPasswordCode) {
         PasswordResetToken passwordResetToken =
@@ -248,19 +242,6 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-//    public User getCurrentUser() {
-//        Optional<User> user = getAuthentication();
-//
-//        return user.get();
-//    }
-//
-//    public User deleteCurrentUser() {
-//        Optional<User> user = getAuthentication();
-//        deleteUserById(user.get().getId());
-//        return user.get();
-//
-//    }
-
     public User findUserByEmail(String email) {
         return  userRepository.findByEmail(email).
                 orElseThrow(() -> new NotFoundException("User not Found") );
@@ -270,11 +251,4 @@ public class UserServiceImpl implements UserService {
         PasswordResetToken myToken = new PasswordResetToken(token, user);
         passwordResetTokenRepository.save(myToken);
     }
-
-//    public void changePassword(PasswordResetToken token, String newPassword) {
-//        User user = token.getUser();
-//        user.setPassword(encoder.encode(newPassword));
-//        passwordResetTokenRepository.delete(token);
-//        userRepository.save(user);
-//    }
 }
