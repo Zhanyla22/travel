@@ -68,4 +68,26 @@ public class EmailUtility {
 
         System.out.println(content);
     }
+    public void sendLoginAndPassword(String email, String password, JavaMailSender javaMailSender)
+            throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
+        helper.setFrom("trevelproject.kg@gmail.com");
+        helper.setTo(email);
+
+        String subject = "User password";
+
+        String content = "<p>HEllo! </p>"
+                + "<p>Your registration is done successfully</p>"
+                + "<p>Email: <strong>" + email + "</strong></p>"
+                + "<p>Password: <strong>" + password + "</strong></p>"
+
+                + "<p>Please change your password ass soon as possible!";
+
+        helper.setSubject(subject);
+
+        helper.setText(content, true);
+
+        javaMailSender.send(message);
+    }
 }

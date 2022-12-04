@@ -13,12 +13,16 @@ import com.example.light_up_travel.repository.PasswordResetTokenRepository;
 import com.example.light_up_travel.repository.RoleRepository;
 import com.example.light_up_travel.repository.UserRepository;
 import com.example.light_up_travel.services.UserService;
+import com.example.light_up_travel.utils.EmailUtility;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.utility.RandomString;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.util.*;
 
 @Service
@@ -28,6 +32,7 @@ public class UserServiceImpl implements UserService {
     private final SecurityServiceImpl securityService;
     private final UserRepository userRepository;
 
+    private final JavaMailSender javaMailSender;
     private final RoleRepository roleRepository;
 
     private final PasswordEncoder encoder;
@@ -75,24 +80,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AddUserDto add(AddUserDto addUserDto) {
+    public AddUserDto add(AddUserDto addUserDto) throws MessagingException {
+        String password = RandomString.make(8);
         if (addUserDto.getEmail() != null &
                 userRepository.existsByEmail(addUserDto.getEmail().toLowerCase())) {
             throw new EmailAlreadyExistsException("User with email: " + addUserDto.getEmail() + " - is already exist");
         }
-
-        // Create new user's account
         User user = new User();
         user.setName(addUserDto.getName());
         user.setSurname(addUserDto.getSurname());
         user.setEmail(addUserDto.getEmail().toLowerCase());
-//        user.setPassword(encoder.encode(addUserDto.getPassword()));
-        user.setPassword(encoder.encode("12345678"));
+        user.setPassword(encoder.encode(password));
         user.setDateCreated(new Date());
         user.setEnabled(true);
         user.setStatus(Status.ACTIVE);
         user.setVerificationCode("Verified-By-Admin");
-
 
         Set<Role> roles = new HashSet<>();
         Set<String> strRoles = addUserDto.getRole();
@@ -126,6 +128,7 @@ public class UserServiceImpl implements UserService {
 
         user.setRoles(roles);
         userRepository.save(user);
+        EmailUtility.sendLoginAndPassword(user.getEmail(), password, javaMailSender);
         return addUserDto;
     }
 
