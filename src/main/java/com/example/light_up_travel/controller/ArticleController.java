@@ -3,8 +3,10 @@ package com.example.light_up_travel.controller;
 
 import com.example.light_up_travel.model.ArticleDTO;
 import com.example.light_up_travel.services.serviceZ.ArticleService;
+import com.example.light_up_travel.services.serviceZ.FileUploadService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +19,9 @@ import java.util.List;
 public class ArticleController {
     @Autowired
     ArticleService articleService;
+
+    @Autowired
+    FileUploadService fileUploadService;
 
     @Operation(summary =  "Получение всего активного артикла ")
     @GetMapping("/get-all-active-article") //working good
@@ -53,7 +58,7 @@ public class ArticleController {
         return articleService.updateArticleWithoutFile(articleDTO);
     }
 
-    @Operation(summary = "обновить артикл по айдишке c фото 1 запрос")
+    @Operation(summary = "обновить артикл по айдишке c фото 2 запрос")
     @PutMapping("/update-article-photo/{id}") // ?????((((((
     public ResponseEntity<String> updateArticle(@PathVariable Long id,@RequestPart MultipartFile multipartFile) throws Exception{
         return ResponseEntity.ok(articleService.UpdateImageForArticle(id,multipartFile));
@@ -78,6 +83,9 @@ public class ArticleController {
     public void deleteArticleById(@PathVariable Long id) throws Exception{
         articleService.deleteArticleById(id);
     }
+
+
+
 
 
 

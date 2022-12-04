@@ -8,7 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -26,7 +28,7 @@ public class Article {
     private String title;
 
     @Column(name = "date_created")
-    private LocalDateTime dateCreated;
+    private LocalDate dateCreated;
 
 
     @Column(name="file_path")

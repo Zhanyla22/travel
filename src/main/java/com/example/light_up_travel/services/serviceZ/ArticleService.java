@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,7 +30,7 @@ public class ArticleService {
     private ArticleRepository articleRepository;
 
     @Autowired
-    private ImageService imageService;
+    private FileUploadService fileUploadService;
 
     public ArticleService(ArticleRepository articleRepository){
 
@@ -64,29 +66,11 @@ public class ArticleService {
         }
     }
 
-//    public ResponseEntity<String> createNewArticle(ArticleDTO articleDTO, MultipartFile file) throws Exception {
-//        try {
-//            Article article = new Article();
-//            article.setTitle(articleDTO.getTitle());
-//            article.setDateCreated(LocalDateTime.now()); //check it
-//            article.setDescription(articleDTO.getDescription());
-//            article.setSubtitle(articleDTO.getSubtitle());
-//            article.setText(articleDTO.getText());
-//            article.setStatus(Status.ACTIVE);
-//            article.setFilePath(imageService.saveFile(file));
-//            articleRepository.save(article);
-//            return new ResponseEntity<String>("you created new article",HttpStatus.OK);
-//        } catch (Exception e) {
-//            return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);
-//        }
-//    }
-
-
     public ResponseEntity<Long> createNewArticleWithoutFile(ArticleDTO articleDTO) throws Exception {
         try {
             Article article = new Article();
             article.setTitle(articleDTO.getTitle());
-            article.setDateCreated(LocalDateTime.now()); //check it
+            article.setDateCreated(LocalDate.now()); //check it
             article.setDescription(articleDTO.getDescription());
             article.setSubtitle(articleDTO.getSubtitle());
             article.setText(articleDTO.getText());
@@ -106,7 +90,7 @@ public class ArticleService {
                         () -> new NotFoundResourceException("Article was not found with id: " + articleId)
                 );
 
-        article.setFilePath(imageService.saveFile(multipartFile));
+        article.setFilePath(fileUploadService.saveFile(multipartFile));
 
         articleRepository.save(article);
 
@@ -116,7 +100,7 @@ public class ArticleService {
     public ResponseEntity<Long> updateArticleWithoutFile(ArticleDTO articleDTO) throws Exception {
         try {
             Article article = articleRepository.findById(articleDTO.getId()).orElseThrow(
-                    () -> new Exception("Content with  id = " + articleDTO.getId() + "not found")
+                    () -> new Exception("Article with  id = " + articleDTO.getId() + "not found")
             );
             article.setTitle(articleDTO.getTitle());
             article.setDateUpdated(LocalDateTime.now()); //check it
@@ -136,30 +120,13 @@ public class ArticleService {
                         () -> new NotFoundResourceException("Article was not found with id: " + articleId)
                 );
 
-        article.setFilePath(imageService.saveFile(multipartFile));
+        article.setFilePath(fileUploadService.saveFile(multipartFile));
 
         articleRepository.save(article);
 
         return "updated image for article with id = "+articleId;
     }
 
-
-
-//    public ResponseEntity<String> updateArticle(ArticleDTO articleDTO,MultipartFile file) throws Exception {
-//        try {
-//            Article article = new Article();
-//            article.setTitle(articleDTO.getTitle());
-//            article.setDateUpdated(LocalDateTime.now()); //check it
-//            article.setDescription(articleDTO.getDescription());
-//            article.setSubtitle(articleDTO.getSubtitle());
-//            article.setText(articleDTO.getText());
-//            article.setFilePath(imageService.saveFile(file));
-//            articleRepository.save(article);
-//            return new ResponseEntity<String>("you updated article",HttpStatus.OK);
-//        } catch (Exception e) {
-//            return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);
-//        }
-//    }
 
     public void deleteArticleById(Long id) throws Exception {
         Article article = articleRepository.findById(id).orElseThrow(
@@ -169,6 +136,26 @@ public class ArticleService {
         article.setDateDeleted(LocalDateTime.now());
         articleRepository.save(article);
     }
+
+
+
+
+//    public ResponseEntity<String> createNewArticle(ArticleDTO articleDTO, MultipartFile file) throws Exception {
+//        try {
+//            Article article = new Article();
+//            article.setTitle(articleDTO.getTitle());
+//            article.setDateCreated(LocalDateTime.now()); //check it
+//            article.setDescription(articleDTO.getDescription());
+//            article.setSubtitle(articleDTO.getSubtitle());
+//            article.setText(articleDTO.getText());
+//            article.setStatus(Status.ACTIVE);
+//            article.setFilePath(imageService.saveFile(file));
+//            articleRepository.save(article);
+//            return new ResponseEntity<String>("you created new article",HttpStatus.OK);
+//        } catch (Exception e) {
+//            return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);
+//        }
+//    }
 
 
 
