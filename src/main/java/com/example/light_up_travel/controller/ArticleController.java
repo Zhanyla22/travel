@@ -5,8 +5,11 @@ import com.example.light_up_travel.model.ArticleDTO;
 import com.example.light_up_travel.services.serviceZ.ArticleService;
 import com.example.light_up_travel.services.serviceZ.FileUploadService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -47,8 +50,12 @@ public class ArticleController {
     }
 
     @Operation(summary = "создать новый артикл фото/ 2й запрос")
-    @PostMapping("/create-new-article-photo/{id}") //working good
-    public ResponseEntity<String> createNewArticlePhoto(@PathVariable Long id,@RequestPart MultipartFile multipartFile) throws Exception{
+    @PostMapping("/create-new-article-photo/{id}")
+    //consumes = "multipart/form-data")
+    public ResponseEntity<String> createNewArticlePhoto(@PathVariable Long id,@Parameter(
+            description = "Files to be uploaded",
+            content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)
+    )@RequestParam("file") MultipartFile multipartFile) throws Exception{
         return ResponseEntity.ok(articleService.saveImageForArticle(id,multipartFile));
     }
 
@@ -65,11 +72,11 @@ public class ArticleController {
     }
 
 
-//    @Operation(summary = "создать новый артикл")
-//    @PostMapping("/create-new-article") //working good
-//    public ResponseEntity<String> createNewArticle(@RequestBody ArticleDTO articleDTO,@RequestPart MultipartFile file) throws Exception{
-//        return articleService.createNewArticle(articleDTO, file);
-//    }
+    @Operation(summary = "создать новый артикл тестовый")
+    @PostMapping("/create-new-article")
+    public ResponseEntity<String> createNewArticle(@RequestBody ArticleDTO articleDTO, @RequestPart(name = "file") MultipartFile file) throws Exception{
+        return articleService.createNewArticle(articleDTO, file);
+    }
 //
 //    @Operation(summary = "обновить артикл")
 //    @PutMapping("/update-article") // ?????((((((

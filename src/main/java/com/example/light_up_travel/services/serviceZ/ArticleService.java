@@ -75,7 +75,7 @@ public class ArticleService {
             article.setSubtitle(articleDTO.getSubtitle());
             article.setText(articleDTO.getText());
             article.setStatus(Status.ACTIVE);
-            articleRepository.save(article);
+            article = articleRepository.save(article);
             return new ResponseEntity<Long>(article.getId(),HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<Long>(HttpStatus.NOT_ACCEPTABLE);
@@ -140,22 +140,22 @@ public class ArticleService {
 
 
 
-//    public ResponseEntity<String> createNewArticle(ArticleDTO articleDTO, MultipartFile file) throws Exception {
-//        try {
-//            Article article = new Article();
-//            article.setTitle(articleDTO.getTitle());
-//            article.setDateCreated(LocalDateTime.now()); //check it
-//            article.setDescription(articleDTO.getDescription());
-//            article.setSubtitle(articleDTO.getSubtitle());
-//            article.setText(articleDTO.getText());
-//            article.setStatus(Status.ACTIVE);
-//            article.setFilePath(imageService.saveFile(file));
-//            articleRepository.save(article);
-//            return new ResponseEntity<String>("you created new article",HttpStatus.OK);
-//        } catch (Exception e) {
-//            return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);
-//        }
-//    }
+    public ResponseEntity<String> createNewArticle(ArticleDTO articleDTO, MultipartFile file) throws Exception {
+        try {
+            Article article = new Article();
+            article.setTitle(articleDTO.getTitle());
+            article.setDateCreated(LocalDate.now()); //check it
+            article.setDescription(articleDTO.getDescription());
+            article.setSubtitle(articleDTO.getSubtitle());
+            article.setText(articleDTO.getText());
+            article.setStatus(Status.ACTIVE);
+            article.setFilePath(fileUploadService.saveFile(file));
+            articleRepository.save(article);
+            return new ResponseEntity<String>("you created new article",HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
 
 
 
