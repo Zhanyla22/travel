@@ -52,10 +52,7 @@ public class ArticleController {
     @Operation(summary = "создать новый артикл фото/ 2й запрос")
     @PostMapping("/create-new-article-photo/{id}")
     //consumes = "multipart/form-data")
-    public ResponseEntity<String> createNewArticlePhoto(@PathVariable Long id,@Parameter(
-            description = "Files to be uploaded",
-            content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)
-    )@RequestParam("file") MultipartFile multipartFile) throws Exception{
+    public ResponseEntity<String> createNewArticlePhoto(@PathVariable Long id,@RequestPart MultipartFile multipartFile) throws Exception{
         return ResponseEntity.ok(articleService.saveImageForArticle(id,multipartFile));
     }
 

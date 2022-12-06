@@ -73,14 +73,17 @@ public class FileUploadService {
 
         final String urlKey = "cloudinary://532431178934438:dziz4lD4M6_iip6t1tuF0an_N8Q@db5aw8xbo";
 
-        Cloudinary cloudinary = new Cloudinary(urlKey);
+
+        Cloudinary cloudinary = new Cloudinary((urlKey));
 
         File saveFile = Files.createTempFile(
                         System.currentTimeMillis() + "",
                         Objects.requireNonNull
                                 (multipartfile.getOriginalFilename(), "File must have an extension")
+//                                .substring(file.getOriginalFilename().lastIndexOf("."))
                 )
                 .toFile();
+
         multipartfile.transferTo(saveFile);
 
 
