@@ -92,7 +92,7 @@ public class ArticleService {
 
         article.setFilePath(fileUploadService.saveFile(multipartFile));
 
-        article = articleRepository.save(article);
+        articleRepository.save(article);
 
         return "Saved image for article with id = "+articleId;
     }
