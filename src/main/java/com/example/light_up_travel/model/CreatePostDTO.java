@@ -17,4 +17,5 @@ public class CreatePostDTO {
     private String description;
     private LocalDate dateCreated;
     private User user;
+    private String filePath;
 }

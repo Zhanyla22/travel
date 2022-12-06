@@ -48,21 +48,6 @@ public class FileUploadService {
         return (String) upload.get("url");
     }
 
-    @SneakyThrows
-    public String saveImageForArticle(Long articleId, MultipartFile multipartFile) throws IOException {
-
-        Article article = articleRepository.findById(articleId)
-                .orElseThrow(
-                        () -> new NotFoundResourceException("Article was not found with id: " + articleId)
-                );
-
-        article.setFilePath(saveFile(multipartFile));
-
-        articleRepository.save(article);
-
-        return "Saved image for article with id = "+articleId;
-    }
-
 
 
     @SneakyThrows
