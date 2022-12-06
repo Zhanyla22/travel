@@ -76,7 +76,7 @@ public class LifehackService {
             lifehack.setDateCreated(LocalDateTime.now()); //check it
             lifehack.setDescription(lifehackDTO.getDescription());
             lifehack.setStatus(Status.ACTIVE);
-            lifehackRepository.save(lifehack);
+            lifehack = lifehackRepository.saveAndFlush(lifehack);
             return new ResponseEntity<Long>(lifehack.getId(),HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<Long>(HttpStatus.NOT_ACCEPTABLE);
@@ -86,14 +86,14 @@ public class LifehackService {
 
     @SneakyThrows
     public String saveVideoForLifehack(Long lifehackId, MultipartFile multipartFile) throws IOException {
-        Lifehack article = lifehackRepository.findById(lifehackId)
+        Lifehack lifehack = lifehackRepository.findById(lifehackId)
                 .orElseThrow(
                         () -> new NotFoundResourceException("Lifehack was not found with id: " + lifehackId)
                 );
 
-        article.setFilePath(fileUploadService.saveVideo(multipartFile));
+        lifehack.setFilePath(fileUploadService.saveVideo(multipartFile));
 
-        lifehackRepository.save(article);
+        lifehack = lifehackRepository.saveAndFlush(lifehack);
 
         return "Saved video for lifehack with id = "+lifehackId;
     }
@@ -106,7 +106,7 @@ public class LifehackService {
             lifehack.setTitle(lifehackDTO.getTitle());
             lifehack.setDateUpdated(LocalDateTime.now()); //check it
             lifehack.setDescription(lifehackDTO.getDescription());
-            lifehackRepository.save(lifehack);
+            lifehack = lifehackRepository.saveAndFlush(lifehack);
             return new ResponseEntity<Long>(lifehack.getId(),HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<Long>(HttpStatus.NOT_ACCEPTABLE);
@@ -121,7 +121,7 @@ public class LifehackService {
 
         lifehack.setFilePath(fileUploadService.saveVideo(multipartFile));
 
-        lifehackRepository.save(lifehack);
+        lifehack = lifehackRepository.saveAndFlush(lifehack);
 
         return "updated video for lifehack with id = " + lifehackId;
     }
@@ -133,6 +133,6 @@ public class LifehackService {
         );
         lifehack.setStatus(Status.DELETED_BY_ADMIN);
         lifehack.setDateDeleted(LocalDateTime.now());
-        lifehackRepository.save(lifehack);
+        lifehack = lifehackRepository.saveAndFlush(lifehack);
     }
 }

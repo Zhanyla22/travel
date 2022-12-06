@@ -2,14 +2,18 @@ package com.example.light_up_travel.services.serviceZ;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.example.light_up_travel.entity.Article;
 import com.example.light_up_travel.exceptions.EmptyFileException;
 
+import com.example.light_up_travel.exceptions.NotFoundResourceException;
+import com.example.light_up_travel.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Map;
 import java.util.Objects;
@@ -17,6 +21,8 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class FileUploadService {
+
+    private ArticleRepository articleRepository;
 
     @SneakyThrows
     public String saveVideo(MultipartFile multipartfile) {
@@ -41,6 +47,23 @@ public class FileUploadService {
 
         return (String) upload.get("url");
     }
+
+    @SneakyThrows
+    public String saveImageForArticle(Long articleId, MultipartFile multipartFile) throws IOException {
+
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(
+                        () -> new NotFoundResourceException("Article was not found with id: " + articleId)
+                );
+
+        article.setFilePath(saveFile(multipartFile));
+
+        articleRepository.save(article);
+
+        return "Saved image for article with id = "+articleId;
+    }
+
+
 
     @SneakyThrows
     public String saveFile(MultipartFile multipartfile) {

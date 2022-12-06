@@ -75,7 +75,7 @@ public class ArticleService {
             article.setSubtitle(articleDTO.getSubtitle());
             article.setText(articleDTO.getText());
             article.setStatus(Status.ACTIVE);
-            article = articleRepository.save(article);
+            article = articleRepository.saveAndFlush(article);
             return new ResponseEntity<Long>(article.getId(),HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<Long>(HttpStatus.NOT_ACCEPTABLE);
@@ -92,7 +92,7 @@ public class ArticleService {
 
         article.setFilePath(fileUploadService.saveFile(multipartFile));
 
-        articleRepository.save(article);
+        article = articleRepository.save(article);
 
         return "Saved image for article with id = "+articleId;
     }

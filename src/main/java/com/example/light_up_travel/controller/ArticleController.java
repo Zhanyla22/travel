@@ -73,8 +73,8 @@ public class ArticleController {
 
 
     @Operation(summary = "создать новый артикл тестовый")
-    @PostMapping("/create-new-article")
-    public ResponseEntity<String> createNewArticle(@RequestBody ArticleDTO articleDTO, @RequestPart(name = "file") MultipartFile file) throws Exception{
+    @PostMapping(value = "/create-new-article",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<String> createNewArticle(@RequestPart ArticleDTO articleDTO, @RequestPart(name = "file") MultipartFile file) throws Exception{
         return articleService.createNewArticle(articleDTO, file);
     }
 //
