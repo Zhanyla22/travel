@@ -8,6 +8,7 @@ import com.example.light_up_travel.mapper.ForumMapper;
 import com.example.light_up_travel.model.ForumDto;
 import com.example.light_up_travel.repository.ForumRepository;
 import com.example.light_up_travel.services.ForumService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ForumServiceImpl implements ForumService {
 
     @Autowired
@@ -25,6 +27,8 @@ public class ForumServiceImpl implements ForumService {
 
     @Autowired
     private UserServiceImpl userService;
+    private final MentorServiceImpl mentorService;
+
     @Override
     public List<ForumDto> getAllNotDeletedForums() {
         Iterable<Forum> forums = forumRepository.findAllNotDeletedForums();
@@ -106,6 +110,13 @@ public class ForumServiceImpl implements ForumService {
     @Override
     public void hardDeleteById(Long id) {
         forumRepository.deleteById(id);
+    }
+
+    public void approveForum(Long formId){
+        Forum forum = isForumDeletedCheck(formId);
+        mentorService.saveMentor(forum.getUser().getId(), userService.getUserByAuthentication().getId());
+        forum.setStatus(Stat.APPROVED);
+        forumRepository.save(forum);
     }
 
     @Override

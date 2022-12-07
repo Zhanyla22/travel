@@ -76,9 +76,6 @@ public class User {
     @Column(name = "date_deleted")
     private Date dateDeleted;
 
-//    @OneToOne
-//    private Forum forum;
-
     public String getUsername(){
         return email;
     }

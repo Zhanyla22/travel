@@ -3,7 +3,9 @@ package com.example.light_up_travel.mapper;
 import com.example.light_up_travel.entity.User;
 import com.example.light_up_travel.model.BasicUserDto;
 
+
 public class BasicUserMapper {
+
     public static User basicUserDtoToUser(BasicUserDto userDTO){
         User user = new User();
         user.setId(userDTO.getId());

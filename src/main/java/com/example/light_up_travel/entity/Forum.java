@@ -20,9 +20,6 @@ public class Forum {
     @Column(nullable = false)
     private String description;
 
-//    @Column(name = "way_of_contacting")
-//    private String wayOfContacting;
-
     @Enumerated(EnumType.STRING)
     private Stat status;
 
@@ -37,9 +34,4 @@ public class Forum {
     private Date dateUpdated;
     @Column(name = "date_deleted")
     private Date dateDeleted;
-
-    public Forum(String description, User basicUserDtoToUser) {
-        this.description = description;
-        this.user = basicUserDtoToUser;
-    }
 }

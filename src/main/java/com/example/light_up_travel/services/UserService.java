@@ -1,6 +1,7 @@
 package com.example.light_up_travel.services;
 
 import com.example.light_up_travel.entity.User;
+import com.example.light_up_travel.model.BasicUserDto;
 import com.example.light_up_travel.model.UpdateUserDto;
 import com.example.light_up_travel.model.AddUserDto;
 
@@ -21,8 +22,8 @@ public interface UserService {
     List<User> getAllNotDeletedUsers();
 
     List<User> getAllNotDeletedModerators();
-//
-    List<User> getAllUserRoles();
+
+    List<BasicUserDto> getAllUsersWithUserRole();
 
     List<User> getAllDeletedUsers();
 

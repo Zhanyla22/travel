@@ -7,6 +7,8 @@ import com.example.light_up_travel.enums.ERole;
 import com.example.light_up_travel.enums.Status;
 import com.example.light_up_travel.exceptions.EmailAlreadyExistsException;
 import com.example.light_up_travel.exceptions.NotFoundException;
+import com.example.light_up_travel.mapper.BasicUserMapper;
+import com.example.light_up_travel.model.BasicUserDto;
 import com.example.light_up_travel.model.UpdateUserDto;
 import com.example.light_up_travel.model.AddUserDto;
 import com.example.light_up_travel.repository.PasswordResetTokenRepository;
@@ -34,6 +36,7 @@ public class UserServiceImpl implements UserService {
 
     private final JavaMailSender javaMailSender;
     private final RoleRepository roleRepository;
+    private final MentorServiceImpl mentorService;
 
     private final PasswordEncoder encoder;
 
@@ -54,10 +57,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAllNotDeletedModerators();
     }
 
-    @Override
-    public List<User> getAllUserRoles() {
-        return userRepository.findAllUserRoles();
-    }
 
     @Override
     public List<User> getAllDeletedUsers() {
@@ -68,15 +67,31 @@ public class UserServiceImpl implements UserService {
         User user = isUserDeletedCheck(id);
         return userRepository.findNotDeletedUserById(id);
     }
+    @Override
+    public List<BasicUserDto> getAllUsersWithUserRole() {
+        List<User> users = userRepository.findAllUserRoles();
+        List<BasicUserDto> basicUserDtos = new ArrayList<>();
 
-    public User deleteUserById(Long id) {
+        for(User user: users){
+            BasicUserDto basicUserDto = BasicUserMapper.basicUserToUserDTO(user);
+            try {
+                User mentor = isUserDeletedCheck(mentorService.getMentorById(user.getId()).getMentorId());
+                basicUserDto.setMentorName(mentor.getName() + " " + mentor.getSurname());
+            }
+            catch (NotFoundException ignored) {
+            }
+            basicUserDtos.add(basicUserDto);
+        }
+        return basicUserDtos;
+    }
+
+    public void deleteUserById(Long id) {
         User user = isUserDeletedCheck(id);
         user.setDateDeleted(new Date());
         user.setEnabled(false);
         user.setStatus(Status.DELETED_BY_ADMIN);
         user.setVerificationCode(null);
         userRepository.save(user);
-        return user;
     }
 
     @Override
@@ -215,16 +230,13 @@ public class UserServiceImpl implements UserService {
 
 
 
-    public String hardDeleteAllUsers() {
-
+    public void hardDeleteAllUsers() {
         userRepository.deleteAll();
-        return "All Users deleted";
     }
 
-    public String hardDeleteById(Long id) {
+    public void hardDeleteById(Long id) {
         User user = isUserDeletedCheck(id);
         userRepository.deleteById(id);
-        return "User with id:" + id + " deleted";
     }
 
 
@@ -254,4 +266,5 @@ public class UserServiceImpl implements UserService {
         PasswordResetToken myToken = new PasswordResetToken(token, user);
         passwordResetTokenRepository.save(myToken);
     }
+
 }

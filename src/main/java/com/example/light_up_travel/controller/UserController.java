@@ -40,10 +40,9 @@ public class UserController {
     @PostMapping("/add")
     public ResponseEntity<?> addUser(@Valid @RequestBody AddUserDto signupRequest) {
         try {
-        userService.add(signupRequest);
+            userService.add(signupRequest);
             return ResponseEntity.ok(new MessageResponse("User is created successfully"));
-        }
-        catch(Exception ex) {
+        } catch (Exception ex) {
             return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
         }
     }
@@ -51,7 +50,7 @@ public class UserController {
     @Operation(summary = "Update not deleted user by id")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateUserById(@RequestBody UpdateUserDto updateUserDto, @PathVariable Long id) {
-        try{
+        try {
             return ResponseEntity.ok(userService.updateNotDeletedUserById(id, updateUserDto));
         } catch (NotFoundException nfe) {
             throw new NotFoundException(nfe.getMessage());
@@ -63,7 +62,7 @@ public class UserController {
     @Operation(summary = "Get all not deleted users")
     @GetMapping("/all-not-deleted")
     ResponseEntity<?> getAllNotDeletedUsers() {
-        try{
+        try {
             return ResponseEntity.ok(userService.getAllNotDeletedUsers());
         } catch (NotFoundException nfe) {
             throw new NotFoundException(nfe.getMessage());
@@ -76,7 +75,7 @@ public class UserController {
     @Operation(summary = "Get all deleted users")
     @GetMapping("/archive")
     ResponseEntity<?> getAllDeletedUsers() {
-        try{
+        try {
             return ResponseEntity.ok(userService.getAllDeletedUsers());
         } catch (NotFoundException nfe) {
             throw new NotFoundException(nfe.getMessage());
@@ -114,7 +113,7 @@ public class UserController {
     @Operation(summary = "Get all users")
     @GetMapping("/all")
     ResponseEntity<?> getAllUsers() {
-        try{
+        try {
             return ResponseEntity.ok(userService.getAllUsers());
         } catch (NotFoundException nfe) {
             throw new NotFoundException(nfe.getMessage());
@@ -126,7 +125,7 @@ public class UserController {
     @Operation(summary = "Get all not deleted users with role: moderator")
     @GetMapping("/all-moderators")
     ResponseEntity<?> getAllNotDeletedModerators() {
-        try{
+        try {
             return ResponseEntity.ok(userService.getAllNotDeletedModerators());
         } catch (NotFoundException nfe) {
             throw new NotFoundException(nfe.getMessage());
@@ -134,17 +133,13 @@ public class UserController {
             return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
         }
     }
-    @Operation(summary = "Get all not deleted users with role: users")
+
+
+    @Operation(summary = "Get all not deleted users dto with role: users")
     @GetMapping("/all-users")
     ResponseEntity<?> getAllUserRoles() {
-        try{
-            return ResponseEntity.ok(userService.getAllUserRoles());
-        } catch (NotFoundException nfe) {
-            throw new NotFoundException(nfe.getMessage());
-        } catch (Exception ex) {
-            return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
-        }
-    }
+            return ResponseEntity.ok(userService.getAllUsersWithUserRole());
+}
 
     @Operation(summary = "Hard delete all users")
     @DeleteMapping("/hard-delete-all")

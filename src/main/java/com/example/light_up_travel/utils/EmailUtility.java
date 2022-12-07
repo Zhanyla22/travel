@@ -77,12 +77,13 @@ public class EmailUtility {
 
         String subject = "User password";
 
-        String content = "<p>HEllo! </p>"
-                + "<p>Your registration is done successfully</p>"
+        String content = "<p>Hello, dear user! </p>"
+                + "<p>Your registration is done successfully.</p>"
+                + "<p> These are your login information;</p>"
                 + "<p>Email: <strong>" + email + "</strong></p>"
                 + "<p>Password: <strong>" + password + "</strong></p>"
-
-                + "<p>Please change your password ass soon as possible!";
+                + "<p>Please change your password after logging in!"
+                + "<p>Enjoy our website and have a nice day! :))";
 
         helper.setSubject(subject);
 

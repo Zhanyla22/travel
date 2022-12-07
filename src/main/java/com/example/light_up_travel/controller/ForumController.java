@@ -30,6 +30,16 @@ public class ForumController {
             return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
         }
     }
+    @Operation(summary = "Verify forum")
+    @PostMapping("/verify/{forumId}")
+    public ResponseEntity<?> verifyForum(@PathVariable Long forumId) {
+        try{
+            forumService.approveForum(forumId);
+            return ResponseEntity.ok(new MessageResponse("Forum is verified successfully"));
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
+        }
+    }
 
     @Operation(summary = "Get all forums")
     @GetMapping("/all")
