@@ -3,8 +3,13 @@ package com.example.light_up_travel.controller;
 
 import com.example.light_up_travel.model.ArticleDTO;
 import com.example.light_up_travel.services.serviceZ.ArticleService;
+import com.example.light_up_travel.services.serviceZ.FileUploadService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +22,9 @@ import java.util.List;
 public class ArticleController {
     @Autowired
     ArticleService articleService;
+
+    @Autowired
+    FileUploadService fileUploadService;
 
     @Operation(summary =  "Получение всего активного артикла ")
     @GetMapping("/get-all-active-article") //working good
@@ -42,7 +50,8 @@ public class ArticleController {
     }
 
     @Operation(summary = "создать новый артикл фото/ 2й запрос")
-    @PostMapping("/create-new-article-photo/{id}") //working good
+    @PostMapping("/create-new-article-photo/{id}")
+    //consumes = "multipart/form-data")
     public ResponseEntity<String> createNewArticlePhoto(@PathVariable Long id,@RequestPart MultipartFile multipartFile) throws Exception{
         return ResponseEntity.ok(articleService.saveImageForArticle(id,multipartFile));
     }
@@ -53,18 +62,18 @@ public class ArticleController {
         return articleService.updateArticleWithoutFile(articleDTO);
     }
 
-    @Operation(summary = "обновить артикл по айдишке c фото 1 запрос")
+    @Operation(summary = "обновить артикл по айдишке c фото 2 запрос")
     @PutMapping("/update-article-photo/{id}") // ?????((((((
     public ResponseEntity<String> updateArticle(@PathVariable Long id,@RequestPart MultipartFile multipartFile) throws Exception{
         return ResponseEntity.ok(articleService.UpdateImageForArticle(id,multipartFile));
     }
 
 
-//    @Operation(summary = "создать новый артикл")
-//    @PostMapping("/create-new-article") //working good
-//    public ResponseEntity<String> createNewArticle(@RequestBody ArticleDTO articleDTO,@RequestPart MultipartFile file) throws Exception{
-//        return articleService.createNewArticle(articleDTO, file);
-//    }
+    @Operation(summary = "создать новый артикл тестовый")
+    @PostMapping(value = "/create-new-article")
+    public ResponseEntity<String> createNewArticle(@RequestPart ArticleDTO articleDTO, @RequestPart MultipartFile file) throws Exception{
+        return articleService.createNewArticle(articleDTO, file);
+    }
 //
 //    @Operation(summary = "обновить артикл")
 //    @PutMapping("/update-article") // ?????((((((
@@ -78,6 +87,9 @@ public class ArticleController {
     public void deleteArticleById(@PathVariable Long id) throws Exception{
         articleService.deleteArticleById(id);
     }
+
+
+
 
 
 
