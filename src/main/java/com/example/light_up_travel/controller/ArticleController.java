@@ -88,7 +88,11 @@ public class ArticleController {
         articleService.deleteArticleById(id);
     }
 
-
+    @Operation(summary = "удалить весь артикл(только фронтам)")
+    @DeleteMapping("/hard-delete-all-article")
+    public void hardDeleteAllArticle(){
+        articleService.harDeleteAllArticle();
+    }
 
 
 

@@ -135,4 +135,9 @@ public class LifehackService {
         lifehack.setDateDeleted(LocalDateTime.now());
         lifehack = lifehackRepository.saveAndFlush(lifehack);
     }
+
+    public String harDeleteAllLifehack() {
+        lifehackRepository.deleteAll();
+        return "All lifehacks deleted";
+    }
 }

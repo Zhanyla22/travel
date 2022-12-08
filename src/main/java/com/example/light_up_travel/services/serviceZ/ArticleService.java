@@ -158,6 +158,12 @@ public class ArticleService {
     }
 
 
+    public String harDeleteAllArticle() {
+        articleRepository.deleteAll();
+        return "All articles deleted";
+    }
+
+
 
 
 

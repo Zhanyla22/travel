@@ -77,6 +77,12 @@ public class LifehackController {
         lifehackService.deleteLifehackById(id);
     }
 
+    @Operation(summary = "удалить весь лайфхак(только фронтам)")
+    @DeleteMapping("/hard-delete-all-lifehack")
+    public void hardDeleteAllLifehack(){
+        lifehackService.harDeleteAllLifehack();
+    }
+
 
 
 }
