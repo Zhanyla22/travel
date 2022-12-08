@@ -1,20 +1,22 @@
 package com.example.light_up_travel.model;
 
-
 import com.example.light_up_travel.entity.User;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class CreatePostDTO {
-
+public class GetPostDTO {
+    private Long id;
     private String description;
     private LocalDate dateCreated;
-    private User user;
+    private UserForPost user;
     private String filePath;
+    private Long counter;
 }

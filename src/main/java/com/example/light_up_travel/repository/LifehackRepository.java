@@ -11,10 +11,10 @@ public interface LifehackRepository extends JpaRepository<Lifehack, Long> {
 
     @Query(value = "SELECT * " +
             " FROM lifehack WHERE status = 'ACTIVE' ORDER BY date_created",nativeQuery = true)
-    public List<Lifehack> getAllActiveLifehack();
+    List<Lifehack> getAllActiveLifehack();
 
     @Query(value = "SELECT * " +
             " FROM lifehack WHERE status = 'DELETED_BY_ADMIN' ORDER BY date_deleted",nativeQuery = true)
-    public List<Lifehack> getAllDeletedLifehack();
+    List<Lifehack> getAllDeletedLifehack();
 
 }

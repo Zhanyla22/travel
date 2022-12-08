@@ -54,6 +54,8 @@ public class User {
 
     private String country;
 
+    private String profileUrl;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(	name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

@@ -1,6 +1,7 @@
 package com.example.light_up_travel.services.impl;
 
 import com.example.light_up_travel.entity.PasswordResetToken;
+import com.example.light_up_travel.entity.Post;
 import com.example.light_up_travel.entity.Role;
 import com.example.light_up_travel.entity.User;
 import com.example.light_up_travel.enums.ERole;
@@ -8,7 +9,9 @@ import com.example.light_up_travel.enums.Status;
 import com.example.light_up_travel.exceptions.EmailAlreadyExistsException;
 import com.example.light_up_travel.exceptions.NotFoundException;
 import com.example.light_up_travel.mapper.BasicUserMapper;
+import com.example.light_up_travel.mapper.PostMapper;
 import com.example.light_up_travel.model.BasicUserDto;
+import com.example.light_up_travel.model.GetPostDTO;
 import com.example.light_up_travel.model.UpdateUserDto;
 import com.example.light_up_travel.model.AddUserDto;
 import com.example.light_up_travel.repository.PasswordResetTokenRepository;
@@ -18,6 +21,9 @@ import com.example.light_up_travel.services.UserService;
 import com.example.light_up_travel.utils.EmailUtility;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
