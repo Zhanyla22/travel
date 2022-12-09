@@ -8,6 +8,7 @@ import com.example.light_up_travel.services.serviceZ.FileUploadService;
 import com.example.light_up_travel.services.serviceZ.LifehackService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,15 +29,15 @@ public class LifehackController {
 
     @Operation(summary =  "Получение всего активного lifehack ")
     @GetMapping("/get-all-active-lifehack") //working good
-    public List<LifehackDTO> getAllActiveLifehack(){
-        return lifehackService.getAllActiveLifehack();
+    public List<LifehackDTO> getAllActiveLifehack(@RequestParam Integer page, @RequestParam Integer size){
+        return lifehackService.getAllActiveLifehack(page,size);
     }
 
 
     @Operation(summary =  "Получение всего удаленного lifehack(для корзинки) ")
     @GetMapping("/get-all-deleted-lifehack") //working good
-    public List<LifehackDTO> getAllDeletedLifehack(){
-        return lifehackService.getAllDeletedLifehack();
+    public List<LifehackDTO> getAllDeletedLifehack(@RequestParam Integer page, @RequestParam Integer size){
+        return lifehackService.getAllDeletedLifehack(page,size);
     }
 
 
@@ -68,7 +69,15 @@ public class LifehackController {
     @Operation(summary = "обновить lifehack по айдишке c фото 2 запрос")
     @PutMapping("/update-lifehack-video/{id}") // ?????((((((
     public ResponseEntity<String> updateLifehack(@PathVariable Long id,@RequestPart MultipartFile multipartFile) throws Exception{
-        return ResponseEntity.ok(lifehackService.UpdateVideoForLifehack(id,multipartFile));
+        lifehackService.UpdateVideoForLifehack(id,multipartFile);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "обновить lifehack")
+    @PutMapping("/update-lifehack") // ?????((((((
+    public ResponseEntity<Void> updateLifehack(@RequestPart LifehackDTO lifehackDTO,@RequestPart MultipartFile multipartFile) throws Exception{
+        lifehackService.updateLifehack(lifehackDTO,multipartFile);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Operation(summary = "удалить lifehack по айдишке")

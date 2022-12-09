@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ArticleMapper {
 
-    public Article articleDtoToArticleEntity(ArticleDTO articleDTO){
+    public static Article articleDtoToArticleEntity(ArticleDTO articleDTO){
         Article article = new Article();
         article.setFilePath(articleDTO.getFilePath());
         article.setTitle(articleDTO.getTitle());
@@ -19,7 +19,7 @@ public class ArticleMapper {
         return article;
     }
 
-    public ArticleDTO articleEntityToArticleDTO(Article article){
+    public static ArticleDTO articleEntityToArticleDTO(Article article){
         ArticleDTO articleDTO = new ArticleDTO();
         articleDTO.setId(article.getId());
         articleDTO.setFilePath(article.getFilePath());

@@ -1,6 +1,7 @@
 package com.example.light_up_travel.services.serviceZ;
 
 import com.example.light_up_travel.entity.Article;
+import com.example.light_up_travel.entity.Post;
 import com.example.light_up_travel.enums.Status;
 import com.example.light_up_travel.exceptions.NotFoundResourceException;
 import com.example.light_up_travel.mapper.ArticleMapper;
@@ -8,6 +9,9 @@ import com.example.light_up_travel.model.ArticleDTO;
 import com.example.light_up_travel.repository.ArticleRepository;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,39 +21,35 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
 public class ArticleService {
 
-    @Autowired
-    private ArticleMapper articleMapper;
-
-    @Autowired
     private ArticleRepository articleRepository;
-
-    @Autowired
     private FileUploadService fileUploadService;
 
-    public ArticleService(ArticleRepository articleRepository){
-
+    public ArticleService(ArticleRepository articleRepository, FileUploadService fileUploadService){
         this.articleRepository = articleRepository;
+        this.fileUploadService = fileUploadService;
     }
+    
 
-    public List<ArticleDTO> getAllActiveArticle(){
+    public List<ArticleDTO> getAllActiveArticle(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Article> articles = articleRepository.findByStatus(Status.ACTIVE, pageable);
         List<ArticleDTO> articleMapperList = new ArrayList<>();
-        for(Article a:articleRepository.getAllActiveArticles()){
-            articleMapperList.add(articleMapper.articleEntityToArticleDTO(a));
-        }
+        for(Article a : articles.getContent())
+            articleMapperList.add(ArticleMapper.articleEntityToArticleDTO(a));
         return articleMapperList;
     }
 
-    public List<ArticleDTO> getAllDeletedArticle(){
+    public List<ArticleDTO> getAllDeletedArticle(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Article> deletedArticles = articleRepository.findByStatus(Status.DELETED_BY_ADMIN, pageable);
         List<ArticleDTO> articleMapperList = new ArrayList<>();
-        for(Article r:articleRepository.getAllDeletedArticles()){
-            articleMapperList.add(articleMapper.articleEntityToArticleDTO(r));
-        }
+        for(Article r: deletedArticles.getContent())
+            articleMapperList.add(ArticleMapper.articleEntityToArticleDTO(r));
         return articleMapperList;
     }
 
@@ -58,11 +58,11 @@ public class ArticleService {
             Article article = articleRepository.findById(id).orElseThrow(
                     ()-> new Exception("Article with id = "+ id +" not found")
             );
-            ArticleDTO articleDTO = articleMapper.articleEntityToArticleDTO(article);
+            ArticleDTO articleDTO = ArticleMapper.articleEntityToArticleDTO(article);
 
-            return new ResponseEntity<ArticleDTO>(articleDTO, HttpStatus.OK);
+            return new ResponseEntity<>(articleDTO, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<ArticleDTO>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -76,9 +76,9 @@ public class ArticleService {
             article.setText(articleDTO.getText());
             article.setStatus(Status.ACTIVE);
             article = articleRepository.saveAndFlush(article);
-            return new ResponseEntity<Long>(article.getId(),HttpStatus.OK);
+            return new ResponseEntity<>(article.getId(),HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<Long>(HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
 

@@ -28,14 +28,14 @@ public class ArticleController {
 
     @Operation(summary =  "Получение всего активного артикла ")
     @GetMapping("/get-all-active-article") //working good
-    public List<ArticleDTO> getAllActiveArticle(){
-        return articleService.getAllActiveArticle();
+    public List<ArticleDTO> getAllActiveArticle(@RequestParam Integer page, @RequestParam Integer size){
+        return articleService.getAllActiveArticle(page,size);
     }
 
     @Operation(summary =  "Получение всего удаленного артикла(для корзинки) ")
     @GetMapping("/get-all-deleted-article") //working good
-    public List<ArticleDTO> getAllDeletedArticle(){
-        return articleService.getAllDeletedArticle();
+    public List<ArticleDTO> getAllDeletedArticle(@RequestParam Integer page, @RequestParam Integer size){
+        return articleService.getAllDeletedArticle(page,size);
     }
 
     @Operation(summary = "получение артикла по айдишке")

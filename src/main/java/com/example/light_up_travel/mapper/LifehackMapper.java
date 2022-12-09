@@ -15,7 +15,7 @@ public class LifehackMapper {
         return lifehack;
     }
 
-    public LifehackDTO lifehackEntityToLifehackDTO(Lifehack lifehack){
+    public  static LifehackDTO lifehackEntityToLifehackDTO(Lifehack lifehack){
         LifehackDTO lifehackDTO = new LifehackDTO();
         lifehackDTO.setId(lifehack.getId());
         lifehackDTO.setTitle(lifehack.getTitle());
