@@ -19,10 +19,8 @@ public class PlaceCategories {
     private Long id;
 
     @ManyToOne
-    @Column(name = "category_id")
     private Category category;
 
     @ManyToOne
-    @Column(name = "place_id")
     private Place place;
 }

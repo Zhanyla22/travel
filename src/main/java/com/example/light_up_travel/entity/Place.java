@@ -1,7 +1,9 @@
 package com.example.light_up_travel.entity;
 
 import com.example.light_up_travel.enums.Status;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
@@ -13,6 +15,8 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "places")
 public class Place {
 
