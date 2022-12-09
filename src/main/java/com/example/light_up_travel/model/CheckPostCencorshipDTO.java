@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class CheckPostCencorshipDTO {
     private Long id;
     private String description;
-    private LocalDate crestedDate;
+    private LocalDate createdDate;
     private Status status;
     private User user;
 }

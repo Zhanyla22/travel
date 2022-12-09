@@ -82,8 +82,9 @@ public class LifehackController {
 
     @Operation(summary = "удалить lifehack по айдишке")
     @DeleteMapping("/delete-lifehack/{id}") //working good
-    public void deleteLifehackById(@PathVariable Long id) throws Exception{
-        lifehackService.deleteLifehackById(id);
+    public ResponseEntity<Void> deleteLifehackById(@RequestBody LifehackDTO lifehackDTO) throws Exception{
+        lifehackService.deleteLifehackById(lifehackDTO.getId());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Operation(summary = "удалить весь лайфхак(только фронтам)")
@@ -91,7 +92,6 @@ public class LifehackController {
     public void hardDeleteAllLifehack(){
         lifehackService.harDeleteAllLifehack();
     }
-
 
 
 }

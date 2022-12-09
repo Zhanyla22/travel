@@ -147,13 +147,14 @@ public class LifehackService {
         }
     }
 
-    public void deleteLifehackById(Long id) throws Exception {
+    public ResponseEntity<Void> deleteLifehackById(Long id) throws Exception {
         Lifehack lifehack = lifehackRepository.findById(id).orElseThrow(
                 () -> new Exception("Lifehack with  id = " + id + "not found")
         );
         lifehack.setStatus(Status.DELETED_BY_ADMIN);
         lifehack.setDateDeleted(LocalDateTime.now());
         lifehackRepository.save(lifehack);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     public String harDeleteAllLifehack() {

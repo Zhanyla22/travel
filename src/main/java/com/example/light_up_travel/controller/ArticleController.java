@@ -52,7 +52,8 @@ public class ArticleController {
     @Operation(summary = "создать новый артикл фото/ 2й запрос")
     @PostMapping("/create-new-article-photo/{id}")
     //consumes = "multipart/form-data")
-    public ResponseEntity<String> createNewArticlePhoto(@PathVariable Long id,@RequestPart MultipartFile multipartFile) throws Exception{
+    public ResponseEntity<String> createNewArticlePhoto(@PathVariable Long id,
+                                                        @RequestPart MultipartFile multipartFile) throws Exception{
         return ResponseEntity.ok(articleService.saveImageForArticle(id,multipartFile));
     }
 
@@ -64,7 +65,8 @@ public class ArticleController {
 
     @Operation(summary = "обновить артикл по айдишке c фото 2 запрос")
     @PutMapping("/update-article-photo/{id}") // ?????((((((
-    public ResponseEntity<String> updateArticle(@PathVariable Long id,@RequestPart MultipartFile multipartFile) throws Exception{
+    public ResponseEntity<String> updateArticle(@PathVariable Long id,
+                                                @RequestPart MultipartFile multipartFile) throws Exception{
         return ResponseEntity.ok(articleService.UpdateImageForArticle(id,multipartFile));
     }
 
