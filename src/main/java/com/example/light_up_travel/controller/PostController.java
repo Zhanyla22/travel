@@ -44,7 +44,7 @@ public class PostController {
     }
     @Operation(summary = "edit post  for client side")
     @PutMapping("/edit/post/{id}")  //
-    public ResponseEntity<Void> updatePost(@RequestPart UpdatePostDTO updatePostDTO, @RequestParam MultipartFile multipartFile) throws Exception {
+    public ResponseEntity<Void> updatePost(@RequestPart UpdatePostDTO updatePostDTO, @RequestPart MultipartFile multipartFile) throws Exception {
         postService.updatePost(updatePostDTO, multipartFile);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -66,5 +66,10 @@ public class PostController {
     public ResponseEntity<Void> deletePostById(@RequestBody GetPostDTO getPostDTO){
         postService.deletePostById(getPostDTO.getId());
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @Operation(summary = "like Post")
+    @PostMapping("/like/{postId}")
+    public void like(@PathVariable Long postId){
+        postService.LikePost(postId);
     }
 }

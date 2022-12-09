@@ -1,6 +1,7 @@
 package com.example.light_up_travel.services.serviceZ;
 
 import com.example.light_up_travel.entity.Lifehack;
+import com.example.light_up_travel.entity.Likes;
 import com.example.light_up_travel.entity.Post;
 import com.example.light_up_travel.entity.User;
 import com.example.light_up_travel.enums.Status;
@@ -22,10 +23,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ObjectStreamClass;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class PostService {
@@ -99,11 +102,12 @@ public class PostService {
     public ResponseEntity<Void> updatePost(UpdatePostDTO updatePostDTO, MultipartFile multipartFile) throws Exception {
         try {
             Post post = postRepository.findById(updatePostDTO.getId()).orElseThrow(
-                    () -> new Exception("Post with  id = " + updatePostDTO.getId() + "not found")
+                    () -> new Exception("Post with  id = " + updatePostDTO.getId() + " not found")
             );
             post.setDescription(updatePostDTO.getDescription());
             post.setDateUpdated(LocalDateTime.now()); //check it
-            post.setFilePath(fileUploadService.saveFile(multipartFile));
+            if (!Objects.isNull(multipartFile))
+                post.setFilePath(fileUploadService.saveFile(multipartFile));
             postRepository.save(post);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
@@ -111,9 +115,9 @@ public class PostService {
         }
     }
 
-    public ResponseEntity<Void> deletePostById(Long id){
+    public ResponseEntity<Void> deletePostById(Long id) {
         Post post = postRepository.findById(id).orElseThrow(
-                ()-> new NotFoundException("Not found "+id+" Post")
+                () -> new NotFoundException("Not found " + id + " Post")
         );
         post.setStatus(Status.DELETED_BY_USER);
         post.setDateDeleted(LocalDateTime.now());
@@ -122,4 +126,13 @@ public class PostService {
 
     }
 
+    public void LikePost(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(
+                () -> new NotFoundException("Not found " + postId + " Post")
+        );
+        Likes likes = new Likes();
+        likes.setPost(post);
+        likes.setUser(userRepository.getOne(userService.getUserByAuthentication().getId()));
+        likesRepository.save(likes);
+    }
 }
