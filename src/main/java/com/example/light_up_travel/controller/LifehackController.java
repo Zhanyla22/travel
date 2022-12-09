@@ -61,8 +61,8 @@ public class LifehackController {
 
 
     @Operation(summary = "обновить lifehack по айдишке без фото 1 запрос")
-    @PutMapping("/update-lifehack") // ?????((((((
-    public ResponseEntity<Long> updateLifehack(@RequestBody LifehackDTO lifehackDTO) throws Exception{
+    @PutMapping("/update-lifehack-without-video") // ?????((((((
+    public ResponseEntity<Long> updateLifehackWithoutVideo(@RequestBody LifehackDTO lifehackDTO) throws Exception{
         return lifehackService.updateLifehackWithoutVideo(lifehackDTO);
     }
 
