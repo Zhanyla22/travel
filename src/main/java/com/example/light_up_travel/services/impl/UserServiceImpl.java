@@ -152,11 +152,11 @@ public class UserServiceImpl implements UserService {
     public User updateNotDeletedUserById(Long id, UpdateUserDto updateUserDto) {
         User user = isUserDeletedCheck(id);
         if (updateUserDto.getName() != null){
-        user.setName(updateUserDto.getName());}
+            user.setName(updateUserDto.getName());}
         if (updateUserDto.getSurname() != null){
-        user.setSurname(updateUserDto.getSurname());}
+            user.setSurname(updateUserDto.getSurname());}
         if (updateUserDto.getEmail() != null){
-        user.setEmail(updateUserDto.getEmail().toLowerCase());}
+            user.setEmail(updateUserDto.getEmail().toLowerCase());}
         user.setDateUpdated(new Date());
 
         Set<Role> roles = new HashSet<>();
