@@ -35,38 +35,10 @@ public class AddUserDto {
     @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
-//    @Schema(example = "password123", required = true)
-//    @NotBlank
-//    @Size(min = 8, max = 40)
-//    private String password;
-
-//    @Schema(example = "Male")
-//    private String gender;
-//
-//    @Schema(example = "+123456789")
-//    private String phoneNumber;
-//
-//    @Schema(example = "1995-11-11")
-//    private LocalDate dob;
-//
-//    @Schema(example = "USA")
-//    private String country;
-
     @NotNull
     @Schema(example = "[\n" +
             "    \"admin\"\n" +
             "  ]", description = "3 type of roles: \"user\", \"admin\", \"moderator\"", required = true)
     private Set<String> role;
 
-//    @JsonIgnore
-//    private String verificationCode;
-//
-//    @JsonIgnore
-//    private boolean enabled;
-//
-//    @JsonIgnore
-//    private Date dateCreated;
-//
-//    @JsonIgnore
-//    private Status status;
 }
