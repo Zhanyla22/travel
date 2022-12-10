@@ -59,6 +59,17 @@ public class UserController {
             return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
         }
     }
+    @Operation(summary = "Update not deleted user's profile by id")
+    @PutMapping("/update-profile/{id}")
+    public ResponseEntity<?> updateUserProfileById(@RequestBody UserProfileDto userProfileDto) {
+        try {
+            return ResponseEntity.ok(userService.updateProfilePageById(userProfileDto));
+        } catch (NotFoundException nfe) {
+            throw new NotFoundException(nfe.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
+        }
+    }
 
     @Operation(summary = "Update not deleted user's profile by id")
     @PutMapping("/update-profile/{id}")

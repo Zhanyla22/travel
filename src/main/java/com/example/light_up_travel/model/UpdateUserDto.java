@@ -21,8 +21,6 @@ import java.util.Set;
 @Data
 public class UpdateUserDto {
 
-//    private Long id;
-
     @Schema(example = "Will")
     private String name;
 
@@ -34,24 +32,9 @@ public class UpdateUserDto {
     @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
-
-//    @Schema(example = "Male")
-//    private String gender;
-//
-//    @Schema(example = "+923456789")
-//    private String phoneNumber;
-//
-//    @Schema(example = "1995-09-11")
-//    private LocalDate dob;
-//
-//    @Schema(example = "USA")
-//    private String country;
-
     @Schema(example = "[\n" +
             "    \"user\"\n" +
             "  ]", description = "3 type of roles: \"user\", \"admin\", \"moderator\"")
     private Set<String> role;
 
-//    @JsonIgnore
-//    private Date dateUpdated;
 }

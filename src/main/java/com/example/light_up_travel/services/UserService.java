@@ -14,15 +14,12 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-
-//    boolean isDeleted(Long id);
-     AddUserDto add(AddUserDto signupRequest) throws MessagingException;
+    AddUserDto add(AddUserDto signupRequest) throws MessagingException;
 
 
     User updateNotDeletedUserById(Long id, UpdateUserDto updateUserDto);
 
     UserProfileDto updateProfilePageById(UserProfileDto userProfileDto);
-
 
     List<User> getAllNotDeletedUsers();
 

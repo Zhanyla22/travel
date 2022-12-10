@@ -11,6 +11,11 @@ import com.example.light_up_travel.exceptions.NotFoundException;
 import com.example.light_up_travel.mapper.BasicUserMapper;
 import com.example.light_up_travel.mapper.PostMapper;
 import com.example.light_up_travel.model.*;
+import com.example.light_up_travel.model.BasicUserDto;
+import com.example.light_up_travel.model.GetPostDTO;
+import com.example.light_up_travel.model.UpdateUserDto;
+import com.example.light_up_travel.model.AddUserDto;
+import com.example.light_up_travel.model.UserProfileDto;
 import com.example.light_up_travel.repository.PasswordResetTokenRepository;
 import com.example.light_up_travel.repository.RoleRepository;
 import com.example.light_up_travel.repository.UserRepository;
@@ -154,11 +159,11 @@ public class UserServiceImpl implements UserService {
     public User updateNotDeletedUserById(Long id, UpdateUserDto updateUserDto) {
         User user = isUserDeletedCheck(id);
         if (updateUserDto.getName() != null){
-        user.setName(updateUserDto.getName());}
+            user.setName(updateUserDto.getName());}
         if (updateUserDto.getSurname() != null){
-        user.setSurname(updateUserDto.getSurname());}
+            user.setSurname(updateUserDto.getSurname());}
         if (updateUserDto.getEmail() != null){
-        user.setEmail(updateUserDto.getEmail().toLowerCase());}
+            user.setEmail(updateUserDto.getEmail().toLowerCase());}
         user.setDateUpdated(new Date());
 
         Set<Role> roles = new HashSet<>();
@@ -198,7 +203,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-     public UserProfileDto updateProfilePageById(UserProfileDto userProfileDto) {
+    public UserProfileDto updateProfilePageById(UserProfileDto userProfileDto) {
         User user = isUserDeletedCheck(getUserByAuthentication().getId());
         if (userProfileDto.getEmail() != null &
                 userRepository.existsByEmail(userProfileDto.getEmail().toLowerCase())) {
