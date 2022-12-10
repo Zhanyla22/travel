@@ -3,6 +3,7 @@ package com.example.light_up_travel.controller;
 import com.example.light_up_travel.entity.User;
 import com.example.light_up_travel.model.UpdateUserDto;
 import com.example.light_up_travel.model.AddUserDto;
+import com.example.light_up_travel.model.UserProfileDto;
 import com.example.light_up_travel.payload.response.MessageResponse;
 import com.example.light_up_travel.services.impl.SecurityServiceImpl;
 import com.example.light_up_travel.services.impl.UserServiceImpl;
@@ -52,6 +53,17 @@ public class UserController {
     public ResponseEntity<?> updateUserById(@RequestBody UpdateUserDto updateUserDto, @PathVariable Long id) {
         try {
             return ResponseEntity.ok(userService.updateNotDeletedUserById(id, updateUserDto));
+        } catch (NotFoundException nfe) {
+            throw new NotFoundException(nfe.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
+        }
+    }
+    @Operation(summary = "Update not deleted user's profile by id")
+    @PutMapping("/update-profile/{id}")
+    public ResponseEntity<?> updateUserProfileById(@RequestBody UserProfileDto userProfileDto) {
+        try {
+            return ResponseEntity.ok(userService.updateProfilePageById(userProfileDto));
         } catch (NotFoundException nfe) {
             throw new NotFoundException(nfe.getMessage());
         } catch (Exception ex) {
