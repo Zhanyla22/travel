@@ -2,14 +2,11 @@ package com.example.light_up_travel.controller;
 
 
 import com.example.light_up_travel.model.ArticleDTO;
-import com.example.light_up_travel.services.serviceZ.ArticleService;
-import com.example.light_up_travel.services.serviceZ.FileUploadService;
+import com.example.light_up_travel.services.impl.ArticleService;
+import com.example.light_up_travel.services.impl.FileUploadService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

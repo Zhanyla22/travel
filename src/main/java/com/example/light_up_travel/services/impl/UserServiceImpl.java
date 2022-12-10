@@ -10,10 +10,7 @@ import com.example.light_up_travel.exceptions.EmailAlreadyExistsException;
 import com.example.light_up_travel.exceptions.NotFoundException;
 import com.example.light_up_travel.mapper.BasicUserMapper;
 import com.example.light_up_travel.mapper.PostMapper;
-import com.example.light_up_travel.model.BasicUserDto;
-import com.example.light_up_travel.model.GetPostDTO;
-import com.example.light_up_travel.model.UpdateUserDto;
-import com.example.light_up_travel.model.AddUserDto;
+import com.example.light_up_travel.model.*;
 import com.example.light_up_travel.repository.PasswordResetTokenRepository;
 import com.example.light_up_travel.repository.RoleRepository;
 import com.example.light_up_travel.repository.UserRepository;
@@ -198,6 +195,26 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user);
         return user;
+    }
+
+    @Override
+     public UserProfileDto updateProfilePageById(UserProfileDto userProfileDto) {
+        User user = isUserDeletedCheck(getUserByAuthentication().getId());
+        if (userProfileDto.getEmail() != null &
+                userRepository.existsByEmail(userProfileDto.getEmail().toLowerCase())) {
+            throw new EmailAlreadyExistsException("User with email: " + userProfileDto.getEmail() + " - is already exist");
+        }
+        user.setName(userProfileDto.getName());
+        user.setSurname(userProfileDto.getSurname());
+        user.setEmail(userProfileDto.getEmail().toLowerCase());
+        user.setPassword(encoder.encode(userProfileDto.getPassword()));
+        user.setDob(userProfileDto.getDob());
+        user.setCountry(userProfileDto.getCountry());
+        user.setPhoneNumber(userProfileDto.getPhoneNumber());
+        user.setGender(userProfileDto.getGender());
+
+        userRepository.save(user);
+        return userProfileDto;
     }
 
     public boolean verify(String verificationCode) {

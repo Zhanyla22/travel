@@ -1,14 +1,12 @@
-package com.example.light_up_travel.services.serviceZ;
+package com.example.light_up_travel.services.impl;
 
 import com.example.light_up_travel.entity.Article;
-import com.example.light_up_travel.entity.Post;
 import com.example.light_up_travel.enums.Status;
 import com.example.light_up_travel.exceptions.NotFoundResourceException;
 import com.example.light_up_travel.mapper.ArticleMapper;
 import com.example.light_up_travel.model.ArticleDTO;
 import com.example.light_up_travel.repository.ArticleRepository;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

@@ -1,11 +1,9 @@
 package com.example.light_up_travel.controller;
 
 
-import com.example.light_up_travel.model.ArticleDTO;
 import com.example.light_up_travel.model.LifehackDTO;
-import com.example.light_up_travel.services.serviceZ.ArticleService;
-import com.example.light_up_travel.services.serviceZ.FileUploadService;
-import com.example.light_up_travel.services.serviceZ.LifehackService;
+import com.example.light_up_travel.services.impl.FileUploadService;
+import com.example.light_up_travel.services.impl.LifehackService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

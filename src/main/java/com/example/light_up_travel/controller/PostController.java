@@ -3,7 +3,7 @@ package com.example.light_up_travel.controller;
 import com.example.light_up_travel.model.CreatePostDTO;
 import com.example.light_up_travel.model.GetPostDTO;
 import com.example.light_up_travel.model.UpdatePostDTO;
-import com.example.light_up_travel.services.serviceZ.PostService;
+import com.example.light_up_travel.services.impl.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
