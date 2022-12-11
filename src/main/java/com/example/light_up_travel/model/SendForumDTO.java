@@ -9,9 +9,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserForPost {
-    private Long id;
-    private String fileUrl;
-    private String name;
-    private String surname;
+public class SendForumDTO {
+    private String description;
 }

@@ -6,6 +6,7 @@ import com.example.light_up_travel.exceptions.NotFoundException;
 import com.example.light_up_travel.mapper.BasicUserMapper;
 import com.example.light_up_travel.mapper.ForumMapper;
 import com.example.light_up_travel.model.ForumDto;
+import com.example.light_up_travel.model.SendForumDTO;
 import com.example.light_up_travel.repository.ForumRepository;
 import com.example.light_up_travel.services.ForumService;
 import lombok.RequiredArgsConstructor;
@@ -67,11 +68,22 @@ public class ForumServiceImpl implements ForumService {
 
 
 
+//    @Override
+//    public ForumDto insert(String desc) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        Forum forum = new Forum();
+//        forum.setDescription(desc);
+//        forum.setUser(userService.getUserByAuthentication());
+//        forum.setDateCreated(new Date());
+//        forum.setStatus(Stat.PENDING);
+//        return ForumMapper.ForumToForumDTO(forumRepository.save(forum));
+//    }
+
     @Override
-    public ForumDto insert(String desc) {
+    public ForumDto insert(SendForumDTO sendForumDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Forum forum = new Forum();
-        forum.setDescription(desc);
+        forum.setDescription(sendForumDTO.getDescription());
         forum.setUser(userService.getUserByAuthentication());
         forum.setDateCreated(new Date());
         forum.setStatus(Stat.PENDING);
