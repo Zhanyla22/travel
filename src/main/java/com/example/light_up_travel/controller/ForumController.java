@@ -22,7 +22,7 @@ public class ForumController {
     private ForumServiceImpl forumService;
 
     @Operation(summary = "Add new forum")
-    @PostMapping("/add/{desc}")
+    @PostMapping("/add")
     public ResponseEntity<?> addForum(@RequestBody SendForumDTO sendForumDTO) {
         try{
             forumService.insert(sendForumDTO);
