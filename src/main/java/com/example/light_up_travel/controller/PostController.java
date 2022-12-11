@@ -63,8 +63,8 @@ public class PostController {
 
     @Operation(summary = "delete post by id - only for client side")
     @DeleteMapping("/delete-post/{id}")
-    public ResponseEntity<Void> deletePostById(@RequestBody GetPostDTO getPostDTO){
-        postService.deletePostById(getPostDTO.getId());
+    public ResponseEntity<Void> deletePostById(@PathVariable Long id){
+        postService.deletePostById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @Operation(summary = "like Post")
