@@ -24,13 +24,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PlacesService {
 
-    private RatingRepository ratingRepository;
+    private final RatingRepository ratingRepository;
 
-    private PlacesRepository placesRepository;
+    private final PlacesRepository placesRepository;
 
-    private FileUploadService fileUploadService;
+    private final FileUploadService fileUploadService;
 
-    private FilesRepository filesRepository;
+    private final FilesRepository filesRepository;
 
     public List<GetPlaceDTO> getAll(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);

@@ -1,6 +1,6 @@
 package com.example.light_up_travel.enums;
 
-public enum Category {
+public enum CategoryEnum {
     TRAVEL,
     EAT,
     ENTERTAINMENT,

@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface PlacesRepository extends JpaRepository<Place, Integer>, JpaSpecificationExecutor<Place>{
+public interface PlacesRepository extends JpaRepository<Place, Integer>{
 
     Page<Place> findByStatus(Status status, Pageable pageable);
 
