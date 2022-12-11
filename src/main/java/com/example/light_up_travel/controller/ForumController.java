@@ -1,7 +1,6 @@
 package com.example.light_up_travel.controller;
 
 
-import com.example.light_up_travel.model.SendForumDTO;
 import com.example.light_up_travel.payload.response.MessageResponse;
 import com.example.light_up_travel.services.impl.ForumServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,10 +21,10 @@ public class ForumController {
     private ForumServiceImpl forumService;
 
     @Operation(summary = "Add new forum")
-    @PostMapping("/add")
-    public ResponseEntity<?> addForum(@RequestBody SendForumDTO sendForumDTO) {
+    @PostMapping("/add/{desc}")
+    public ResponseEntity<?> addForum(@PathVariable String desc) {
         try{
-            forumService.insert(sendForumDTO);
+            forumService.insert(desc);
             return ResponseEntity.ok(new MessageResponse("Forum is added successfully"));
         } catch (Exception ex) {
             return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
