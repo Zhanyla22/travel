@@ -1,7 +1,7 @@
 package com.example.light_up_travel.mapper;
 
 import com.example.light_up_travel.entity.User;
-import com.example.light_up_travel.model.BasicUserDto;
+import com.example.light_up_travel.dto.BasicUserDto;
 
 
 public class BasicUserMapper {

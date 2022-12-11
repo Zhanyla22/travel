@@ -3,9 +3,8 @@ package com.example.light_up_travel.services.impl;
 import com.example.light_up_travel.entity.Forum;
 import com.example.light_up_travel.enums.Stat;
 import com.example.light_up_travel.exceptions.NotFoundException;
-import com.example.light_up_travel.mapper.BasicUserMapper;
 import com.example.light_up_travel.mapper.ForumMapper;
-import com.example.light_up_travel.model.ForumDto;
+import com.example.light_up_travel.dto.ForumDto;
 import com.example.light_up_travel.repository.ForumRepository;
 import com.example.light_up_travel.services.ForumService;
 import lombok.RequiredArgsConstructor;
@@ -76,12 +75,6 @@ public class ForumServiceImpl implements ForumService {
         forum.setDateCreated(new Date());
         forum.setStatus(Stat.PENDING);
         return ForumMapper.ForumToForumDTO(forumRepository.save(forum));
-    }
-
-
-    @Override
-    public ForumDto updateNotDeletedForumById(Long id) {
-        return null;
     }
 
     @Override
