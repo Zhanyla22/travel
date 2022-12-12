@@ -7,11 +7,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class UserForPost {
-    private Long id;
-    private String fileUrl;
+@AllArgsConstructor
+public class UserForPlaces {
+    private Long ratingId;
+    private String profileUrl;
     private String name;
     private String surname;
+    private String comment;
+    private Long rate;
 }

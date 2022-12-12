@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class LifehackService {
@@ -136,6 +137,7 @@ public class LifehackService {
             lifehack.setTitle(lifehackDTO.getTitle());
             lifehack.setDateUpdated(LocalDateTime.now()); //check it
             lifehack.setDescription(lifehackDTO.getDescription());
+            if (!Objects.isNull(multipartFile))
             lifehack.setFilePath(fileUploadService.saveVideo(multipartFile));
             lifehackRepository.save(lifehack);
             return new ResponseEntity<>(HttpStatus.OK);

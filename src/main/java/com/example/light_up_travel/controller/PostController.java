@@ -30,41 +30,41 @@ public class PostController {
     }
 
     @Operation(summary = "approve post(for admin panel's cencership)")
-    @PostMapping("/approve/post")
+    @PostMapping("/approve-post")
     public ResponseEntity<GetPostDTO> approvePost(@RequestBody GetPostDTO getPostDTO){
         postService.approvePost(getPostDTO.getId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Operation(summary = "disapprove post(for admin panel's cencership)")
-    @PostMapping("/disapprove/post")
+    @PostMapping("/disapprove-post")
     public ResponseEntity<GetPostDTO> disApprovePost(@RequestBody GetPostDTO getPostDTO){
         postService.disApprovePost(getPostDTO.getId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @Operation(summary = "edit post  for client side")
-    @PutMapping("/edit/post/{id}")  //
+    @PutMapping("/edit-post/{id}")  //
     public ResponseEntity<Void> updatePost(@RequestPart UpdatePostDTO updatePostDTO, @RequestPart MultipartFile multipartFile) throws Exception {
         postService.updatePost(updatePostDTO, multipartFile);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Operation(summary = "Get all disapproved Posts(for admin panel's cencership)")
-    @GetMapping("/list-Of-disapproved")
+    @GetMapping("/list-of-disapproved-posts")
     public List<GetPostDTO> getAllDisApproved(@RequestParam Integer page, @RequestParam Integer size){
         return postService.getAllDisApprovedPosts(page, size);
     }
 
     @Operation(summary = "Get all Posts(for admin panel's cencership)")
-    @GetMapping("/list")
+    @GetMapping("/list-of-approved-posts")
     public List<GetPostDTO> getAll(@RequestParam Integer page, @RequestParam Integer size){
         return postService.getAllActivePosts(page, size);
     }
 
     @Operation(summary = "delete post by id - only for client side")
     @DeleteMapping("/delete-post/{id}")
-    public ResponseEntity<Void> deletePostById(@RequestBody GetPostDTO getPostDTO){
-        postService.deletePostById(getPostDTO.getId());
+    public ResponseEntity<Void> deletePostById(@PathVariable Long id){
+        postService.deletePostById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @Operation(summary = "like Post")
