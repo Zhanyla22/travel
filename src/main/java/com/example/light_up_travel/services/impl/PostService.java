@@ -128,7 +128,7 @@ public class PostService {
         );
         Likes likes = new Likes();
         likes.setPost(post);
-        likes.setUser(userRepository.getOne(userService.getUserByAuthentication().getId()));
+        likes.setUser(userRepository.getById(userService.getUserByAuthentication().getId()));
         likesRepository.save(likes);
     }
 }
