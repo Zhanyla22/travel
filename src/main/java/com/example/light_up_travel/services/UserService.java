@@ -20,8 +20,6 @@ public interface UserService {
 
     User updateNotDeletedUserById(Long id, UpdateUserDto updateUserDto);
 
-    UserProfileDto updateProfilePageById(UserProfileDto userProfileDto);
-
     List<User> getAllNotDeletedUsers();
 
     List<User> getAllNotDeletedModerators();

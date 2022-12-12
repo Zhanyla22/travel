@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.webjars.NotFoundException;
 
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
@@ -48,7 +50,7 @@ public class UserController {
         }
     }
 
-    @Operation(summary = "Update not deleted user by id")
+    @Operation(summary = "Update not deleted user by id only for admins")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateUserById(@RequestBody UpdateUserDto updateUserDto, @PathVariable Long id) {
         try {
@@ -59,16 +61,25 @@ public class UserController {
             return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
         }
     }
-    @Operation(summary = "Update not deleted user's profile by id")
+    @Operation(summary = "Update not deleted user's profile by id / 1- request")
     @PutMapping("/update-profile/{id}")
-    public ResponseEntity<?> updateUserProfileById(@RequestBody UserProfileDto userProfileDto) {
-        try {
-            return ResponseEntity.ok(userService.updateProfilePageById(userProfileDto));
-        } catch (NotFoundException nfe) {
-            throw new NotFoundException(nfe.getMessage());
-        } catch (Exception ex) {
-            return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
-        }
+    public Long updateUserProfileById(@RequestBody UserProfileDto userProfileDto) throws Exception{
+
+        return userService.updateProfilePageById(userProfileDto);
+//        try {
+//            return ResponseEntity.ok(userService.updateProfilePageById(userProfileDto));
+//        } catch (NotFoundException nfe) {
+//            throw new NotFoundException(nfe.getMessage());
+//        } catch (Exception ex) {
+//            return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
+//        }
+    }
+
+    @Operation(summary = "Update not deleted user's profile by id / 2- request")
+    @PutMapping("/update-profile-pic/{id}")
+    public ResponseEntity<String> updateProfileUrl(@PathVariable Long id, @RequestPart MultipartFile multipartFile) throws Exception{
+
+        return ResponseEntity.ok(userService.updateProfileUrl(id, multipartFile));
     }
 
     @Operation(summary = "Get all not deleted users")

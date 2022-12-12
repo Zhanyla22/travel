@@ -44,4 +44,6 @@ public class UserProfileDto {
 
     @Schema(example = "USA")
     private String country;
+
+    private String profileUrl;
 }

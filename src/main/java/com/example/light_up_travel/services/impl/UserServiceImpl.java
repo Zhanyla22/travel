@@ -7,6 +7,7 @@ import com.example.light_up_travel.enums.ERole;
 import com.example.light_up_travel.enums.Status;
 import com.example.light_up_travel.exceptions.EmailAlreadyExistsException;
 import com.example.light_up_travel.exceptions.NotFoundException;
+import com.example.light_up_travel.exceptions.NotFoundResourceException;
 import com.example.light_up_travel.mapper.BasicUserMapper;
 import com.example.light_up_travel.dto.BasicUserDto;
 import com.example.light_up_travel.dto.UpdateUserDto;
@@ -19,11 +20,14 @@ import com.example.light_up_travel.services.UserService;
 import com.example.light_up_travel.utils.EmailUtility;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
@@ -39,6 +43,8 @@ public class UserServiceImpl implements UserService {
     private final JavaMailSender javaMailSender;
     private final RoleRepository roleRepository;
     private final MentorServiceImpl mentorService;
+
+    private final FileUploadService fileUploadService;
 
     private final PasswordEncoder encoder;
 
@@ -196,8 +202,9 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    @Override
-    public UserProfileDto updateProfilePageById(UserProfileDto userProfileDto) {
+
+    public Long updateProfilePageById(UserProfileDto userProfileDto){
+
         User user = isUserDeletedCheck(getUserByAuthentication().getId());
         if (userProfileDto.getEmail() != null &
                 userRepository.existsByEmail(userProfileDto.getEmail().toLowerCase())) {
@@ -213,8 +220,21 @@ public class UserServiceImpl implements UserService {
         user.setGender(userProfileDto.getGender());
 
         userRepository.save(user);
-        return userProfileDto;
+
+        return user.getId();
     }
+
+
+    public String updateProfileUrl(Long userId, MultipartFile multipartFile){
+        User user = userRepository.findById(userId).orElseThrow(
+                ()->  new NotFoundResourceException("User was not found with id: " + userId)
+        );
+        user.setProfileUrl(fileUploadService.saveFile(multipartFile));
+        userRepository.save(user);
+        return "updated profile image for user with id "+ userId;
+    }
+
+
 
     public boolean verify(String verificationCode) {
         User user = userRepository.findByVerificationCode(verificationCode);
