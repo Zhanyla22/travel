@@ -26,6 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 @Service
@@ -96,7 +97,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AddUserDto add(AddUserDto addUserDto) throws MessagingException {
+    public AddUserDto add(AddUserDto addUserDto) throws MessagingException, UnsupportedEncodingException {
         String password = RandomString.make(8);
         if (addUserDto.getEmail() != null &
                 userRepository.existsByEmail(addUserDto.getEmail().toLowerCase())) {

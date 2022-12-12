@@ -69,10 +69,10 @@ public class EmailUtility {
         System.out.println(content);
     }
     public void sendLoginAndPassword(String email, String password, JavaMailSender javaMailSender)
-            throws MessagingException {
+            throws MessagingException, UnsupportedEncodingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
-        helper.setFrom("trevelproject.kg@gmail.com");
+        helper.setFrom("trevelproject.kg@gmail.com", "Light Up Travel");
         helper.setTo(email);
 
         String subject = "User password";

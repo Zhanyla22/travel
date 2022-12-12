@@ -47,7 +47,7 @@ public class PostService {
     public ResponseEntity<Void> createNewPost(CreatePostDTO createPostDTO, MultipartFile multipartFile) throws Exception {
         try {
 
-            User user = userRepository.getById(userService.getUserByAuthentication().getId());
+            User user = userRepository.findNotDeletedUserById(userService.getUserByAuthentication().getId());
             Post newPost = new Post();
             newPost.setDescription(createPostDTO.getDescription());
             newPost.setDateCreated(LocalDate.now());

@@ -15,8 +15,6 @@ public interface ForumService {
 
     ForumDto insert(String desc);
 
-    ForumDto updateNotDeletedForumById(Long id);
-
     void deleteNotDeletedForumById(Long id);
 
     Forum isForumDeletedCheck(Long id);
