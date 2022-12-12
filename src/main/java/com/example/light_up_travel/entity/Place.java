@@ -41,6 +41,8 @@ public class Place {
     @Column(name = "status")
     private Status status;
 
+
+
     @Column(name ="dateCreated")
     private LocalDate dateCreated;
 

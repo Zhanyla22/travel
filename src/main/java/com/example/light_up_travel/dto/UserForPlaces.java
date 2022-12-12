@@ -15,5 +15,5 @@ public class UserForPlaces {
     private String name;
     private String surname;
     private String comment;
-    private Long rate;
+    private int rate;
 }
