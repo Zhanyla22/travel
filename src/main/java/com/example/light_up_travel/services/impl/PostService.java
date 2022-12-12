@@ -44,21 +44,29 @@ public class PostService {
     }
 
 
-    public ResponseEntity<Void> createNewPost(CreatePostDTO createPostDTO, MultipartFile multipartFile) throws Exception {
+    public ResponseEntity<Long> createNewPost(CreatePostDTO createPostDTO) throws Exception {
         try {
 
             User user = userRepository.findNotDeletedUserById(userService.getUserByAuthentication().getId());
             Post newPost = new Post();
             newPost.setDescription(createPostDTO.getDescription());
             newPost.setDateCreated(LocalDate.now());
-            newPost.setFilePath(fileUploadService.saveFile(multipartFile));
             newPost.setStatus(Status.WAITING_FOR_APPROVE);
             newPost.setUser(user);
             postRepository.save(newPost);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(newPost.getId(),HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
+    }
+
+    public String saveImageForPost(Long postId,MultipartFile multipartFile){
+        Post post = postRepository.findById(postId).orElseThrow(
+                ()-> new NotFoundException("post with id "+ postId+" npt foubd")
+        );
+        post.setFilePath(fileUploadService.saveFile(multipartFile));
+        postRepository.save(post);
+        return "saved image for post with id +" +postId;
     }
 
     public void approvePost(Long postId) {
@@ -99,21 +107,30 @@ public class PostService {
                     !likesRepository.existsByPost_IdAndUser_Id(p.getId(), userService.getUserByAuthentication().getId())));
         return result;
     }
-    public ResponseEntity<Void> updatePost(UpdatePostDTO updatePostDTO, MultipartFile multipartFile) throws Exception {
+    public ResponseEntity<Long> updatePost(UpdatePostDTO updatePostDTO) throws Exception {
         try {
             Post post = postRepository.findById(updatePostDTO.getId()).orElseThrow(
                     () -> new Exception("Post with  id = " + updatePostDTO.getId() + " not found")
             );
             post.setDescription(updatePostDTO.getDescription());
             post.setDateUpdated(LocalDateTime.now()); //check it
-            if (!Objects.isNull(multipartFile))
-                post.setFilePath(fileUploadService.saveFile(multipartFile));
             postRepository.save(post);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<Long>(post.getId(),HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<Long>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
+
+    public String updateImageForPost(Long postId, MultipartFile multipartFile){
+        Post post = postRepository.findById(postId).orElseThrow(
+                ()-> new NotFoundException("Post with"+postId+"not found")
+        );
+        post.setFilePath(fileUploadService.saveFile(multipartFile));
+        postRepository.save(post);
+        return "updated image for post with id " +postId;
+    }
+
+
 
     public ResponseEntity<Void> deletePostById(Long id) {
         Post post = postRepository.findById(id).orElseThrow(

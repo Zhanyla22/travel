@@ -22,11 +22,16 @@ public class PostController {
         this.postService = postService;
     }
 
-    @Operation(summary = "Create new Post")
+    @Operation(summary = "Create new Post 1 req")
     @PostMapping("/create/new-post")
-    public ResponseEntity<Void> createNewPost(@RequestPart CreatePostDTO createPostDTO,@RequestPart MultipartFile multipartFile) throws  Exception{
-        postService.createNewPost(createPostDTO,multipartFile);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Long> createNewPost(@RequestBody CreatePostDTO createPostDTO) throws  Exception{
+        return postService.createNewPost(createPostDTO);
+    }
+
+    @Operation(summary = "Create new Post image 2 req")
+    @PostMapping("/create/new-post-image")
+    public ResponseEntity<String> createNewPost(@PathVariable Long postId, @RequestPart MultipartFile multipartFile) throws  Exception{
+        return ResponseEntity.ok(postService.saveImageForPost(postId,multipartFile));
     }
 
     @Operation(summary = "approve post(for admin panel's cencership)")
@@ -42,11 +47,16 @@ public class PostController {
         postService.disApprovePost(getPostDTO.getId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @Operation(summary = "edit post  for client side")
-    @PutMapping("/edit-post/{id}")  //
-    public ResponseEntity<Void> updatePost(@RequestPart UpdatePostDTO updatePostDTO, @RequestPart MultipartFile multipartFile) throws Exception {
-        postService.updatePost(updatePostDTO, multipartFile);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @Operation(summary = "edit post  for client side 1 req")
+    @PutMapping("/edit-post")  //
+    public ResponseEntity<Long> updatePost(@RequestBody UpdatePostDTO updatePostDTO) throws Exception {
+      return postService.updatePost(updatePostDTO);
+    }
+
+    @Operation(summary = "edit post  for client side 2 req")
+    @PutMapping("/edit-post-image/{id}")  //
+    public ResponseEntity<String> updatePostImage(@PathVariable Long postId, @RequestPart MultipartFile multipartFile) throws Exception {
+        return ResponseEntity.ok(postService.updateImageForPost(postId, multipartFile));
     }
 
     @Operation(summary = "Get all disapproved Posts(for admin panel's cencership)")
