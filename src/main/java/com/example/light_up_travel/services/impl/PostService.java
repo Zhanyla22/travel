@@ -82,7 +82,10 @@ public class PostService {
         Page<Post> posts = postRepository.findByStatus(Status.DISAPPROVED, pageable);
         List<GetPostDTO> result = new ArrayList<>();
         for (Post p : posts.getContent())
-            result.add(PostMapper.PostEntityToPostDto(p, likesRepository.countById(p.getId())));
+            result.add(PostMapper.PostEntityToPostDto(
+                    p,
+                    likesRepository.countById(p.getId()),
+                    !likesRepository.existsByPost_IdAndUser_Id(p.getId(), userService.getUserByAuthentication().getId())));
         return result;
     }
 
@@ -91,10 +94,11 @@ public class PostService {
         Page<Post> posts = postRepository.findByStatus(Status.ACTIVE, pageable);
         List<GetPostDTO> result = new ArrayList<>();
         for (Post p : posts.getContent())
-            result.add(PostMapper.PostEntityToPostDto(p, likesRepository.countById(p.getId())));
+            result.add(PostMapper.PostEntityToPostDto( p,
+                    likesRepository.countById(p.getId()),
+                    !likesRepository.existsByPost_IdAndUser_Id(p.getId(), userService.getUserByAuthentication().getId())));
         return result;
     }
-
     public ResponseEntity<Void> updatePost(UpdatePostDTO updatePostDTO, MultipartFile multipartFile) throws Exception {
         try {
             Post post = postRepository.findById(updatePostDTO.getId()).orElseThrow(
@@ -123,12 +127,13 @@ public class PostService {
     }
 
     public void LikePost(Long postId) {
+
         Post post = postRepository.findById(postId).orElseThrow(
                 () -> new NotFoundException("Not found " + postId + " Post")
         );
-        Likes likes = new Likes();
-        likes.setPost(post);
-        likes.setUser(userRepository.getOne(userService.getUserByAuthentication().getId()));
-        likesRepository.save(likes);
+            Likes likes = new Likes();
+            likes.setPost(post);
+            likes.setUser(userRepository.getById(userService.getUserByAuthentication().getId()));
+            likesRepository.save(likes);
     }
 }

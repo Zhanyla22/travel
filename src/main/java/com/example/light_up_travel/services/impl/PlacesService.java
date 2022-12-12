@@ -1,12 +1,11 @@
 package com.example.light_up_travel.services.impl;
 
-import com.example.light_up_travel.entity.Files;
-import com.example.light_up_travel.entity.Place;
-import com.example.light_up_travel.entity.Rating;
+import com.example.light_up_travel.entity.*;
 import com.example.light_up_travel.enums.Status;
 import com.example.light_up_travel.mapper.PlacesMapper;
 import com.example.light_up_travel.model.GetPlaceDTO;
 import com.example.light_up_travel.model.UserForPlaces;
+import com.example.light_up_travel.repository.CategoryRepository;
 import com.example.light_up_travel.repository.FilesRepository;
 import com.example.light_up_travel.repository.PlacesRepository;
 import com.example.light_up_travel.repository.RatingRepository;
@@ -15,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,7 +32,12 @@ public class PlacesService {
 
     private final FilesRepository filesRepository;
 
-    public List<GetPlaceDTO> getAll(int page, int size) {
+    private final CategoryRepository categoryRepository;
+
+    public List<GetPlaceDTO> getAll(int page, int size,Long categoryId) throws Exception {
+        Category category = categoryRepository.findById(categoryId).orElseThrow(
+                () -> new Exception("category with  id = " + categoryId+ " not found")
+        );
         Pageable pageable = PageRequest.of(page, size);
         Page<Place> places = placesRepository.findByStatus(Status.ACTIVE, pageable);
         List<GetPlaceDTO> result = new ArrayList<>();
