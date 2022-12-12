@@ -1,4 +1,4 @@
-package com.example.light_up_travel.model.requestPag;
+package com.example.light_up_travel.dto.requestPag;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

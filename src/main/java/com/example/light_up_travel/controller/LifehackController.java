@@ -1,7 +1,7 @@
 package com.example.light_up_travel.controller;
 
 
-import com.example.light_up_travel.model.LifehackDTO;
+import com.example.light_up_travel.dto.LifehackDTO;
 import com.example.light_up_travel.services.impl.FileUploadService;
 import com.example.light_up_travel.services.impl.LifehackService;
 import io.swagger.v3.oas.annotations.Operation;

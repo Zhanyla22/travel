@@ -1,7 +1,7 @@
 package com.example.light_up_travel.mapper;
 
 import com.example.light_up_travel.entity.Lifehack;
-import com.example.light_up_travel.model.LifehackDTO;
+import com.example.light_up_travel.dto.LifehackDTO;
 import org.springframework.stereotype.Component;
 
 @Component

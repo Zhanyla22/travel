@@ -1,11 +1,10 @@
-package com.example.light_up_travel.model;
+package com.example.light_up_travel.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Getter

@@ -5,7 +5,7 @@ import com.example.light_up_travel.entity.Lifehack;
 import com.example.light_up_travel.enums.Status;
 import com.example.light_up_travel.exceptions.NotFoundResourceException;
 import com.example.light_up_travel.mapper.LifehackMapper;
-import com.example.light_up_travel.model.LifehackDTO;
+import com.example.light_up_travel.dto.LifehackDTO;
 import com.example.light_up_travel.repository.LifehackRepository;
 import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;

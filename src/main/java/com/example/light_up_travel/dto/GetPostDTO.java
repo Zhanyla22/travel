@@ -1,6 +1,5 @@
-package com.example.light_up_travel.model;
+package com.example.light_up_travel.dto;
 
-import com.example.light_up_travel.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,6 @@
 package com.example.light_up_travel.controller;
 
-import com.example.light_up_travel.model.GetPlaceDTO;
+import com.example.light_up_travel.dto.GetPlaceDTO;
 import com.example.light_up_travel.services.impl.PlacesService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;

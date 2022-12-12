@@ -1,9 +1,8 @@
 package com.example.light_up_travel.mapper;
 
-import com.example.light_up_travel.entity.Likes;
 import com.example.light_up_travel.entity.Post;
-import com.example.light_up_travel.model.GetPostDTO;
-import com.example.light_up_travel.model.UserForPost;
+import com.example.light_up_travel.dto.GetPostDTO;
+import com.example.light_up_travel.dto.UserForPost;
 import org.springframework.stereotype.Component;
 
 @Component

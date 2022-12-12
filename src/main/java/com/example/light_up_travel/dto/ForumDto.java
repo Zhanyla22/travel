@@ -1,7 +1,6 @@
-package com.example.light_up_travel.model;
+package com.example.light_up_travel.dto;
 
 import com.example.light_up_travel.enums.Stat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

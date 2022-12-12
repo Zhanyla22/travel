@@ -1,12 +1,8 @@
 package com.example.light_up_travel.mapper;
 
-import com.example.light_up_travel.entity.Files;
 import com.example.light_up_travel.entity.Place;
-import com.example.light_up_travel.entity.Rating;
-import com.example.light_up_travel.model.GetPlaceDTO;
-import com.example.light_up_travel.model.UserForPlaces;
-import com.example.light_up_travel.repository.PlacesRepository;
-import com.example.light_up_travel.repository.RatingRepository;
+import com.example.light_up_travel.dto.GetPlaceDTO;
+import com.example.light_up_travel.dto.UserForPlaces;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
