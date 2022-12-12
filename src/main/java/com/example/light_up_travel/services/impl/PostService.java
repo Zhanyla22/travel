@@ -131,9 +131,10 @@ public class PostService {
         Post post = postRepository.findById(postId).orElseThrow(
                 () -> new NotFoundException("Not found " + postId + " Post")
         );
-            Likes likes = new Likes();
-            likes.setPost(post);
-            likes.setUser(userRepository.getById(userService.getUserByAuthentication().getId()));
-            likesRepository.save(likes);
+        Likes likes = new Likes();
+        likes.setPost(post);
+        likes.setUser(userRepository.getById(userService.getUserByAuthentication().getId()));
+        likesRepository.save(likes);
+
     }
 }
