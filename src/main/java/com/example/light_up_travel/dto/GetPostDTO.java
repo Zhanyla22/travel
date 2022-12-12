@@ -17,5 +17,6 @@ public class GetPostDTO {
     private LocalDate dateCreated;
     private UserForPost user;
     private String filePath;
+    private boolean like;
     private Long counter;
 }

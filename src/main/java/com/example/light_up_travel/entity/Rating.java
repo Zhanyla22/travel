@@ -21,7 +21,7 @@ public class Rating {
     private String comment;
 
     @Column(name ="rate")
-    private Long rate;
+    private int rate;
 
     @ManyToOne
     private User user;
