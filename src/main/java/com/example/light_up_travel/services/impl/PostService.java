@@ -152,6 +152,5 @@ public class PostService {
         likes.setPost(post);
         likes.setUser(userRepository.getById(userService.getUserByAuthentication().getId()));
         likesRepository.save(likes);
-
     }
 }
