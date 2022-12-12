@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PostMapper {
-    public static GetPostDTO PostEntityToPostDto(Post post, Long countLikes) {
+    public static GetPostDTO PostEntityToPostDto(Post post, Long countLikes, boolean like) {
         GetPostDTO postDTO = new GetPostDTO();
         postDTO.setId(post.getId());
         postDTO.setDescription(post.getDescription());
@@ -18,6 +18,7 @@ public class PostMapper {
                         post.getUser().getProfileUrl(),
                         post.getUser().getName(),
                         post.getUser().getSurname()));
+        postDTO.setLike(like);
         return postDTO;
     }
 }
