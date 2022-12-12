@@ -4,7 +4,7 @@ import com.example.light_up_travel.entity.Article;
 import com.example.light_up_travel.enums.Status;
 import com.example.light_up_travel.exceptions.NotFoundResourceException;
 import com.example.light_up_travel.mapper.ArticleMapper;
-import com.example.light_up_travel.model.ArticleDTO;
+import com.example.light_up_travel.dto.ArticleDTO;
 import com.example.light_up_travel.repository.ArticleRepository;
 import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;

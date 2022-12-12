@@ -1,9 +1,9 @@
 package com.example.light_up_travel.controller;
 
 import com.example.light_up_travel.entity.User;
-import com.example.light_up_travel.model.UpdateUserDto;
-import com.example.light_up_travel.model.AddUserDto;
-import com.example.light_up_travel.model.UserProfileDto;
+import com.example.light_up_travel.dto.UpdateUserDto;
+import com.example.light_up_travel.dto.AddUserDto;
+import com.example.light_up_travel.dto.UserProfileDto;
 import com.example.light_up_travel.payload.response.MessageResponse;
 import com.example.light_up_travel.services.impl.SecurityServiceImpl;
 import com.example.light_up_travel.services.impl.UserServiceImpl;

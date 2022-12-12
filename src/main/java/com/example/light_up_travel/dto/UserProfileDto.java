@@ -1,4 +1,4 @@
-package com.example.light_up_travel.model;
+package com.example.light_up_travel.dto;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;

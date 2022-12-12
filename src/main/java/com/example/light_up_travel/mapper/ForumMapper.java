@@ -1,7 +1,7 @@
 package com.example.light_up_travel.mapper;
 
 import com.example.light_up_travel.entity.Forum;
-import com.example.light_up_travel.model.ForumDto;
+import com.example.light_up_travel.dto.ForumDto;
 
 public class ForumMapper {
         public static Forum forumDtoToForum(ForumDto forumDto){

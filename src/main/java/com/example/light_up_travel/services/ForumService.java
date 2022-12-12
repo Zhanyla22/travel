@@ -1,10 +1,9 @@
 package com.example.light_up_travel.services;
 
 import com.example.light_up_travel.entity.Forum;
-import com.example.light_up_travel.model.ForumDto;
+import com.example.light_up_travel.dto.ForumDto;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ForumService {
 

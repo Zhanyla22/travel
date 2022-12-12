@@ -1,7 +1,7 @@
 package com.example.light_up_travel.mapper;
 
 import com.example.light_up_travel.entity.Article;
-import com.example.light_up_travel.model.ArticleDTO;
+import com.example.light_up_travel.dto.ArticleDTO;
 import org.springframework.stereotype.Component;
 
 @Component

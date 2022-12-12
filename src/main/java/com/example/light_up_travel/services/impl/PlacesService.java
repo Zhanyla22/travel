@@ -5,8 +5,8 @@ import com.example.light_up_travel.entity.Place;
 import com.example.light_up_travel.entity.Rating;
 import com.example.light_up_travel.enums.Status;
 import com.example.light_up_travel.mapper.PlacesMapper;
-import com.example.light_up_travel.model.GetPlaceDTO;
-import com.example.light_up_travel.model.UserForPlaces;
+import com.example.light_up_travel.dto.GetPlaceDTO;
+import com.example.light_up_travel.dto.UserForPlaces;
 import com.example.light_up_travel.repository.FilesRepository;
 import com.example.light_up_travel.repository.PlacesRepository;
 import com.example.light_up_travel.repository.RatingRepository;
@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
