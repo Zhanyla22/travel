@@ -77,12 +77,6 @@ public class ForumServiceImpl implements ForumService {
         return ForumMapper.ForumToForumDTO(forumRepository.save(forum));
     }
 
-
-    @Override
-    public ForumDto updateNotDeletedForumById(Long id) {
-        return null;
-    }
-
     @Override
     public void deleteNotDeletedForumById(Long id) {
         Forum forum = isForumDeletedCheck(id);

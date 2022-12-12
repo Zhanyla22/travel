@@ -1,6 +1,11 @@
 package com.example.light_up_travel.services.impl;
 
 import com.example.light_up_travel.entity.*;
+
+import com.example.light_up_travel.entity.Category;
+import com.example.light_up_travel.entity.Files;
+import com.example.light_up_travel.entity.Place;
+import com.example.light_up_travel.entity.Rating;
 import com.example.light_up_travel.enums.Status;
 import com.example.light_up_travel.mapper.PlacesMapper;
 import com.example.light_up_travel.dto.GetPlaceDTO;

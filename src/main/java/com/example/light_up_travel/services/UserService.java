@@ -7,6 +7,7 @@ import com.example.light_up_travel.dto.AddUserDto;
 import com.example.light_up_travel.dto.UserProfileDto;
 
 import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 
@@ -14,7 +15,7 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    AddUserDto add(AddUserDto signupRequest) throws MessagingException;
+    AddUserDto add(AddUserDto signupRequest) throws MessagingException, UnsupportedEncodingException;
 
 
     User updateNotDeletedUserById(Long id, UpdateUserDto updateUserDto);
