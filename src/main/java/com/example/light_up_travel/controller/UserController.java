@@ -62,7 +62,7 @@ public class UserController {
         }
     }
     @Operation(summary = "Update not deleted user's profile by id / 1- request")
-    @PutMapping("/update-profile/{id}")
+    @PutMapping("/update-profile")
     public Long updateUserProfileById(@RequestBody UserProfileDto userProfileDto) throws Exception{
 
         return userService.updateProfilePageById(userProfileDto);
