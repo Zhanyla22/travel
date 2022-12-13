@@ -52,6 +52,17 @@ public class ForumServiceImpl implements ForumService {
         return forumDto;
     }
 
+    public List<ForumDto> getAllPendingForums() {
+        Iterable<Forum> forums = forumRepository.getAllForumPending();
+        List<ForumDto> forumDto = new ArrayList<>();
+
+        for (Forum forum : forums){
+            forumDto.add(ForumMapper.ForumToForumDTO(forum));
+        }
+
+        return forumDto;
+    }
+
     @Override
     public List<ForumDto> getAllDeletedForums() {
         Iterable<Forum> forums = forumRepository.findAllDeletedForums();

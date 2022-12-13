@@ -53,6 +53,18 @@ public class ForumController {
         }
     }
 
+    @Operation(summary = "Get all Pending forums")
+    @GetMapping("/all-pending")
+    ResponseEntity<?> getAllPendingForums() {
+        try{
+            return ResponseEntity.ok(forumService.getAllPendingForums());
+        } catch (NotFoundException nfe) {
+            throw new NotFoundException(nfe.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().body(new MessageResponse(ex.getMessage()));
+        }
+    }
+
     @Operation(summary = "Get all not deleted forums")
     @GetMapping("/all-not-deleted")
     ResponseEntity<?> getAllNotDeletedForums() {

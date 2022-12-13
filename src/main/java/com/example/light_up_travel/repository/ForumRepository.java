@@ -19,4 +19,7 @@ public interface ForumRepository extends JpaRepository<Forum, Long> {
 
     @Query("SELECT f FROM Forum f WHERE f.id = ?1 and f.dateDeleted is not null")
     Optional<Forum> findDeletedUserById(Long id);
+
+    @Query(value = "SELECT * FROM Forum where status='PENDING'",nativeQuery = true)
+    List<Forum> getAllForumPending();
 }
