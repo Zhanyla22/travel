@@ -167,8 +167,8 @@ public class PostService {
         likesRepository.save(likes);
     }
 
-    public List<GetPostDTO> getAllPostsByUser(Long userId) {
-        List<Post> posts = postRepository.findAllPostsByUser(userId);
+    public List<GetPostDTO> getAllPostsByUser() {
+        List<Post> posts = postRepository.findAllPostsByUser(userService.getUserByAuthentication().getId());
         List<GetPostDTO> result = new ArrayList<>();
         for (Post p : posts)
             result.add(PostMapper.PostEntityToPostDto(
