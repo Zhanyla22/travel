@@ -35,16 +35,16 @@ public class PostController {
     }
 
     @Operation(summary = "approve post(for admin panel's cencership)")
-    @PostMapping("/approve-post")
-    public ResponseEntity<GetPostDTO> approvePost(@RequestBody GetPostDTO getPostDTO){
-        postService.approvePost(getPostDTO.getId());
+    @PostMapping("/approve-post/{postId}")
+    public ResponseEntity<GetPostDTO> approvePost(@PathVariable Long postId){
+        postService.approvePost(postId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Operation(summary = "disapprove post(for admin panel's cencership)")
-    @PostMapping("/disapprove-post")
-    public ResponseEntity<GetPostDTO> disApprovePost(@RequestBody GetPostDTO getPostDTO){
-        postService.disApprovePost(getPostDTO.getId());
+    @PostMapping("/disapprove-post/{postId}")
+    public ResponseEntity<GetPostDTO> disApprovePost(@PathVariable Long postId){
+        postService.disApprovePost(postId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @Operation(summary = "edit post  for client side 1 req")
@@ -54,7 +54,7 @@ public class PostController {
     }
 
     @Operation(summary = "edit post  for client side 2 req")
-    @PutMapping("/edit-post-image/{id}")  //
+    @PutMapping("/edit-post-image/{postId}")  //
     public ResponseEntity<String> updatePostImage(@PathVariable Long postId, @RequestPart MultipartFile multipartFile) throws Exception {
         return ResponseEntity.ok(postService.updateImageForPost(postId, multipartFile));
     }
