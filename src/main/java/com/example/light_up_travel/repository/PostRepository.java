@@ -16,7 +16,7 @@ public interface PostRepository  extends JpaRepository<Post,Long> {
 
     Page<Post> findByStatus(Status status, Pageable pageable);
 
-    @Query(value = "SELECT p from post p where p.user.id = :userId AND p.status='ACTIVE'")
+    @Query(value = "SELECT * from post  where user_id = :userId AND status='ACTIVE'",nativeQuery = true)
     List<Post> findAllPostsByUser(Long userId);
 
     @Query(value = "SELECT * FROM post where status='WAITING_FOR_APPROVE'",nativeQuery = true)
