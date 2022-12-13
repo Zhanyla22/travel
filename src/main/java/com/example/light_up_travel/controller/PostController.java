@@ -29,7 +29,7 @@ public class PostController {
     }
 
     @Operation(summary = "Create new Post image 2 req")
-    @PostMapping("/create/new-post-image")
+    @PostMapping("/create/new-post-image/{postId}")
     public ResponseEntity<String> createNewPost(@PathVariable Long postId, @RequestPart MultipartFile multipartFile) throws  Exception{
         return ResponseEntity.ok(postService.saveImageForPost(postId,multipartFile));
     }
