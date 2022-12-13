@@ -1,5 +1,6 @@
 package com.example.light_up_travel.services.impl;
 
+import com.example.light_up_travel.dto.*;
 import com.example.light_up_travel.entity.PasswordResetToken;
 import com.example.light_up_travel.entity.Role;
 import com.example.light_up_travel.entity.User;
@@ -9,10 +10,6 @@ import com.example.light_up_travel.exceptions.EmailAlreadyExistsException;
 import com.example.light_up_travel.exceptions.NotFoundException;
 import com.example.light_up_travel.exceptions.NotFoundResourceException;
 import com.example.light_up_travel.mapper.BasicUserMapper;
-import com.example.light_up_travel.dto.BasicUserDto;
-import com.example.light_up_travel.dto.UpdateUserDto;
-import com.example.light_up_travel.dto.AddUserDto;
-import com.example.light_up_travel.dto.UserProfileDto;
 import com.example.light_up_travel.repository.PasswordResetTokenRepository;
 import com.example.light_up_travel.repository.RoleRepository;
 import com.example.light_up_travel.repository.UserRepository;
@@ -206,10 +203,6 @@ public class UserServiceImpl implements UserService {
     public Long updateProfilePageById(UserProfileDto userProfileDto){
 
         User user = isUserDeletedCheck(getUserByAuthentication().getId());
-        if (userProfileDto.getEmail() != null &
-                userRepository.existsByEmail(userProfileDto.getEmail().toLowerCase())) {
-            throw new EmailAlreadyExistsException("User with email: " + userProfileDto.getEmail() + " - is already exist");
-        }
         user.setName(userProfileDto.getName());
         user.setSurname(userProfileDto.getSurname());
         user.setEmail(userProfileDto.getEmail().toLowerCase());
@@ -223,6 +216,7 @@ public class UserServiceImpl implements UserService {
 
         return user.getId();
     }
+
 
 
     public String updateProfileUrl(Long userId, MultipartFile multipartFile){

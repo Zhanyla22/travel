@@ -21,7 +21,6 @@ public class Rating {
     private String comment;
 
     @Column(name ="rate")
-
     private int rate;
 
     @ManyToOne

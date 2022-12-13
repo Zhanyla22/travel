@@ -1,6 +1,7 @@
 package com.example.light_up_travel.repository;
 
 import com.example.light_up_travel.entity.Place;
+import com.example.light_up_travel.entity.PlaceCategories;
 import com.example.light_up_travel.entity.Post;
 import com.example.light_up_travel.enums.Status;
 import com.example.light_up_travel.enums.Travel;
@@ -15,6 +16,7 @@ import java.util.List;
 public interface PlacesRepository extends JpaRepository<Place, Integer>{
 
     Page<Place> findByStatus(Status status, Pageable pageable);
+
 
 
 }

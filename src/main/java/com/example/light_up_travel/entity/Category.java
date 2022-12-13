@@ -17,12 +17,11 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "category")
-    private CategoryEnum category;
+    @Column(name = "category_name")
+    private String categoryName;
 
     @Column(name = "parent_id")
-    private Long parentId;
+    private int parentId;
 }
