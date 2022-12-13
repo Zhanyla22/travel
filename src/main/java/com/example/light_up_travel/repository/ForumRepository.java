@@ -11,10 +11,10 @@ import java.util.Optional;
 @Repository
 public interface ForumRepository extends JpaRepository<Forum, Long> {
 
-    @Query("SELECT f FROM Forum f WHERE f.dateDeleted is null")
+    @Query("SELECT f FROM Forum f WHERE f.dateDeleted is null and f.status = 'APPROVED'")
     List<Forum> findAllNotDeletedForums();
 
-    @Query("SELECT f FROM Forum f WHERE f.dateDeleted is not null")
+    @Query("SELECT f FROM Forum f WHERE f.dateDeleted is not null and f.status = 'DISAPPROVED'")
     List<Forum> findAllDeletedForums();
 
     @Query("SELECT f FROM Forum f WHERE f.id = ?1 and f.dateDeleted is not null")
