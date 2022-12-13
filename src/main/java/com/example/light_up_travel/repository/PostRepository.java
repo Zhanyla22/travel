@@ -1,5 +1,6 @@
 package com.example.light_up_travel.repository;
 
+import com.example.light_up_travel.entity.Forum;
 import com.example.light_up_travel.entity.Post;
 import com.example.light_up_travel.enums.Status;
 import org.springframework.data.domain.Page;
@@ -16,5 +17,8 @@ public interface PostRepository  extends JpaRepository<Post,Long> {
 
 //    @Query(value = "SELECT post from post where user = :userId")
 //    List<Post> findByUser(Long userId);
+
+    @Query(value = "SELECT * FROM post where status='WAITING_FOR_APPROVE'",nativeQuery = true)
+    List<Post> getAllPostPending();
 
 }

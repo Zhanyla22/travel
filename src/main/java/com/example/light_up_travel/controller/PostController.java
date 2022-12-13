@@ -71,6 +71,11 @@ public class PostController {
         return postService.getAllActivePosts(page, size);
     }
 
+    @Operation(summary = "Get all pending Posts(for admin panel's cencership)")
+    @GetMapping("/list-of-pending-posts")
+    public List<GetPostDTO> getAllPending(){
+        return postService.getAllPendingPosts();
+    }
     @Operation(summary = "delete post by id - only for client side")
     @DeleteMapping("/delete-post/{id}")
     public ResponseEntity<Void> deletePostById(@PathVariable Long id){

@@ -1,10 +1,13 @@
 package com.example.light_up_travel.services.impl;
 
+import com.example.light_up_travel.dto.ForumDto;
+import com.example.light_up_travel.entity.Forum;
 import com.example.light_up_travel.entity.Likes;
 import com.example.light_up_travel.entity.Post;
 import com.example.light_up_travel.entity.User;
 import com.example.light_up_travel.enums.Status;
 import com.example.light_up_travel.exceptions.NotFoundException;
+import com.example.light_up_travel.mapper.ForumMapper;
 import com.example.light_up_travel.mapper.PostMapper;
 import com.example.light_up_travel.dto.CreatePostDTO;
 import com.example.light_up_travel.dto.GetPostDTO;
@@ -17,6 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -106,6 +110,15 @@ public class PostService {
                     likesRepository.countById(p.getId()),
                     !likesRepository.existsByPost_IdAndUser_Id(p.getId(), userService.getUserByAuthentication().getId())));
         return result;
+    }
+
+    public List<GetPostDTO> getAllPendingPosts() {
+      List<GetPostDTO> postMapperList = new ArrayList<>();
+
+      for(Post p:postRepository.getAllPostPending())
+          postMapperList.add(PostMapper.PostEntityToPostDto(p, likesRepository.countById(p.getId()),
+                  !likesRepository.existsByPost_IdAndUser_Id(p.getId(), userService.getUserByAuthentication().getId())));
+      return postMapperList;
     }
     public ResponseEntity<Long> updatePost(UpdatePostDTO updatePostDTO) throws Exception {
         try {
