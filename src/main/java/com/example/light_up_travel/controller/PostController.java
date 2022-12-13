@@ -71,6 +71,12 @@ public class PostController {
         return postService.getAllActivePosts(page, size);
     }
 
+    @Operation(summary = "Get all Posts of user(for user only)")
+    @GetMapping("/list-of-posts/{userId}")
+    public List<GetPostDTO> getAllUserPosts(@PathVariable Long userId){
+        return postService.getAllPostsByUser(userId);
+    }
+
     @Operation(summary = "Get all pending Posts(for admin panel's cencership)")
     @GetMapping("/list-of-pending-posts")
     public List<GetPostDTO> getAllPending(){

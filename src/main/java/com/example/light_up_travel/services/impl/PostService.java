@@ -166,4 +166,15 @@ public class PostService {
         likes.setUser(userRepository.getById(userService.getUserByAuthentication().getId()));
         likesRepository.save(likes);
     }
+
+    public List<GetPostDTO> getAllPostsByUser(Long userId) {
+        List<Post> posts = postRepository.findAllPostsByUser(userId);
+        List<GetPostDTO> result = new ArrayList<>();
+        for (Post p : posts)
+            result.add(PostMapper.PostEntityToPostDto(
+                    p,
+                    likesRepository.countById(p.getId()),
+                    !likesRepository.existsByPost_IdAndUser_Id(p.getId(), userService.getUserByAuthentication().getId())));
+        return result;
+    }
 }
