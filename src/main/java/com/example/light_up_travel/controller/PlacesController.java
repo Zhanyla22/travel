@@ -21,10 +21,10 @@ public class PlacesController {
 
 
 
-    @Operation(summary =  "Получение всего активного places ")
-    @GetMapping("/get-all-active/{categoryId}")
-    public List<GetPlaceDTO> getAllActivePlaces(@RequestParam Integer page, @RequestParam Integer size,@PathVariable Long categoryId) throws Exception {
-        return placesService.getAll(page,size,categoryId);
+    @Operation(summary =  "Получение places по айдишке ")
+    @GetMapping("/get-by-id/{placeId}")
+    public ResponseEntity<GetPlaceDTO> getPlacesById(@PathVariable Long placeId) throws Exception {
+        return placesService.getActivePlaceById(placeId);
     }
 
     @Operation(summary =  "Получение всего активного places о категориям")
