@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
-    @Query(value = "select categoryName from category where id=:parentId ",nativeQuery = true)
+    @Query(value = "select category from category where id=:parentId ",nativeQuery = true)
     String getParentName(int parentId);
 }
