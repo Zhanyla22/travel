@@ -26,7 +26,7 @@ public class PlacesController {
         return placesService.getAll(page,size,categoryId);
     }
 
-    @Operation(summary =  "Получение всего активного places о категориям ")
+    @Operation(summary =  "Получение всего активного places о категориям")
     @GetMapping("/get-all-active-by-category/{categoryId}")
     public List<GetPlaceWithCategDTO> getAllActiveByCategoryPlaces(@PathVariable int categoryId) throws Exception {
         return placesService.getAllPlacesByCategory(categoryId);
