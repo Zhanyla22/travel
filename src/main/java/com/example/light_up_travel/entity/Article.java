@@ -41,16 +41,14 @@ public class Article {
     @Column(name = "subtitle")
     private String subtitle;
 
-    @Column(name = "text")
+    @Column(name = "text",length = 2000)
     private String text;
-
 
     @Column(name = "date_updated")
     private LocalDateTime dateUpdated;
 
     @Column(name = "date_deleted")
     private LocalDateTime dateDeleted;
-
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
