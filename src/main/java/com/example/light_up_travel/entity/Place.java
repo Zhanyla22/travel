@@ -28,9 +28,6 @@ public class Place {
     @Column(name ="city")
     private String city;
 
-    @Column(name ="address")
-    private String address;
-
     @Column(name ="description")
     private String description;
 
@@ -41,7 +38,8 @@ public class Place {
     @Column(name = "status")
     private Status status;
 
-
+    @Column(name = "address_link")
+    private String addressLink;
 
     @Column(name ="dateCreated")
     private LocalDate dateCreated;

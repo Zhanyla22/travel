@@ -1,19 +1,14 @@
 package com.example.light_up_travel.services.impl;
 
-import com.example.light_up_travel.entity.*;
+import com.example.light_up_travel.dto.GetPlaceWithCategDTO;
 
-import com.example.light_up_travel.entity.Category;
-import com.example.light_up_travel.entity.Files;
-import com.example.light_up_travel.entity.Place;
-import com.example.light_up_travel.entity.Rating;
+import com.example.light_up_travel.entity.*;
 import com.example.light_up_travel.enums.Status;
+import com.example.light_up_travel.mapper.GetPlaceWithCategoryMapper;
 import com.example.light_up_travel.mapper.PlacesMapper;
 import com.example.light_up_travel.dto.GetPlaceDTO;
 import com.example.light_up_travel.dto.UserForPlaces;
-import com.example.light_up_travel.repository.CategoryRepository;
-import com.example.light_up_travel.repository.FilesRepository;
-import com.example.light_up_travel.repository.PlacesRepository;
-import com.example.light_up_travel.repository.RatingRepository;
+import com.example.light_up_travel.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -37,10 +32,8 @@ public class PlacesService {
 
     private final CategoryRepository categoryRepository;
 
+    private final PlaceCategoriesRepository placeCategoriesRepository;
     public List<GetPlaceDTO> getAll(int page, int size,Long categoryId) throws Exception {
-        Category category = categoryRepository.findById(categoryId).orElseThrow(
-                () -> new Exception("category with  id = " + categoryId+ " not found")
-        );
         Pageable pageable = PageRequest.of(page, size);
         Page<Place> places = placesRepository.findByStatus(Status.ACTIVE, pageable);
         List<GetPlaceDTO> result = new ArrayList<>();
@@ -70,5 +63,13 @@ public class PlacesService {
 
 
 
+     public List<GetPlaceWithCategDTO>  getAllPlacesByCategory(int categoryId){
+
+         List<PlaceCategories> placeCategories = placeCategoriesRepository.getPlaceCategoriesByCategoryIsLike(categoryId);
+           List<GetPlaceWithCategDTO> placeMapperList = new ArrayList<>();
+           for(Place p:placesRepository.findAll())
+               placeMapperList.add(GetPlaceWithCategoryMapper.PlaceEntityToPlaceDTO(p,ratingRepository.avgRate(p.getId())));
+               return placeMapperList;
+    }
 
 }
