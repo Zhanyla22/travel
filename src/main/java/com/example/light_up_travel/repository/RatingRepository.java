@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface RatingRepository extends JpaRepository<Rating,Long> {
-    @Query(value ="SELECT AVG(r.rate) FROM rating r WHERE r.place = ?1",nativeQuery = true)
-    double avgRate(Long placeId);
+    @Query(value ="SELECT AVG(r.rate) FROM rating r WHERE r.place_id = ?1",nativeQuery = true)
+    Double avgRate(Long placeId);
     List<Rating> findAllByPlace_Id(Long placeId);
 }

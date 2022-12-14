@@ -16,7 +16,7 @@ public interface PlaceCategoriesRepository extends JpaRepository<PlaceCategories
             "JOIN category c" +
             " on " +
             "c.id = place_categories.category_id" +
-            " WHERE category_id = :categoryId")
+            " WHERE category_id = :categoryId AND p.status = 'ACTIVE' ", nativeQuery = true)
     List<PlaceCategories> getPlaceCategoriesByCategoryIsLike(int categoryId);
 
 }

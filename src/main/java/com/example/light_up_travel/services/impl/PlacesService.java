@@ -67,7 +67,7 @@ public class PlacesService {
 
          List<PlaceCategories> placeCategories = placeCategoriesRepository.getPlaceCategoriesByCategoryIsLike(categoryId);
            List<GetPlaceWithCategDTO> placeMapperList = new ArrayList<>();
-           for(Place p:placesRepository.findAll())
+           for(PlaceCategories p:placeCategories)
                placeMapperList.add(GetPlaceWithCategoryMapper.PlaceEntityToPlaceDTO(p,ratingRepository.avgRate(p.getId())));
                return placeMapperList;
     }
