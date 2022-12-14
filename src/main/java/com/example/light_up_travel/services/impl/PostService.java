@@ -128,9 +128,9 @@ public class PostService {
             post.setDescription(updatePostDTO.getDescription());
             post.setDateUpdated(LocalDateTime.now()); //check it
             postRepository.save(post);
-            return new ResponseEntity<Long>(post.getId(),HttpStatus.OK);
+            return new ResponseEntity<>(post.getId(),HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<Long>(HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
