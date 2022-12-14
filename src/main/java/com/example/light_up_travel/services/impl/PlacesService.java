@@ -1,5 +1,6 @@
 package com.example.light_up_travel.services.impl;
 
+import com.example.light_up_travel.dto.CreatePlaceDto;
 import com.example.light_up_travel.dto.GetPlaceWithCategDTO;
 
 import com.example.light_up_travel.entity.*;
@@ -13,8 +14,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,4 +76,25 @@ public class PlacesService {
                return placeMapperList;
     }
 
+    public ResponseEntity<Long> createNewPlace(int categoryId, CreatePlaceDto createPlaceDto) {
+        try {
+            Category category = categoryRepository.getById(categoryId);
+            PlaceCategories placeCategories = new PlaceCategories();
+            Place place = new Place();
+            place.setName(createPlaceDto.getName());
+            place.setDescription(createPlaceDto.getDescription());
+            place.setCity(createPlaceDto.getCity());
+            place.setAddressLink(createPlaceDto.getAddressLink());
+            place.setDateCreated(LocalDate.now());
+            place.setStatus(Status.ACTIVE);
+            placesRepository.saveAndFlush(place);
+
+            placeCategories.setPlace(placesRepository.getById(place.getId()));
+            placeCategories.setCategory(categoryRepository.getById(category.getId()));
+
+            return new ResponseEntity<>(place.getId(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
 }

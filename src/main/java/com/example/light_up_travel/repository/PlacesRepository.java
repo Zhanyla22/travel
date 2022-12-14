@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface PlacesRepository extends JpaRepository<Place, Integer>{
+public interface PlacesRepository extends JpaRepository<Place, Long>{
 
     Page<Place> findByStatus(Status status, Pageable pageable);
 
