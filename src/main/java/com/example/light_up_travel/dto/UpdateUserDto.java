@@ -29,6 +29,6 @@ public class UpdateUserDto {
     @Schema(example = "[\n" +
             "    \"user\"\n" +
             "  ]", description = "3 type of roles: \"user\", \"admin\", \"moderator\"")
-    private Set<String> roles;
+    private Set<String> role;
 
 }

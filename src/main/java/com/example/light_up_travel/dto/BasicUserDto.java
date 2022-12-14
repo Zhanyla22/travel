@@ -22,6 +22,6 @@ public class BasicUserDto {
 
     private String mentorName;
 
-    private Set<Role> role;
+    private Set<Role> roles;
 
 }

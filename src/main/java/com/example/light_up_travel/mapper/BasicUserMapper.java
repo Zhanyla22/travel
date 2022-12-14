@@ -12,7 +12,7 @@ public class BasicUserMapper {
         user.setName(userDTO.getName());
         user.setSurname(userDTO.getSurname());
         user.setEmail(userDTO.getEmail());
-        user.setRoles(userDTO.getRole());
+        user.setRoles(userDTO.getRoles());
         return user;
     }
 
@@ -22,7 +22,7 @@ public class BasicUserMapper {
         userDTO.setName(user.getName());
         userDTO.setSurname(user.getSurname());
         userDTO.setEmail(user.getEmail());
-        userDTO.setRole(user.getRoles());
+        userDTO.setRoles(user.getRoles());
         return userDTO;
     }
 }
