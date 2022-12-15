@@ -1,12 +1,12 @@
 package com.example.light_up_travel.controller;
 
 import com.example.light_up_travel.entity.User;
-import com.example.light_up_travel.dto.UpdateUserDto;
-import com.example.light_up_travel.dto.AddUserDto;
-import com.example.light_up_travel.dto.UserProfileDto;
+import com.example.light_up_travel.dto.UpdateUserDTO;
+import com.example.light_up_travel.dto.AddUserDTO;
+import com.example.light_up_travel.dto.UserProfileDTO;
 import com.example.light_up_travel.payload.response.MessageResponse;
-import com.example.light_up_travel.services.impl.SecurityServiceImpl;
-import com.example.light_up_travel.services.impl.UserServiceImpl;
+import com.example.light_up_travel.services.SecurityService;
+import com.example.light_up_travel.services.UserService;
 import com.example.light_up_travel.utils.EmailUtility;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.webjars.NotFoundException;
 
 import javax.mail.MessagingException;
-import javax.mail.Multipart;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
@@ -30,18 +29,18 @@ import java.util.Random;
 public class UserController {
 
     @Autowired
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     @Autowired
     private JavaMailSender mailSender;
 
     @Autowired
-    private SecurityServiceImpl securityService;
+    private SecurityService securityService;
 
 
     @Operation(summary = "Add new user")
     @PostMapping("/add")
-    public ResponseEntity<?> addUser(@Valid @RequestBody AddUserDto signupRequest) {
+    public ResponseEntity<?> addUser(@Valid @RequestBody AddUserDTO signupRequest) {
         try {
             userService.add(signupRequest);
             return ResponseEntity.ok(new MessageResponse("User is created successfully"));
@@ -52,7 +51,7 @@ public class UserController {
 
     @Operation(summary = "Update not deleted user by id only for admins")
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateUserById(@RequestBody UpdateUserDto updateUserDto, @PathVariable Long id) {
+    public ResponseEntity<?> updateUserById(@RequestBody UpdateUserDTO updateUserDto, @PathVariable Long id) {
         try {
             return ResponseEntity.ok(userService.updateNotDeletedUserById(id, updateUserDto));
         } catch (NotFoundException nfe) {
@@ -63,7 +62,7 @@ public class UserController {
     }
     @Operation(summary = "Update not deleted user's profile by id / 1- request")
     @PutMapping("/update-profile/{id}")
-    public Long updateUserProfileById(@RequestBody UserProfileDto userProfileDto) throws Exception{
+    public Long updateUserProfileById(@RequestBody UserProfileDTO userProfileDto) throws Exception{
 
         return userService.updateProfilePageById(userProfileDto);
 //        try {

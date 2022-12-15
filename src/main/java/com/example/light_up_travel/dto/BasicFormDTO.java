@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BasicFormDto {
+public class BasicFormDTO {
 
     private String description;
 

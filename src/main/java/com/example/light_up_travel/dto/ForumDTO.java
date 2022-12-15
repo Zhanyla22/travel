@@ -10,13 +10,13 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ForumDto {
+public class ForumDTO {
 
     private Long id;
 
     private String description;
 
-    private BasicUserDto user;
+    private BasicUserDTO user;
 
     private Stat status;
 

@@ -1,11 +1,9 @@
 package com.example.light_up_travel.controller;
 
 
-import com.example.light_up_travel.dto.CommentsDto;
-import com.example.light_up_travel.dto.FavouritesDto;
-import com.example.light_up_travel.dto.UpdateUserDto;
+import com.example.light_up_travel.dto.FavouritesDTO;
 import com.example.light_up_travel.payload.response.MessageResponse;
-import com.example.light_up_travel.services.impl.FavouriteServiceImpl;
+import com.example.light_up_travel.services.FavouriteService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +16,11 @@ import org.webjars.NotFoundException;
 @RequestMapping("/favourite")
 public class FavouritesController {
 
-    private final FavouriteServiceImpl favouriteService;
+    private final FavouriteService favouriteService;
 
     @Operation(summary = "Add new favourite place")
     @PostMapping("/add")
-    public ResponseEntity<?> addFavourite(@RequestBody FavouritesDto favouriteDto) {
+    public ResponseEntity<?> addFavourite(@RequestBody FavouritesDTO favouriteDto) {
         try{
             favouriteService.addFavourite(favouriteDto);
             return ResponseEntity.ok(new MessageResponse("Favourite place is added successfully"));
@@ -69,7 +67,7 @@ public class FavouritesController {
 
     @Operation(summary = "Update not deleted favourite place by id")
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateUserById(@RequestBody FavouritesDto favouritesDto, @PathVariable Long id) {
+    public ResponseEntity<?> updateUserById(@RequestBody FavouritesDTO favouritesDto, @PathVariable Long id) {
         try {
             return ResponseEntity.ok(favouriteService.updateNotDeletedFavouriteById(id, favouritesDto));
         } catch (NotFoundException nfe) {

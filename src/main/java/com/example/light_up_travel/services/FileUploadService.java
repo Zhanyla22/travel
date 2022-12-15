@@ -1,4 +1,4 @@
-package com.example.light_up_travel.services.impl;
+package com.example.light_up_travel.services;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;

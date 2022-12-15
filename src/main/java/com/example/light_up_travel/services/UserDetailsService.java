@@ -1,10 +1,8 @@
-package com.example.light_up_travel.services.impl;
+package com.example.light_up_travel.services;
 
 import com.example.light_up_travel.entity.User;
 import com.example.light_up_travel.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,19 +11,19 @@ import java.util.Optional;
 
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
     @Autowired
     UserRepository userRepository;
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+    public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 
         Optional<User> user = userRepository.findByEmail(login);
 
         User user1 = user.get();
 
-        return UserDetailsImpl.build(user1);
+        return UserDetails.build(user1);
     }
 
 }

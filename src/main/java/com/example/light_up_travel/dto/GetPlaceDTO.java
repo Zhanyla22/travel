@@ -15,7 +15,7 @@ public class GetPlaceDTO {
     private String mainFilePath;
     private String name;
     private Double rate;
-    private List<UserForPlaces> comments;
+    private List<UserForPlacesDTO> comments;
     private List<String> files;
     private String description;
 }

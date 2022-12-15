@@ -1,4 +1,4 @@
-package com.example.light_up_travel.services.impl;
+package com.example.light_up_travel.services;
 
 import com.example.light_up_travel.entity.Article;
 import com.example.light_up_travel.enums.Status;

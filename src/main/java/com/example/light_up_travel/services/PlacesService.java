@@ -1,4 +1,4 @@
-package com.example.light_up_travel.services.impl;
+package com.example.light_up_travel.services;
 
 import com.example.light_up_travel.dto.*;
 
@@ -38,7 +38,7 @@ public class PlacesService {
 
     private final PlaceCategoriesRepository placeCategoriesRepository;
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     private final UserRepository userRepository;
     public ResponseEntity<GetPlaceDTO> getActivePlaceById(Long placeId) throws Exception {
@@ -47,16 +47,16 @@ public class PlacesService {
                     () -> new NotFoundException("Place with id" + placeId + "not found")
             );
                 List<Rating> listOfRatings = ratingRepository.findAllByPlace_Id(place.getId());
-                List<UserForPlaces> userForPlacesList = new ArrayList<>();
+                List<UserForPlacesDTO> userForPlacesDTOList = new ArrayList<>();
                 for (Rating r : listOfRatings) {
-                    UserForPlaces userForPlaces = new UserForPlaces();
-                    userForPlaces.setName(r.getUser().getName());
-                    userForPlaces.setSurname(r.getUser().getSurname());
-                    userForPlaces.setProfileUrl(r.getUser().getProfileUrl());
-                    userForPlaces.setRatingId(r.getId());
-                    userForPlaces.setComment(r.getComment());
-                    userForPlaces.setRate(r.getRate());
-                    userForPlacesList.add(userForPlaces);
+                    UserForPlacesDTO userForPlacesDTO = new UserForPlacesDTO();
+                    userForPlacesDTO.setName(r.getUser().getName());
+                    userForPlacesDTO.setSurname(r.getUser().getSurname());
+                    userForPlacesDTO.setProfileUrl(r.getUser().getProfileUrl());
+                    userForPlacesDTO.setRatingId(r.getId());
+                    userForPlacesDTO.setComment(r.getComment());
+                    userForPlacesDTO.setRate(r.getRate());
+                    userForPlacesDTOList.add(userForPlacesDTO);
                 }
                 List<Files> filesList = filesRepository.findAllByPlace_Id(place.getId());
                 List<String> list = new ArrayList<>();
@@ -64,7 +64,7 @@ public class PlacesService {
                     list.add(f.getFilePath());
                 }
 
-                GetPlaceDTO getPlaceDTO = PlacesMapper.placeEntityToDTO(place,userForPlacesList,list, ratingRepository.avgRate(place.getId()));
+                GetPlaceDTO getPlaceDTO = PlacesMapper.placeEntityToDTO(place, userForPlacesDTOList,list, ratingRepository.avgRate(place.getId()));
                 return new ResponseEntity<>(getPlaceDTO,HttpStatus.OK);
             }
         catch (Exception e){
@@ -94,7 +94,7 @@ public class PlacesService {
 
     }
 
-    public ResponseEntity<Long> createNewPlace(int categoryId, CreatePlaceDto createPlaceDto) {
+    public ResponseEntity<Long> createNewPlace(int categoryId, CreatePlaceDTO createPlaceDto) {
         try {
             Category category = categoryRepository.getById(categoryId);
             PlaceCategories placeCategories = new PlaceCategories();
@@ -168,7 +168,7 @@ public class PlacesService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public void ratePlace(Long placeId, RatingDto ratingDto){
+    public void ratePlace(Long placeId, RatingDTO ratingDto){
         Place place = placesRepository.findById(placeId).orElseThrow(
                 ()-> new NotFoundException("Place with id "+placeId+" not found")
         );

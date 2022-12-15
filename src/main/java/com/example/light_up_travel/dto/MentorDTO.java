@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MentorDto {
+public class MentorDTO {
     private Long menteeId;
 
     private Long mentorId;

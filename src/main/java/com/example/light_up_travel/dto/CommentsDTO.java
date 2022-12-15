@@ -1,20 +1,23 @@
 package com.example.light_up_travel.dto;
 
-
+import com.example.light_up_travel.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FavouritesDto {
+public class CommentsDTO {
+
     private Long id;
 
-    private String notes;
+    private String comment;
 
-    private BasicUserDto user;
+    private BasicUserDTO userId;
 
-    private BasicPlaceDto place;
+    private BasicPostDTO postId;
+
+    private Status status;
+
 }

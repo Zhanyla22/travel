@@ -1,4 +1,4 @@
-package com.example.light_up_travel.services.impl;
+package com.example.light_up_travel.services;
 
 import com.example.light_up_travel.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @AllArgsConstructor
-public class UserDetailsImpl implements UserDetails {
+public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -32,12 +31,12 @@ public class UserDetailsImpl implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
 
-    public static UserDetailsImpl build(User user) {
+    public static UserDetails build(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toList());
 
-        return new UserDetailsImpl(
+        return new UserDetails(
                 user.getId(),
                 user.getEmail(),
                 user.getPassword(),
@@ -77,7 +76,7 @@ public class UserDetailsImpl implements UserDetails {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        UserDetailsImpl user = (UserDetailsImpl) o;
+        UserDetails user = (UserDetails) o;
         return Objects.equals(id, user.id);
     }
 }

@@ -1,9 +1,8 @@
 package com.example.light_up_travel.controller;
 
 import com.example.light_up_travel.dto.*;
-import com.example.light_up_travel.services.impl.PlacesService;
+import com.example.light_up_travel.services.PlacesService;
 import io.swagger.v3.oas.annotations.Operation;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +41,7 @@ public class PlacesController {
 
     @Operation(summary = "создать новый place без фото/ 1 запрос")
     @PostMapping("/create-new-place-without-photo/{categoryId}")
-    public ResponseEntity<Long> createNewPlace(@PathVariable int categoryId,@RequestBody CreatePlaceDto createPlaceDto) throws Exception{
+    public ResponseEntity<Long> createNewPlace(@PathVariable int categoryId,@RequestBody CreatePlaceDTO createPlaceDto) throws Exception{
         return placesService.createNewPlace(categoryId,createPlaceDto);
     }
 
@@ -74,7 +73,7 @@ public class PlacesController {
 
     @Operation(summary = "Rate place")
     @PostMapping("/rate/{placeId}")
-    public void ratePlace(@PathVariable Long placeId, @RequestBody RatingDto ratingDto){
+    public void ratePlace(@PathVariable Long placeId, @RequestBody RatingDTO ratingDto){
 
         placesService.ratePlace(placeId,ratingDto);
     }

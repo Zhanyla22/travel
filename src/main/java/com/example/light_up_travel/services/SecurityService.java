@@ -1,4 +1,4 @@
-package com.example.light_up_travel.services.impl;
+package com.example.light_up_travel.services;
 
 import com.example.light_up_travel.entity.PasswordResetToken;
 import com.example.light_up_travel.exceptions.ResetPasswordCodeExpirationException;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.logging.Logger;
 
 @Service
-public class SecurityServiceImpl {
+public class SecurityService {
 
     private Logger logger;
     @Autowired

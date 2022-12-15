@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreatePlaceDto {
+public class CreatePlaceDTO {
     private String name;
     private String city;
     private String description;

@@ -1,11 +1,11 @@
 package com.example.light_up_travel.mapper;
 
-import com.example.light_up_travel.dto.FavouritesDto;
+import com.example.light_up_travel.dto.FavouritesDTO;
 import com.example.light_up_travel.entity.Favourite;
 
 public class FavouritesMapper {
-    public static FavouritesDto favouritesToFavouritesDto(Favourite favourite){
-        FavouritesDto favouritesDto = new FavouritesDto();
+    public static FavouritesDTO favouritesToFavouritesDto(Favourite favourite){
+        FavouritesDTO favouritesDto = new FavouritesDTO();
         favouritesDto.setId(favourite.getId());
         favouritesDto.setNotes(favourite.getNotes());
         favouritesDto.setUser(BasicUserMapper.basicUserToUserDTO(favourite.getUser()));
@@ -13,7 +13,7 @@ public class FavouritesMapper {
         return favouritesDto;
     }
 
-    public static Favourite favouritesToFavourite(FavouritesDto favouriteDto){
+    public static Favourite favouritesToFavourite(FavouritesDTO favouriteDto){
         Favourite favourite = new Favourite();
         favourite.setId(favouriteDto.getId());
         favourite.setNotes(favouriteDto.getNotes());

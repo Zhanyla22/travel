@@ -1,4 +1,4 @@
-package com.example.light_up_travel.services.impl;
+package com.example.light_up_travel.services;
 
 import com.example.light_up_travel.entity.RefreshToken;
 import com.example.light_up_travel.repository.RefreshTokenRepository;
@@ -14,7 +14,7 @@ import java.util.UUID;
 
 
 @Service
-public class RefreshTokenServiceImpl {
+public class RefreshTokenService {
     @Value("${travel.app.jwtRefreshExpirationMs}")
     private Long refreshTokenDurationMs;
 

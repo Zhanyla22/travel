@@ -1,6 +1,5 @@
 package com.example.light_up_travel.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,12 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BasicPlaceDto {
+public class BasicPostDTO {
 
     private Long id;
 
-    private String name;
-
-    private String mainFilePath;
-
+    private String description;
 }

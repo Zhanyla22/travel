@@ -1,6 +1,6 @@
-package com.example.light_up_travel.services.impl;
+package com.example.light_up_travel.services;
 
-import com.example.light_up_travel.dto.CommentsDto;
+import com.example.light_up_travel.dto.CommentsDTO;
 import com.example.light_up_travel.entity.Comments;
 import com.example.light_up_travel.enums.Status;
 import com.example.light_up_travel.exceptions.NotFoundException;
@@ -16,18 +16,18 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CommentsServiceImpl {
+public class CommentsService {
 
     private final CommentsRepository commentsRepository;
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     private final PostService postService;
 
-    public List<CommentsDto> getAllNotDeletedCommentsByPostId(Long postId){
+    public List<CommentsDTO> getAllNotDeletedCommentsByPostId(Long postId){
         Iterable<Comments> comments = commentsRepository.getAllNotDeletedCommentsByPostId(postId);
 
-        List<CommentsDto> commentDto = new ArrayList<>();
+        List<CommentsDTO> commentDto = new ArrayList<>();
 
         for (Comments comment : comments){
             commentDto.add(CommentsMapper.CommentsToCommentsDto(comment));
@@ -35,10 +35,10 @@ public class CommentsServiceImpl {
         return commentDto;
     }
 
-    public List<CommentsDto> getAllNotDeletedCommentsByUserId(Long userId){
+    public List<CommentsDTO> getAllNotDeletedCommentsByUserId(Long userId){
         Iterable<Comments> comments = commentsRepository.getAllNotDeletedCommentsByUserId(userId);
 
-        List<CommentsDto> commentDto = new ArrayList<>();
+        List<CommentsDTO> commentDto = new ArrayList<>();
 
         for (Comments comment : comments){
             commentDto.add(CommentsMapper.CommentsToCommentsDto(comment));
@@ -46,10 +46,10 @@ public class CommentsServiceImpl {
         return commentDto;
     }
 
-    public List<CommentsDto> getAllDeletedCommentsByUsersWithPostId(Long postId){
+    public List<CommentsDTO> getAllDeletedCommentsByUsersWithPostId(Long postId){
         Iterable<Comments> comments = commentsRepository.getAllDeletedCommentsByUsersWithPostId(postId);
 
-        List<CommentsDto> commentDto = new ArrayList<>();
+        List<CommentsDTO> commentDto = new ArrayList<>();
 
         for (Comments comment : comments){
             commentDto.add(CommentsMapper.CommentsToCommentsDto(comment));
@@ -57,10 +57,10 @@ public class CommentsServiceImpl {
         return commentDto;
     }
 
-    public List<CommentsDto> getAllDeletedCommentsByAdminWithPostId(Long postId){
+    public List<CommentsDTO> getAllDeletedCommentsByAdminWithPostId(Long postId){
         Iterable<Comments> comments = commentsRepository.getAllDeletedCommentsByAdminWithPostId(postId);
 
-        List<CommentsDto> commentDto = new ArrayList<>();
+        List<CommentsDTO> commentDto = new ArrayList<>();
 
         for (Comments comment : comments){
             commentDto.add(CommentsMapper.CommentsToCommentsDto(comment));
@@ -68,7 +68,7 @@ public class CommentsServiceImpl {
         return commentDto;
     }
 
-    public CommentsDto insertComment(CommentsDto commentsDto){
+    public CommentsDTO insertComment(CommentsDTO commentsDto){
         Comments comment = new Comments();
         comment.setComment(commentsDto.getComment());
         comment.setUser(userService.getUserByAuthentication());
@@ -78,7 +78,7 @@ public class CommentsServiceImpl {
         return CommentsMapper.CommentsToCommentsDto(commentsRepository.save(comment));
     }
 
-    public CommentsDto getCommentById(Long commentId){
+    public CommentsDTO getCommentById(Long commentId){
         Comments comment = isCommentDeletedCheck(commentId);
         return CommentsMapper.CommentsToCommentsDto(comment);
     }

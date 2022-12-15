@@ -2,7 +2,7 @@ package com.example.light_up_travel.security;
 
 import com.example.light_up_travel.security.jwt.AuthEntryPointJwt;
 import com.example.light_up_travel.security.jwt.AuthTokenFilter;
-import com.example.light_up_travel.services.impl.UserDetailsServiceImpl;
+import com.example.light_up_travel.services.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class WebSecurityConfig {
     @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    UserDetailsService userDetailsService;
 
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;

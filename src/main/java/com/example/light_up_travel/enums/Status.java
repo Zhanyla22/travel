@@ -5,6 +5,7 @@ public enum Status {
     PENDING,
     DELETED_BY_ADMIN,
     DELETED_BY_USER,
+
     APPROVED, //for post
     DISAPPROVED, //for post
     WAITING_FOR_APPROVE //for post

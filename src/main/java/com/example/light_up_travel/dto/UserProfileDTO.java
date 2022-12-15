@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserProfileDto {
+public class UserProfileDTO {
 
     @Schema(example = "Will")
     private String name;

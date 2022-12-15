@@ -7,9 +7,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class RatingDto {
-    private int rate;
-    private String comment;
+@NoArgsConstructor
+public class UserForPostDTO {
+    private Long id;
+    private String fileUrl;
+    private String name;
+    private String surname;
 }

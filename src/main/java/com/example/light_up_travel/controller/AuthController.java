@@ -16,9 +16,9 @@ import com.example.light_up_travel.payload.response.JwtResponse;
 import com.example.light_up_travel.payload.response.MessageResponse;
 import com.example.light_up_travel.payload.response.TokenRefreshResponse;
 import com.example.light_up_travel.security.jwt.JwtUtils;
-import com.example.light_up_travel.services.impl.UserDetailsImpl;
-import com.example.light_up_travel.services.impl.RefreshTokenServiceImpl;
-import com.example.light_up_travel.services.impl.UserServiceImpl;
+import com.example.light_up_travel.services.UserDetails;
+import com.example.light_up_travel.services.RefreshTokenService;
+import com.example.light_up_travel.services.UserService;
 import com.example.light_up_travel.utils.EmailUtility;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +52,7 @@ public class AuthController {
     UserRepository userRepository;
 
     @Autowired
-    UserServiceImpl userService;
+    UserService userService;
 
     @Autowired
     RoleRepository roleRepository;
@@ -67,7 +67,7 @@ public class AuthController {
     private JavaMailSender mailSender;
 
     @Autowired
-    RefreshTokenServiceImpl refreshTokenService;
+    RefreshTokenService refreshTokenService;
 
 
     @PostMapping("/signin")
@@ -81,7 +81,7 @@ public class AuthController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtUtils.generateJwtToken(authentication);
 
-            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             List<String> roles = userDetails.getAuthorities().stream()
                     .map(item -> item.getAuthority())
                     .collect(Collectors.toList());

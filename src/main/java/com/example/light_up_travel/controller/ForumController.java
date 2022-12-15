@@ -2,7 +2,7 @@ package com.example.light_up_travel.controller;
 
 
 import com.example.light_up_travel.payload.response.MessageResponse;
-import com.example.light_up_travel.services.impl.ForumServiceImpl;
+import com.example.light_up_travel.services.ForumService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import org.webjars.NotFoundException;
 public class ForumController {
 
     @Autowired
-    private ForumServiceImpl forumService;
+    private ForumService forumService;
 
     @Operation(summary = "Add new forum")
     @PostMapping("/add/{desc}")

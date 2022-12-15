@@ -1,8 +1,8 @@
 package com.example.light_up_travel.controller;
 
-import com.example.light_up_travel.dto.CommentsDto;
+import com.example.light_up_travel.dto.CommentsDTO;
 import com.example.light_up_travel.payload.response.MessageResponse;
-import com.example.light_up_travel.services.impl.CommentsServiceImpl;
+import com.example.light_up_travel.services.CommentsService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +15,12 @@ import org.webjars.NotFoundException;
 @RequestMapping("/comment")
 public class CommentController {
 
-    private final CommentsServiceImpl commentsService;
+    private final CommentsService commentsService;
 
 
     @Operation(summary = "Add new comment to a post")
     @PostMapping("/add")
-    public ResponseEntity<?> addComment(@RequestBody CommentsDto comment) {
+    public ResponseEntity<?> addComment(@RequestBody CommentsDTO comment) {
         try{
             commentsService.insertComment(comment);
             return ResponseEntity.ok(new MessageResponse("Comment is added successfully"));

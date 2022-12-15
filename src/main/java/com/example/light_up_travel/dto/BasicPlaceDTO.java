@@ -1,6 +1,6 @@
 package com.example.light_up_travel.dto;
 
-import com.example.light_up_travel.enums.Status;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,16 +8,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentsDto {
+public class BasicPlaceDTO {
 
     private Long id;
 
-    private String comment;
+    private String name;
 
-    private BasicUserDto userId;
-
-    private BasicPostDto postId;
-
-    private Status status;
+    private String mainFilePath;
 
 }

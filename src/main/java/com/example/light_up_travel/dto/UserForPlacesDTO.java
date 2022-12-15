@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserForPlaces {
+public class UserForPlacesDTO {
     private Long ratingId;
     private String profileUrl;
     private String name;

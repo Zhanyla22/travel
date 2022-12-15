@@ -1,13 +1,10 @@
-package com.example.light_up_travel.services.impl;
+package com.example.light_up_travel.services;
 
-import com.example.light_up_travel.dto.ForumDto;
-import com.example.light_up_travel.entity.Forum;
 import com.example.light_up_travel.entity.Likes;
 import com.example.light_up_travel.entity.Post;
 import com.example.light_up_travel.entity.User;
 import com.example.light_up_travel.enums.Status;
 import com.example.light_up_travel.exceptions.NotFoundException;
-import com.example.light_up_travel.mapper.ForumMapper;
 import com.example.light_up_travel.mapper.PostMapper;
 import com.example.light_up_travel.dto.CreatePostDTO;
 import com.example.light_up_travel.dto.GetPostDTO;
@@ -20,7 +17,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,7 +24,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class PostService {
@@ -36,10 +31,10 @@ public class PostService {
     private final FileUploadService fileUploadService;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
-    private final UserServiceImpl userService;
+    private final UserService userService;
     private final LikesRepository likesRepository;
 
-    public PostService(FileUploadService fileUploadService, PostRepository postRepository, UserRepository userRepository, UserServiceImpl userService, LikesRepository likesRepository) {
+    public PostService(FileUploadService fileUploadService, PostRepository postRepository, UserRepository userRepository, UserService userService, LikesRepository likesRepository) {
         this.fileUploadService = fileUploadService;
         this.postRepository = postRepository;
         this.userRepository = userRepository;

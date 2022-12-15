@@ -1,12 +1,12 @@
 package com.example.light_up_travel.mapper;
 
-import com.example.light_up_travel.dto.CommentsDto;
+import com.example.light_up_travel.dto.CommentsDTO;
 import com.example.light_up_travel.entity.Comments;
 
 public class CommentsMapper {
 
-    public static CommentsDto CommentsToCommentsDto(Comments comments){
-        CommentsDto commentsDto = new CommentsDto();
+    public static CommentsDTO CommentsToCommentsDto(Comments comments){
+        CommentsDTO commentsDto = new CommentsDTO();
         commentsDto.setId(comments.getId());
         commentsDto.setComment(comments.getComment());
         commentsDto.setUserId(BasicUserMapper.basicUserToUserDTO(comments.getUser()));
@@ -14,7 +14,7 @@ public class CommentsMapper {
         return commentsDto;
     }
 
-    public static Comments CommentsToComments(CommentsDto commentsDto){
+    public static Comments CommentsToComments(CommentsDTO commentsDto){
         Comments comments = new Comments();
         comments.setId(commentsDto.getId());
         comments.setComment(commentsDto.getComment());

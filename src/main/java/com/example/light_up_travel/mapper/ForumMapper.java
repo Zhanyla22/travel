@@ -1,10 +1,10 @@
 package com.example.light_up_travel.mapper;
 
 import com.example.light_up_travel.entity.Forum;
-import com.example.light_up_travel.dto.ForumDto;
+import com.example.light_up_travel.dto.ForumDTO;
 
 public class ForumMapper {
-        public static Forum forumDtoToForum(ForumDto forumDto){
+        public static Forum forumDtoToForum(ForumDTO forumDto){
             Forum forum = new Forum();
             forum.setId(forumDto.getId());
             forum.setDescription(forumDto.getDescription());
@@ -14,8 +14,8 @@ public class ForumMapper {
             return forum;
         }
 
-        public static ForumDto ForumToForumDTO(Forum forum){
-            ForumDto forumDTO = new ForumDto();
+        public static ForumDTO ForumToForumDTO(Forum forum){
+            ForumDTO forumDTO = new ForumDTO();
             forumDTO.setId((forum.getId()));
             forumDTO.setDescription(forum.getDescription());
             forumDTO.setUser(BasicUserMapper.basicUserToUserDTO(forum.getUser()));

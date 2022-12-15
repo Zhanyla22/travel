@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
@@ -15,26 +13,22 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class AddUserDto {
+public class UpdateUserDTO {
 
-    @NotBlank(message = "Name can't be null or empty")
-    @Schema(example = "John", required = true)
+    @Schema(example = "Will")
     private String name;
 
-    @NotBlank(message = "Surname can't be null or empty")
-    @Schema(example = "Smith", required = true)
+    @Schema(example = "Smith")
     private String surname;
 
-    @NotBlank(message = "Email can't be null or empty")
-    @Schema(example = "johnsmith@gmail.com", required = true)
+    @Schema(example = "willsmith@gmail.com")
     @Size(max = 150)
     @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
-    @NotNull
     @Schema(example = "[\n" +
-            "    \"admin\"\n" +
-            "  ]", description = "3 type of roles: \"user\", \"admin\", \"moderator\"", required = true)
+            "    \"user\"\n" +
+            "  ]", description = "3 type of roles: \"user\", \"admin\", \"moderator\"")
     private Set<String> role;
 
 }

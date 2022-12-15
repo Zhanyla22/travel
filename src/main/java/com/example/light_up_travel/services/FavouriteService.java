@@ -1,6 +1,6 @@
-package com.example.light_up_travel.services.impl;
+package com.example.light_up_travel.services;
 
-import com.example.light_up_travel.dto.FavouritesDto;
+import com.example.light_up_travel.dto.FavouritesDTO;
 import com.example.light_up_travel.entity.Favourite;
 import com.example.light_up_travel.exceptions.NotFoundException;
 import com.example.light_up_travel.mapper.BasicPlaceMapper;
@@ -15,14 +15,14 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class FavouriteServiceImpl {
+public class FavouriteService {
 
     private final FavouritesRepository favouritesRepository;
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
 
-    public FavouritesDto addFavourite(FavouritesDto favouritesDto){
+    public FavouritesDTO addFavourite(FavouritesDTO favouritesDto){
         Favourite favourite = new Favourite();
         favourite.setNotes(favouritesDto.getNotes());
         favourite.setPlace(BasicPlaceMapper.basicPlaceDtoToPlace(favouritesDto.getPlace()));
@@ -31,9 +31,9 @@ public class FavouriteServiceImpl {
         return FavouritesMapper.favouritesToFavouritesDto(favouritesRepository.save(favourite));
     }
 
-    public List<FavouritesDto> getAllNotDeletedFavouritesByUserId(Long userId){
+    public List<FavouritesDTO> getAllNotDeletedFavouritesByUserId(Long userId){
         Iterable<Favourite> favourites = favouritesRepository.findAllNotDeletedFavouriteByUserId(userId);
-        List<FavouritesDto> favouriteDto = new ArrayList<>();
+        List<FavouritesDTO> favouriteDto = new ArrayList<>();
 
         for (Favourite favourite : favourites){
             favouriteDto.add(FavouritesMapper.favouritesToFavouritesDto(favourite));
@@ -41,7 +41,7 @@ public class FavouriteServiceImpl {
         return favouriteDto;
     }
 
-    public FavouritesDto getFavouriteById(Long id){
+    public FavouritesDTO getFavouriteById(Long id){
         Favourite favourite = isFavouritesDeleted(id);
         return FavouritesMapper.favouritesToFavouritesDto(favourite);
     }
@@ -56,7 +56,7 @@ public class FavouriteServiceImpl {
         else throw new NotFoundException("User doesn't have a favourite place with id: " + id);
     }
 
-    public FavouritesDto updateNotDeletedFavouriteById(Long id, FavouritesDto favouritesDto){
+    public FavouritesDTO updateNotDeletedFavouriteById(Long id, FavouritesDTO favouritesDto){
         Favourite favourite = isFavouritesDeleted(id);
         if (favourite.getUser() == userService.getUserByAuthentication()){
             favourite.setNotes(favouritesDto.getNotes());
