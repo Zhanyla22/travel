@@ -60,7 +60,6 @@ public class UserService {
     }
 
 
-
     public List<User> getAllDeletedUsers() {
         return userRepository.findAllDeletedUsers();
     }
@@ -74,13 +73,12 @@ public class UserService {
         List<User> users = userRepository.findAllUserRoles();
         List<BasicUserDTO> basicUserDTOS = new ArrayList<>();
 
-        for(User user: users){
+        for (User user : users) {
             BasicUserDTO basicUserDto = BasicUserMapper.basicUserToUserDTO(user);
             try {
                 User mentor = isUserDeletedCheck(mentorService.getMentorById(user.getId()).getMentorId());
                 basicUserDto.setMentorName(mentor.getName() + " " + mentor.getSurname());
-            }
-            catch (NotFoundException ignored) {
+            } catch (NotFoundException ignored) {
             }
             basicUserDTOS.add(basicUserDto);
         }
@@ -152,12 +150,15 @@ public class UserService {
 
     public User updateNotDeletedUserById(Long id, UpdateUserDTO updateUserDto) {
         User user = isUserDeletedCheck(id);
-        if (updateUserDto.getName() != null){
-            user.setName(updateUserDto.getName());}
-        if (updateUserDto.getSurname() != null){
-            user.setSurname(updateUserDto.getSurname());}
-        if (updateUserDto.getEmail() != null){
-            user.setEmail(updateUserDto.getEmail().toLowerCase());}
+        if (updateUserDto.getName() != null) {
+            user.setName(updateUserDto.getName());
+        }
+        if (updateUserDto.getSurname() != null) {
+            user.setSurname(updateUserDto.getSurname());
+        }
+        if (updateUserDto.getEmail() != null) {
+            user.setEmail(updateUserDto.getEmail().toLowerCase());
+        }
         user.setDateUpdated(new Date());
 
         Set<Role> roles = new HashSet<>();
@@ -197,7 +198,7 @@ public class UserService {
     }
 
 
-    public Long updateProfilePageById(UserProfileDTO userProfileDto){
+    public Long updateProfilePageById(UserProfileDTO userProfileDto) {
 
         User user = isUserDeletedCheck(getUserByAuthentication().getId());
         user.setName(userProfileDto.getName());
@@ -215,16 +216,14 @@ public class UserService {
     }
 
 
-
-    public String updateProfileUrl(Long userId, MultipartFile multipartFile){
+    public String updateProfileUrl(Long userId, MultipartFile multipartFile) {
         User user = userRepository.findById(userId).orElseThrow(
-                ()->  new NotFoundResourceException("User was not found with id: " + userId)
+                () -> new NotFoundResourceException("User was not found with id: " + userId)
         );
         user.setProfileUrl(fileUploadService.saveFile(multipartFile));
         userRepository.save(user);
-        return "updated profile image for user with id "+ userId;
+        return "updated profile image for user with id " + userId;
     }
-
 
 
     public boolean verify(String verificationCode) {
@@ -245,14 +244,15 @@ public class UserService {
     public boolean verifyPasswordResetCode(String resetPasswordCode) {
         PasswordResetToken passwordResetToken =
                 securityService.validatePasswordResetToken(resetPasswordCode);
-        if (passwordResetToken == null){
+        if (passwordResetToken == null) {
             return false;
-        }else {
+        } else {
             passwordResetToken.setToken("123");
             passwordResetTokenRepository.save(passwordResetToken);
             return true;
         }
     }
+
     public void newPassword(String newPassword) {
         PasswordResetToken token = passwordResetTokenRepository.findByToken("123");
         User user = token.getUser();
@@ -260,7 +260,6 @@ public class UserService {
         passwordResetTokenRepository.delete(token);
         userRepository.save(user);
     }
-
 
 
     public void hardDeleteAllUsers() {
@@ -284,15 +283,15 @@ public class UserService {
     public User isUserDeletedCheck(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Could not find user with id: " + id));
-        if(user.getDateDeleted() != null) {
+        if (user.getDateDeleted() != null) {
             throw new NotFoundException("User with id: " + id + " was deleted!");
         }
         return user;
     }
 
     public User findUserByEmail(String email) {
-        return  userRepository.findByEmail(email).
-                orElseThrow(() -> new NotFoundException("User not Found") );
+        return userRepository.findByEmail(email).
+                orElseThrow(() -> new NotFoundException("User not Found"));
     }
 
     public void createPasswordResetTokenForUser(User user, String token) {

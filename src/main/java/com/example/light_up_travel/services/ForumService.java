@@ -20,11 +20,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ForumService {
 
-    @Autowired
-    private ForumRepository forumRepository;
-
-    @Autowired
-    private UserService userService;
+    private final ForumRepository forumRepository;
+    private final UserService userService;
     private final MentorService mentorService;
 
 
@@ -32,7 +29,7 @@ public class ForumService {
         Iterable<Forum> forums = forumRepository.findAllNotDeletedForums();
         List<ForumDTO> forumDto = new ArrayList<>();
 
-        for (Forum forum : forums){
+        for (Forum forum : forums) {
             forumDto.add(ForumMapper.ForumToForumDTO(forum));
         }
 
@@ -44,7 +41,7 @@ public class ForumService {
         Iterable<Forum> forums = forumRepository.findAll();
         List<ForumDTO> forumDto = new ArrayList<>();
 
-        for (Forum forum : forums){
+        for (Forum forum : forums) {
             forumDto.add(ForumMapper.ForumToForumDTO(forum));
         }
 
@@ -55,7 +52,7 @@ public class ForumService {
         Iterable<Forum> forums = forumRepository.getAllForumPending();
         List<ForumDTO> forumDto = new ArrayList<>();
 
-        for (Forum forum : forums){
+        for (Forum forum : forums) {
             forumDto.add(ForumMapper.ForumToForumDTO(forum));
         }
 
@@ -67,14 +64,12 @@ public class ForumService {
         Iterable<Forum> forums = forumRepository.findAllDeletedForums();
         List<ForumDTO> forumDto = new ArrayList<>();
 
-        for (Forum forum : forums){
+        for (Forum forum : forums) {
             forumDto.add(ForumMapper.ForumToForumDTO(forum));
         }
 
         return forumDto;
     }
-
-
 
 
     public ForumDTO insert(String desc) {
@@ -99,7 +94,7 @@ public class ForumService {
     public Forum isForumDeletedCheck(Long id) {
         Forum forum = forumRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Could not find forum with id: " + id));
-        if(forum.getDateDeleted() != null) {
+        if (forum.getDateDeleted() != null) {
             throw new NotFoundException("Forum with id: " + id + " was deleted!");
         }
         return forum;
@@ -115,7 +110,7 @@ public class ForumService {
         forumRepository.deleteById(id);
     }
 
-    public void approveForum(Long formId){
+    public void approveForum(Long formId) {
         Forum forum = isForumDeletedCheck(formId);
         mentorService.saveMentor(forum.getUser().getId(), userService.getUserByAuthentication().getId());
         forum.setStatus(Stat.APPROVED);

@@ -41,56 +41,55 @@ public class PlacesService {
     private final UserService userService;
 
     private final UserRepository userRepository;
+
     public ResponseEntity<GetPlaceDTO> getActivePlaceById(Long placeId) throws Exception {
         try {
             Place place = placesRepository.findById(placeId).orElseThrow(
                     () -> new NotFoundException("Place with id" + placeId + "not found")
             );
-                List<Rating> listOfRatings = ratingRepository.findAllByPlace_Id(place.getId());
-                List<UserForPlacesDTO> userForPlacesDTOList = new ArrayList<>();
-                for (Rating r : listOfRatings) {
-                    UserForPlacesDTO userForPlacesDTO = new UserForPlacesDTO();
-                    userForPlacesDTO.setName(r.getUser().getName());
-                    userForPlacesDTO.setSurname(r.getUser().getSurname());
-                    userForPlacesDTO.setProfileUrl(r.getUser().getProfileUrl());
-                    userForPlacesDTO.setRatingId(r.getId());
-                    userForPlacesDTO.setComment(r.getComment());
-                    userForPlacesDTO.setRate(r.getRate());
-                    userForPlacesDTOList.add(userForPlacesDTO);
-                }
-                List<Files> filesList = filesRepository.findAllByPlace_Id(place.getId());
-                List<String> list = new ArrayList<>();
-                for (Files f : filesList) {
-                    list.add(f.getFilePath());
-                }
-
-                GetPlaceDTO getPlaceDTO = PlacesMapper.placeEntityToDTO(place, userForPlacesDTOList,list, ratingRepository.avgRate(place.getId()));
-                return new ResponseEntity<>(getPlaceDTO,HttpStatus.OK);
+            List<Rating> listOfRatings = ratingRepository.findAllByPlace_Id(place.getId());
+            List<UserForPlacesDTO> userForPlacesDTOList = new ArrayList<>();
+            for (Rating r : listOfRatings) {
+                UserForPlacesDTO userForPlacesDTO = new UserForPlacesDTO();
+                userForPlacesDTO.setName(r.getUser().getName());
+                userForPlacesDTO.setSurname(r.getUser().getSurname());
+                userForPlacesDTO.setProfileUrl(r.getUser().getProfileUrl());
+                userForPlacesDTO.setRatingId(r.getId());
+                userForPlacesDTO.setComment(r.getComment());
+                userForPlacesDTO.setRate(r.getRate());
+                userForPlacesDTOList.add(userForPlacesDTO);
             }
-        catch (Exception e){
+            List<Files> filesList = filesRepository.findAllByPlace_Id(place.getId());
+            List<String> list = new ArrayList<>();
+            for (Files f : filesList) {
+                list.add(f.getFilePath());
+            }
+
+            GetPlaceDTO getPlaceDTO = PlacesMapper.placeEntityToDTO(place, userForPlacesDTOList, list, ratingRepository.avgRate(place.getId()));
+            return new ResponseEntity<>(getPlaceDTO, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
 
+    public List<GetPlaceWithCategDTO> getAllPlacesByCategory(int categoryId) {
 
-     public List<GetPlaceWithCategDTO>  getAllPlacesByCategory(int categoryId){
-
-         List<PlaceCategories> placeCategories = placeCategoriesRepository.getPlaceCategoriesByCategoryIsLike(categoryId);
-           List<GetPlaceWithCategDTO> placeMapperList = new ArrayList<>();
-           for(PlaceCategories p:placeCategories)
-               placeMapperList.add(GetPlaceWithCategoryMapper.PlaceEntityToPlaceDTO(p,ratingRepository.avgRate(p.getId())));
-               return placeMapperList;
+        List<PlaceCategories> placeCategories = placeCategoriesRepository.getPlaceCategoriesByCategoryIsLike(categoryId);
+        List<GetPlaceWithCategDTO> placeMapperList = new ArrayList<>();
+        for (PlaceCategories p : placeCategories)
+            placeMapperList.add(GetPlaceWithCategoryMapper.PlaceEntityToPlaceDTO(p, ratingRepository.avgRate(p.getId())));
+        return placeMapperList;
     }
 
-    public ResponseEntity<GetPlaceByNameDTO> getPlaceByName(String placeName){
+    public ResponseEntity<GetPlaceByNameDTO> getPlaceByName(String placeName) {
         Place place = placesRepository.getPlaceByName(placeName);
         GetPlaceByNameDTO getPlaceByNameDTO = new GetPlaceByNameDTO();
         getPlaceByNameDTO.setName(place.getName());
         getPlaceByNameDTO.setRate(ratingRepository.avgRate(place.getId()));
         getPlaceByNameDTO.setMainFilePath(place.getMainFilePath());
 
-        return new ResponseEntity<>(getPlaceByNameDTO,HttpStatus.OK);
+        return new ResponseEntity<>(getPlaceByNameDTO, HttpStatus.OK);
 
     }
 
@@ -129,7 +128,7 @@ public class PlacesService {
 
         placesRepository.save(place);
 
-        return "Saved main image for place with id = "+placeId;
+        return "Saved main image for place with id = " + placeId;
     }
 
     public ResponseEntity<Long> updatePlace(UpdatePlaceDTO updatePlaceDTO) throws Exception {
@@ -142,24 +141,24 @@ public class PlacesService {
             place.setCity(updatePlaceDTO.getCity());
             place.setAddressLink(updatePlaceDTO.getAddressLink());
             placesRepository.save(place);
-            return new ResponseEntity<>(place.getId(),HttpStatus.OK);
+            return new ResponseEntity<>(place.getId(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
-    public String updateMainImageForPlace(Long placeId, MultipartFile multipartFile){
+    public String updateMainImageForPlace(Long placeId, MultipartFile multipartFile) {
         Place place = placesRepository.findById(placeId).orElseThrow(
-                ()-> new NotFoundException("Place with"+placeId+"not found")
+                () -> new NotFoundException("Place with" + placeId + "not found")
         );
         place.setMainFilePath(fileUploadService.saveFile(multipartFile));
         placesRepository.save(place);
-        return "updated  main image for place with id " +placeId;
+        return "updated  main image for place with id " + placeId;
     }
 
-    public ResponseEntity<Void> deletePlaceById(Long placeId){
+    public ResponseEntity<Void> deletePlaceById(Long placeId) {
         Place place = placesRepository.findById(placeId).orElseThrow(
-                ()-> new NotFoundException("Place with id "+placeId+" not found")
+                () -> new NotFoundException("Place with id " + placeId + " not found")
         );
         place.setStatus(Status.DELETED_BY_ADMIN);
         place.setDateDeleted(LocalDateTime.now());
@@ -168,9 +167,9 @@ public class PlacesService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public void ratePlace(Long placeId, RatingDTO ratingDto){
+    public void ratePlace(Long placeId, RatingDTO ratingDto) {
         Place place = placesRepository.findById(placeId).orElseThrow(
-                ()-> new NotFoundException("Place with id "+placeId+" not found")
+                () -> new NotFoundException("Place with id " + placeId + " not found")
         );
         Rating rating = new Rating();
         rating.setRate(ratingDto.getRate());

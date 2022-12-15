@@ -2,6 +2,7 @@ package com.example.light_up_travel.services;
 
 import com.example.light_up_travel.entity.User;
 import com.example.light_up_travel.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -11,9 +12,10 @@ import java.util.Optional;
 
 
 @Service
+@RequiredArgsConstructor
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
-    @Autowired
-    UserRepository userRepository;
+
+    private final UserRepository userRepository;
 
     @Override
     @Transactional

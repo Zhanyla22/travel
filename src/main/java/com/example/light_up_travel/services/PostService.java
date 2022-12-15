@@ -12,6 +12,7 @@ import com.example.light_up_travel.dto.UpdatePostDTO;
 import com.example.light_up_travel.repository.LikesRepository;
 import com.example.light_up_travel.repository.PostRepository;
 import com.example.light_up_travel.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PostService {
 
     private final FileUploadService fileUploadService;
@@ -33,14 +35,6 @@ public class PostService {
     private final UserRepository userRepository;
     private final UserService userService;
     private final LikesRepository likesRepository;
-
-    public PostService(FileUploadService fileUploadService, PostRepository postRepository, UserRepository userRepository, UserService userService, LikesRepository likesRepository) {
-        this.fileUploadService = fileUploadService;
-        this.postRepository = postRepository;
-        this.userRepository = userRepository;
-        this.userService = userService;
-        this.likesRepository = likesRepository;
-    }
 
 
     public ResponseEntity<Long> createNewPost(CreatePostDTO createPostDTO) throws Exception {
@@ -53,19 +47,19 @@ public class PostService {
             newPost.setStatus(Status.WAITING_FOR_APPROVE);
             newPost.setUser(user);
             postRepository.save(newPost);
-            return new ResponseEntity<>(newPost.getId(),HttpStatus.OK);
+            return new ResponseEntity<>(newPost.getId(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
-    public String saveImageForPost(Long postId,MultipartFile multipartFile){
+    public String saveImageForPost(Long postId, MultipartFile multipartFile) {
         Post post = postRepository.findById(postId).orElseThrow(
-                ()-> new NotFoundException("post with id "+ postId+" npt foubd")
+                () -> new NotFoundException("post with id " + postId + " npt foubd")
         );
         post.setFilePath(fileUploadService.saveFile(multipartFile));
         postRepository.save(post);
-        return "saved image for post with id +" +postId;
+        return "saved image for post with id +" + postId;
     }
 
     public void approvePost(Long postId) {
@@ -101,20 +95,21 @@ public class PostService {
         Page<Post> posts = postRepository.findByStatus(Status.ACTIVE, pageable);
         List<GetPostDTO> result = new ArrayList<>();
         for (Post p : posts.getContent())
-            result.add(PostMapper.PostEntityToPostDto( p,
+            result.add(PostMapper.PostEntityToPostDto(p,
                     likesRepository.countById(p.getId()),
                     !likesRepository.existsByPost_IdAndUser_Id(p.getId(), userService.getUserByAuthentication().getId())));
         return result;
     }
 
     public List<GetPostDTO> getAllPendingPosts() {
-      List<GetPostDTO> postMapperList = new ArrayList<>();
+        List<GetPostDTO> postMapperList = new ArrayList<>();
 
-      for(Post p:postRepository.getAllPostPending())
-          postMapperList.add(PostMapper.PostEntityToPostDto(p, likesRepository.countById(p.getId()),
-                  !likesRepository.existsByPost_IdAndUser_Id(p.getId(), userService.getUserByAuthentication().getId())));
-      return postMapperList;
+        for (Post p : postRepository.getAllPostPending())
+            postMapperList.add(PostMapper.PostEntityToPostDto(p, likesRepository.countById(p.getId()),
+                    !likesRepository.existsByPost_IdAndUser_Id(p.getId(), userService.getUserByAuthentication().getId())));
+        return postMapperList;
     }
+
     public ResponseEntity<Long> updatePost(UpdatePostDTO updatePostDTO) throws Exception {
         try {
             Post post = postRepository.findById(updatePostDTO.getId()).orElseThrow(
@@ -123,21 +118,20 @@ public class PostService {
             post.setDescription(updatePostDTO.getDescription());
             post.setDateUpdated(LocalDateTime.now()); //check it
             postRepository.save(post);
-            return new ResponseEntity<>(post.getId(),HttpStatus.OK);
+            return new ResponseEntity<>(post.getId(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
-    public String updateImageForPost(Long postId, MultipartFile multipartFile){
+    public String updateImageForPost(Long postId, MultipartFile multipartFile) {
         Post post = postRepository.findById(postId).orElseThrow(
-                ()-> new NotFoundException("Post with"+postId+"not found")
+                () -> new NotFoundException("Post with" + postId + "not found")
         );
         post.setFilePath(fileUploadService.saveFile(multipartFile));
         postRepository.save(post);
-        return "updated image for post with id " +postId;
+        return "updated image for post with id " + postId;
     }
-
 
 
     public ResponseEntity<Void> deletePostById(Long id) {
@@ -172,7 +166,6 @@ public class PostService {
                     !likesRepository.existsByPost_IdAndUser_Id(p.getId(), userService.getUserByAuthentication().getId())));
         return result;
     }
-
 
 
 }

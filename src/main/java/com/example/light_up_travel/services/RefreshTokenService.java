@@ -3,6 +3,7 @@ package com.example.light_up_travel.services;
 import com.example.light_up_travel.entity.RefreshToken;
 import com.example.light_up_travel.repository.RefreshTokenRepository;
 import com.example.light_up_travel.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -14,15 +15,15 @@ import java.util.UUID;
 
 
 @Service
+@RequiredArgsConstructor
 public class RefreshTokenService {
     @Value("${travel.app.jwtRefreshExpirationMs}")
     private Long refreshTokenDurationMs;
 
-    @Autowired
-    private RefreshTokenRepository refreshTokenRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+
+    private final UserRepository userRepository;
 
     public Optional<RefreshToken> findByToken(String token) {
         return refreshTokenRepository.findByToken(token);

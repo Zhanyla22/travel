@@ -7,6 +7,7 @@ import com.example.light_up_travel.exceptions.NotFoundResourceException;
 import com.example.light_up_travel.mapper.LifehackMapper;
 import com.example.light_up_travel.dto.LifehackDTO;
 import com.example.light_up_travel.repository.LifehackRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,37 +24,28 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
+@RequiredArgsConstructor
 public class LifehackService {
 
+    private final LifehackRepository lifehackRepository;
+
+    private final FileUploadService fileUploadService;
 
 
-    private LifehackRepository lifehackRepository;
-
-    private FileUploadService fileUploadService;
-
-    public LifehackService(LifehackRepository lifehackRepository, FileUploadService fileUploadService){
-
-        this.lifehackRepository = lifehackRepository;
-        this.fileUploadService = fileUploadService;
-    }
-
-
-
-
-    public List<LifehackDTO> getAllActiveLifehack(int page,int size){
+    public List<LifehackDTO> getAllActiveLifehack(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Lifehack> lifehacks = lifehackRepository.findByStatus(Status.ACTIVE, pageable);
         List<LifehackDTO> lifehackMapperList = new ArrayList<>();
-        for(Lifehack a:lifehacks.getContent())
+        for (Lifehack a : lifehacks.getContent())
             lifehackMapperList.add(LifehackMapper.lifehackEntityToLifehackDTO(a));
         return lifehackMapperList;
     }
 
-    public List<LifehackDTO> getAllDeletedLifehack(int page, int size){
+    public List<LifehackDTO> getAllDeletedLifehack(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Lifehack> deletedLifehacks = lifehackRepository.findByStatus(Status.DELETED_BY_ADMIN, pageable);
         List<LifehackDTO> lifehackMapperList = new ArrayList<>();
-        for(Lifehack r:deletedLifehacks.getContent())
+        for (Lifehack r : deletedLifehacks.getContent())
             lifehackMapperList.add(LifehackMapper.lifehackEntityToLifehackDTO(r));
         return lifehackMapperList;
     }
@@ -61,7 +53,7 @@ public class LifehackService {
     public ResponseEntity<LifehackDTO> getLifehackById(Long id) throws Exception {
         try {
             Lifehack lifehack = lifehackRepository.findById(id).orElseThrow(
-                    ()-> new Exception("Lifehack with id = "+ id +" not found")
+                    () -> new Exception("Lifehack with id = " + id + " not found")
             );
             LifehackDTO lifehackDTO = LifehackMapper.lifehackEntityToLifehackDTO(lifehack);
 
@@ -79,7 +71,7 @@ public class LifehackService {
             lifehack.setDescription(lifehackDTO.getDescription());
             lifehack.setStatus(Status.ACTIVE);
             lifehack = lifehackRepository.saveAndFlush(lifehack);
-            return new ResponseEntity<>(lifehack.getId(),HttpStatus.OK);
+            return new ResponseEntity<>(lifehack.getId(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
@@ -97,7 +89,7 @@ public class LifehackService {
 
         lifehackRepository.save(lifehack);
 
-        return "Saved video for lifehack with id = "+lifehackId;
+        return "Saved video for lifehack with id = " + lifehackId;
     }
 
     public ResponseEntity<Long> updateLifehackWithoutVideo(LifehackDTO lifehackDTO) throws Exception {
@@ -109,11 +101,12 @@ public class LifehackService {
             lifehack.setDateUpdated(LocalDateTime.now()); //check it
             lifehack.setDescription(lifehackDTO.getDescription());
             lifehack = lifehackRepository.saveAndFlush(lifehack);
-            return new ResponseEntity<>(lifehack.getId(),HttpStatus.OK);
+            return new ResponseEntity<>(lifehack.getId(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
+
     @SneakyThrows
     public String UpdateVideoForLifehack(Long lifehackId, MultipartFile multipartFile) throws IOException {
         Lifehack lifehack = lifehackRepository.findById(lifehackId)
@@ -138,7 +131,7 @@ public class LifehackService {
             lifehack.setDateUpdated(LocalDateTime.now()); //check it
             lifehack.setDescription(lifehackDTO.getDescription());
             if (!Objects.isNull(multipartFile))
-            lifehack.setFilePath(fileUploadService.saveVideo(multipartFile));
+                lifehack.setFilePath(fileUploadService.saveVideo(multipartFile));
             lifehackRepository.save(lifehack);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
