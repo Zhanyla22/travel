@@ -10,10 +10,17 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserForPlacesDTO {
+
     private Long ratingId;
+
     private String profileUrl;
+
     private String name;
+
     private String surname;
+
     private String comment;
+
     private int rate;
+
 }

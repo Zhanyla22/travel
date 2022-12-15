@@ -10,12 +10,20 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetPlaceWithCategDTO {
+
     private Long placeId;
+
     private String mainFilePath;
+
     private String name;
+
     private Double rate;
+
     private int categoryId;
+
     private String categoryName;
+
     private int parentId;
+
     private int parentName;
 }

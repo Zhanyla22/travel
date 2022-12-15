@@ -2,19 +2,18 @@ package com.example.light_up_travel.dto;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
-
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+
 public class UserProfileDTO {
 
     @Schema(example = "Will")

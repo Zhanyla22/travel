@@ -12,11 +12,18 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetPostDTO {
+
     private Long id;
+
     private String description;
+
     private LocalDate dateCreated;
+
     private UserForPostDTO user;
+
     private String filePath;
+
     private boolean like;
+
     private Long counter;
 }

@@ -10,8 +10,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserForPostDTO {
+
     private Long id;
+
     private String fileUrl;
+
     private String name;
+
     private String surname;
+
 }

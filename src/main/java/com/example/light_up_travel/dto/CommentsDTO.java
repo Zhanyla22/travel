@@ -1,11 +1,10 @@
 package com.example.light_up_travel.dto;
 
 import com.example.light_up_travel.enums.Status;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentsDTO {

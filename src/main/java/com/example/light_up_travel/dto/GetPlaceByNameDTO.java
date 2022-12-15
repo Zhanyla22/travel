@@ -10,7 +10,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetPlaceByNameDTO {
+
     private String mainFilePath;
+
     private String name;
+
     private Double rate;
 }

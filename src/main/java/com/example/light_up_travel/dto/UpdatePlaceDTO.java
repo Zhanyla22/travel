@@ -10,9 +10,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdatePlaceDTO {
+
     private  Long id;
+
     private String name;
+
     private String city;
+
     private String description;
+
     private String addressLink;
+
 }
+

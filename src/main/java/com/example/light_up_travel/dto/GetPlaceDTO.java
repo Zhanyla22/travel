@@ -12,10 +12,16 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetPlaceDTO {
+
     private String mainFilePath;
+
     private String name;
+
     private Double rate;
+
     private List<UserForPlacesDTO> comments;
+
     private List<String> files;
+
     private String description;
 }

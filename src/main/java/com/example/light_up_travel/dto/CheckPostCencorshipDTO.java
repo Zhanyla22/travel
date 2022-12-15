@@ -2,19 +2,23 @@ package com.example.light_up_travel.dto;
 
 import com.example.light_up_travel.entity.User;
 import com.example.light_up_travel.enums.Status;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+
 public class CheckPostCencorshipDTO {
     private Long id;
+
     private String description;
+
     private LocalDate createdDate;
+
     private Status status;
+
     private User user;
 }

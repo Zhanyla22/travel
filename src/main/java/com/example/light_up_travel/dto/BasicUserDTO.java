@@ -1,13 +1,12 @@
 package com.example.light_up_travel.dto;
 
 import com.example.light_up_travel.entity.Role;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class BasicUserDTO {

@@ -11,7 +11,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CreatePlaceDTO {
     private String name;
+
     private String city;
+
     private String description;
+
     private String addressLink;
 }

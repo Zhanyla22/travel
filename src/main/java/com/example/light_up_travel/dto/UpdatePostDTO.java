@@ -10,7 +10,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdatePostDTO {
+
     private Long id;
+
     private String description;
+
     private String filepath;
+
 }
