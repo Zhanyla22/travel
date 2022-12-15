@@ -6,6 +6,7 @@ import com.example.light_up_travel.exceptions.NotFoundResourceException;
 import com.example.light_up_travel.mapper.ArticleMapper;
 import com.example.light_up_travel.dto.ArticleDTO;
 import com.example.light_up_travel.repository.ArticleRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,15 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ArticleService {
 
-    private ArticleRepository articleRepository;
-    private FileUploadService fileUploadService;
+    private final ArticleRepository articleRepository;
+    private final FileUploadService fileUploadService;
 
-    public ArticleService(ArticleRepository articleRepository, FileUploadService fileUploadService){
-        this.articleRepository = articleRepository;
-        this.fileUploadService = fileUploadService;
-    }
     
 
     public List<ArticleDTO> getAllActiveArticle(int page, int size){
@@ -112,7 +110,7 @@ public class ArticleService {
         }
     }
     @SneakyThrows
-    public String UpdateImageForArticle(Long articleId, MultipartFile multipartFile) throws IOException {
+    public String updateImageForArticle(Long articleId, MultipartFile multipartFile) throws IOException {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(
                         () -> new NotFoundResourceException("Article was not found with id: " + articleId)

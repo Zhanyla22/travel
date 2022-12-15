@@ -91,6 +91,6 @@ public class PostController {
     @Operation(summary = "like Post")
     @PostMapping("/like/{postId}")
     public void like(@PathVariable Long postId){
-        postService.LikePost(postId);
+        postService.likePost(postId);
     }
 }

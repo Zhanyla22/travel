@@ -64,7 +64,7 @@ public class ArticleController {
     @PutMapping("/update-article-photo/{id}") // ?????((((((
     public ResponseEntity<String> updateArticle(@PathVariable Long id,
                                                 @RequestPart MultipartFile multipartFile) throws Exception{
-        return ResponseEntity.ok(articleService.UpdateImageForArticle(id,multipartFile));
+        return ResponseEntity.ok(articleService.updateImageForArticle(id,multipartFile));
     }
 
 

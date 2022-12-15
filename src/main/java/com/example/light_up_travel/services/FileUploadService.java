@@ -19,10 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @Service
-@RequiredArgsConstructor
 public class FileUploadService {
-
-    private ArticleRepository articleRepository;
 
     @SneakyThrows
     public String saveVideo(MultipartFile multipartfile) {

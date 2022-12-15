@@ -145,7 +145,7 @@ public class PostService {
 
     }
 
-    public void LikePost(Long postId) {
+    public void likePost(Long postId) {
 
         Post post = postRepository.findById(postId).orElseThrow(
                 () -> new NotFoundException("Not found " + postId + " Post")
