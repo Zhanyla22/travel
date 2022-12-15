@@ -11,9 +11,6 @@ import com.example.light_up_travel.mapper.PlacesMapper;
 import com.example.light_up_travel.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -84,6 +81,17 @@ public class PlacesService {
            for(PlaceCategories p:placeCategories)
                placeMapperList.add(GetPlaceWithCategoryMapper.PlaceEntityToPlaceDTO(p,ratingRepository.avgRate(p.getId())));
                return placeMapperList;
+    }
+
+    public ResponseEntity<GetPlaceByNameDTO> getPlaceByName(String placeName){
+        Place place = placesRepository.getPlaceByName(placeName);
+        GetPlaceByNameDTO getPlaceByNameDTO = new GetPlaceByNameDTO();
+        getPlaceByNameDTO.setName(place.getName());
+        getPlaceByNameDTO.setRate(ratingRepository.avgRate(place.getId()));
+        getPlaceByNameDTO.setMainFilePath(place.getMainFilePath());
+
+        return new ResponseEntity<>(getPlaceByNameDTO,HttpStatus.OK);
+
     }
 
     public ResponseEntity<Long> createNewPlace(int categoryId, CreatePlaceDto createPlaceDto) {

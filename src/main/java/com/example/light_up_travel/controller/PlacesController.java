@@ -3,6 +3,7 @@ package com.example.light_up_travel.controller;
 import com.example.light_up_travel.dto.*;
 import com.example.light_up_travel.services.impl.PlacesService;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,12 @@ public class PlacesController {
     @GetMapping("/get-all-active-by-category/{categoryId}")
     public List<GetPlaceWithCategDTO> getAllActiveByCategoryPlaces(@PathVariable int categoryId) throws Exception {
         return placesService.getAllPlacesByCategory(categoryId);
+    }
+
+    @Operation(summary = "поиск по имени в плейсес")
+    @GetMapping("/get-place-by-name/{placeName}")
+    public ResponseEntity<GetPlaceByNameDTO> getPlaceByName(@PathVariable String placeName){
+        return placesService.getPlaceByName(placeName);
     }
 
     @Operation(summary = "создать новый place без фото/ 1 запрос")
